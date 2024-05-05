@@ -1,0 +1,106 @@
+name: Issue Report
+description: Report a bug or issue in the mod
+title: '[Bug]: '
+labels:
+  - bug-report
+body:
+  - type: input
+    id: mc-version
+    attributes:
+      label: Minecraft Version
+      description: The version of Minecraft you are using
+      placeholder: 'ex: 1.20.4'
+    validations:
+      required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: >-
+        What version of the mod are you using? Note: ‘Latest’ is not a valid
+        answer, please use the exact version.
+      placeholder: 'ex: 1.2.3'
+    validations:
+      required: true
+  - type: input
+    id: forge-version
+    attributes:
+      label: Forge/Neoforge Version
+      description: >-
+        What version of the modloader are you using? Note that this can be found
+        on the bottom right of the main menu screen on most versions.
+      placeholder: 'ex: 45.0.0'
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: What happened?
+      description: Please clearly and concisely describe the issue
+      placeholder: 'ex: [System] does not work as intended and produces [Strange result]'
+    validations:
+      required: true
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: What was the expected result?
+      description: What were you expecting to happen?
+      placeholder: 'ex: [System] would work properly, producing [Expected result]'
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: 'How do you cause this bug? Please describe what caused this issue, or how you triggered it.'
+      placeholder: 'You can put code snippets here, but make sure to explain what went wrong in them.'
+    validations:
+      required: true
+  - type: textarea
+    id: log-output
+    attributes:
+      label: Log Output (if applicable)
+      description: >-
+        A log file may not be applicable for all issues, but it can be helpful
+        in some.
+      placeholder: Please drag-and-drop your log file here
+  - type: textarea
+    id: crash-report
+    attributes:
+      label: Crash Report (if applicable)
+      description: >-
+        Not all issues have crash reports, but if your game crashed then having
+        the error log can be very helpful for fixing the problem.
+      placeholder: Please drag-and-drop your crash file here
+  - type: input
+    id: compat
+    attributes:
+      label: Is this a compatibility issue with another mod? (As in a Zenith-specific conflict, please do not report bugs from mods depending on Zenith)
+      description: 'If so, please input what mod it was:'
+      placeholder: If not, just leave this field blank
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context/Information
+      description: >-
+        Videos or screenshots can go here, along with anything else you may want
+        to add about the bug.
+  - type: checkboxes
+    id: important-checks
+    attributes:
+      label: 'Make sure to confirm these as well before submitting the report:'
+      options:
+        - label: The issue persists on the latest version of the mod.
+          required: true
+        - label: All version numbers are properly recorded, no instances of ‘latest’
+          required: true
+        - label: All details are reported clearly and concisely
+          required: true
+        - label: This issue is not a duplicate of another issue
+          required: true
+        - label: This issue is **caused by Zenith itself and not a mod that uses it**
+          required: true
+        - label: >-
+            If the issue is a modpack-related issue, it has been reported to the
+            modpack devs as well
+          required: true
