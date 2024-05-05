@@ -4,9 +4,9 @@ TODO: well, everything tbh
 
 <br>
 
-**Planned features:**<sub>
+**Planned features:**
 
-</sub>---
+---
 
 - A config system to create jsons that load much earlier during the loading process than NeoForge's base config (probably, unless they changed this since the Forge split, I may also look for a seperate library so I don't have to do this all manually :joy:)
 - System for easy condition-based datapack logic (such as only enabling a certain worldgen feature with a specified config, or disabling recipes for a certain item when a specified mod is installed)
