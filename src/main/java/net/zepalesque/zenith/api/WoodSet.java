@@ -1,6 +1,8 @@
 package net.zepalesque.zenith.api;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -15,6 +17,8 @@ import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.zepalesque.zenith.util.DataGenUtil;
+import org.codehaus.plexus.util.StringUtils;
 
 public class WoodSet extends BaseWoodSet {
 
@@ -63,11 +67,14 @@ public class WoodSet extends BaseWoodSet {
 
     @Override
     public void itemGen(ItemModelProvider data) {
-
+        ResourceLocation logID = DataGenUtil.getId(log, BuiltInRegistries.BLOCK);
+        data.withExistingParent(logID.getPath(), logID.withPrefix("block/"));
     }
 
     @Override
     public void langGen(LanguageProvider data) {
-
+        data.addBlock(log, DataGenUtil.getNameLocalized(log, BuiltInRegistries.BLOCK));
     }
+
+
 }
