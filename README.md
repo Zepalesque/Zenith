@@ -1,11 +1,12 @@
+<p align="center">
+<img src="https://github.com/Zepalesque/Zenith/blob/1.20.4/src/main/resources/zenith.png" width="300">
+</p>
+
+
+
 # Zenith
 
-TODO: well, everything tbh
-
-
-exCEPT THE LOGO !!! 🥳🎉‼️
-
-![Banner image](src/main/resources/zenith.png)
+Todo: a ton
 
 <br>
 
