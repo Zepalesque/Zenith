@@ -10,6 +10,9 @@ displayURL = "https://github.com/Zepalesque/Zenith"
 logoFile = "zenith.png"
 authors = "Zepalesque"
 description = '''
+Zenith is a library designed to simplify a variety of tedious processes in a way that is dynamic and easily expandable, along with adding useful APIs that can be used for mods.
+
+The main reason the mod exists is for the Aether: Redux, but it may be used in the future, and may be useful as well.
  '''
 [[dependencies.zenith]] #optional
 modId="neoforge" #mandatory

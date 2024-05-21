@@ -1,12 +1,9 @@
 package net.zepalesque.zenith.config;
 
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.zepalesque.zenith.Zenith;
-import org.apache.commons.lang3.tuple.Pair;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import org.apache.commons.lang3.tuple.Pair;
 
-@Mod.EventBusSubscriber(modid = Zenith.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ZConfig {
 
     public static class Common {
@@ -22,7 +19,6 @@ public class ZConfig {
         }
     }
 
-
     public static final ModConfigSpec COMMON_SPEC;
     public static final Common COMMON;
 
@@ -31,5 +27,4 @@ public class ZConfig {
         COMMON_SPEC = commonSpecPair.getRight();
         COMMON = commonSpecPair.getLeft();
     }
-
 }

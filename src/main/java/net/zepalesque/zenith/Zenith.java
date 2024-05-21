@@ -31,7 +31,7 @@ public class Zenith
 
         modEventBus.addListener(this::commonSetup);
 
-        NeoForge.EVENT_BUS.register(this);
+//        NeoForge.EVENT_BUS.register(this);
 
         if (DIRECTORY.toFile().mkdirs())
             LOGGER.info("Created folder for Zenith config");
@@ -40,11 +40,6 @@ public class Zenith
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
 
     }
 
