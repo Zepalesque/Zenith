@@ -48,18 +48,6 @@ public class WoodSet extends BaseWoodSet {
         ));
     }
 
-    protected MapColor getPrimaryColor() {
-        return this.colorPrimary;
-    }
-
-    protected MapColor getSecondaryColor() {
-        return this.colorSecondary;
-    }
-
-
-
-
-
     @Override
     public void blockGen(BlockStateProvider data) {
         data.logBlock(this.log.get());
@@ -76,5 +64,11 @@ public class WoodSet extends BaseWoodSet {
         data.addBlock(log, DataGenUtil.getNameLocalized(log, BuiltInRegistries.BLOCK));
     }
 
+    protected MapColor getPrimaryColor() {
+        return this.colorPrimary;
+    }
 
+    protected MapColor getSecondaryColor() {
+        return this.colorSecondary;
+    }
 }
