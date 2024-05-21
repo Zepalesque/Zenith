@@ -2,17 +2,22 @@
 <img src="https://github.com/Zepalesque/Zenith/blob/1.20.4/src/main/resources/zenith.png" width="300">
 </p>
 
+<p align="center">
+<img src="https://github.com/Zepalesque/Zenith/blob/1.20.4/assets/zenith_title.png" width="500">
+</p>
+
+---
 
 
-# Zenith
+### Zenith, a minecraft modding library
+
+<br> 
 
 Todo: a ton
 
 <br>
 
 **Planned features:**
-
----
 
 - System for easy condition-based datapack logic (such as only enabling a certain worldgen feature with a specified config, or disabling recipes for a certain item when a specified mod is installed)
 - System for custom synchronized block tints based on the biome
