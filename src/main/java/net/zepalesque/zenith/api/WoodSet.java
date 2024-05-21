@@ -16,18 +16,26 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class WoodSet implements BlockSet {
+public class WoodSet extends BaseWoodSet {
 
-    public final DeferredBlock<Block> log;
+    public final DeferredBlock<RotatedPillarBlock> log;
 
-    public WoodSet(DeferredRegister.Blocks registry, String id, MapColor barkColor, MapColor woodColor, SoundType soundType) {
+    protected final MapColor colorPrimary;
+    protected final MapColor colorSecondary;
 
-        this.log = generateLog(registry, id, barkColor, woodColor, soundType);
+    protected final String id;
+
+    public WoodSet(DeferredRegister.Blocks registry, String id, MapColor woodColor, MapColor barkColor, SoundType soundType) {
+        this.id = id;
+        this.colorPrimary = woodColor;
+        this.colorSecondary = barkColor;
+
+        this.log = generateLog(registry, id, getPrimaryColor(), getSecondaryColor(), soundType);
 
     }
 
-    protected DeferredBlock<Block> generateLog(DeferredRegister.Blocks registry, String id, MapColor barkColor, MapColor woodColor, SoundType soundType) {
-        return registry.register(id, () -> new RotatedPillarBlock(Properties.of()
+    protected DeferredBlock<RotatedPillarBlock> generateLog(DeferredRegister.Blocks registry, String id, MapColor woodColor, MapColor barkColor, SoundType soundType) {
+        return registry.register(id + "_log", () -> new RotatedPillarBlock(Properties.of()
                 .mapColor(p_152624_ -> p_152624_.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? woodColor : barkColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F)
@@ -36,13 +44,21 @@ public class WoodSet implements BlockSet {
         ));
     }
 
+    protected MapColor getPrimaryColor() {
+        return this.colorPrimary;
+    }
+
+    protected MapColor getSecondaryColor() {
+        return this.colorSecondary;
+    }
+
 
 
 
 
     @Override
     public void blockGen(BlockStateProvider data) {
-
+        data.logBlock(this.log.get());
     }
 
     @Override
