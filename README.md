@@ -5,7 +5,7 @@ TODO: well, everything tbh
 
 exCEPT THE LOGO !!! 🥳🎉‼️
 
-![Banner image](assets/zenith.png)
+![Banner image](src/main/resources/zenith.png)
 
 <br>
 
