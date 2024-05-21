@@ -18,7 +18,7 @@ public abstract class BaseWoodSet implements BlockSet {
     // Blocks
 
     protected abstract DeferredBlock<?> generateLog(DeferredRegister.Blocks registry, String id, MapColor woodColor, MapColor barkColor, SoundType soundType);
-
+/*
     protected abstract DeferredBlock<?> generateStrippedLog(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
 
     protected abstract DeferredBlock<?> generateWood(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
@@ -70,7 +70,7 @@ public abstract class BaseWoodSet implements BlockSet {
 
     protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateSign(DeferredRegister<BlockEntityType<?>> registry, String id);
 
-    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateHangingSign(DeferredRegister<BlockEntityType<?>> registry, String id);
+    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateHangingSign(DeferredRegister<BlockEntityType<?>> registry, String id);*/
 
 
 
