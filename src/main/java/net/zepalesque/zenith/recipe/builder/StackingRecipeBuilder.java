@@ -34,7 +34,6 @@ public class StackingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    @NotNull
     public RecipeBuilder group(@Nullable String groupName) {
         return this;
     }
@@ -53,20 +52,16 @@ public class StackingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    @NotNull
     public Item getResult() {
         return Items.AIR;
     }
 
     @Override
-    @NotNull
-    @ParametersAreNonnullByDefault
     public RecipeBuilder unlockedBy(String criterionName, Criterion<?> criterionTrigger) {
         return this;
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     public void save(RecipeOutput output, ResourceLocation id) {
         AbstractStackingRecipe recipe = this.factory.create(this.getIngredient(), this.getResultStack(), this.additionalData);
         output.accept(id, recipe, null);

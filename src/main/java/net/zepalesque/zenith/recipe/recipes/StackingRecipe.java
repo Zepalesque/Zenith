@@ -15,23 +15,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Overrides anything container-related or item-related because these in-world recipes have no container. Instead, custom behavior is implemented by recipes that extend this.
  */
 public interface StackingRecipe extends Recipe<Container> {
+
     Ingredient getIngredient();
 
     ItemStack getResult();
 
-
     ItemStack getResultStack(ItemStack originalState);
 
-
     @Override
-    @ParametersAreNonnullByDefault
     default boolean matches(Container container, Level level) {
         return false;
     }
 
     @Override
-    @NotNull
-    @ParametersAreNonnullByDefault
     default ItemStack assemble(Container container, RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
@@ -42,15 +38,11 @@ public interface StackingRecipe extends Recipe<Container> {
     }
 
     @Override
-    @NotNull
-    @ParametersAreNonnullByDefault
     default ItemStack getResultItem(RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    @NotNull
-    @ParametersAreNonnullByDefault
     default NonNullList<ItemStack> getRemainingItems(Container container) {
         return NonNullList.create();
     }
