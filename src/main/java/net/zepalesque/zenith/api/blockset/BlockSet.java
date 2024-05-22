@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api;
+package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeProvider;

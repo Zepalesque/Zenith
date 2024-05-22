@@ -1,10 +1,7 @@
-package net.zepalesque.zenith.api;
+package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.MapColor;
@@ -18,7 +15,7 @@ public abstract class BaseWoodSet implements BlockSet {
     // Blocks
 
     protected abstract DeferredBlock<?> generateLog(DeferredRegister.Blocks registry, String id, MapColor woodColor, MapColor barkColor, SoundType soundType);
-/*
+
     protected abstract DeferredBlock<?> generateStrippedLog(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
 
     protected abstract DeferredBlock<?> generateWood(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
@@ -70,7 +67,7 @@ public abstract class BaseWoodSet implements BlockSet {
 
     protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateSign(DeferredRegister<BlockEntityType<?>> registry, String id);
 
-    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateHangingSign(DeferredRegister<BlockEntityType<?>> registry, String id);*/
+    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> generateHangingSign(DeferredRegister<BlockEntityType<?>> registry, String id);
 
 
 

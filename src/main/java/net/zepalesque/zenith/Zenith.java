@@ -30,9 +30,6 @@ public class Zenith
     public Zenith(IEventBus modEventBus, Dist dist) {
 
         modEventBus.addListener(this::commonSetup);
-
-//        NeoForge.EVENT_BUS.register(this);
-
         if (DIRECTORY.toFile().mkdirs())
             LOGGER.info("Created folder for Zenith config");
 
