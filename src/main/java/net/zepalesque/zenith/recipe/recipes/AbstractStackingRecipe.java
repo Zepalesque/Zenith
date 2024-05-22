@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.zepalesque.zenith.recipe.CustomStackingBehavior;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public abstract class AbstractStackingRecipe implements StackingRecipe {
 
@@ -18,9 +19,9 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     protected final Ingredient ingredient;
     protected final ItemStack result;
     // TODO: figure out if a CompoundTag is the best solution for this or not
-    protected final CompoundTag additional;
+    protected final Optional<CompoundTag> additional;
 
-    public AbstractStackingRecipe(RecipeType<?> type, ResourceLocation id, Ingredient ingredient, ItemStack result, CompoundTag additional) {
+    public AbstractStackingRecipe(RecipeType<?> type, Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional) {
         this.type = type;
         this.ingredient = ingredient;
         this.result = result;
@@ -60,6 +61,14 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     @Override
     public ItemStack getResult() {
         return this.result;
+    }
+
+    public Optional<CompoundTag> getAdditionalData() {
+        return additional;
+    }
+
+    public interface Factory<T extends AbstractStackingRecipe> {
+        T create(Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional);
     }
 
 }
