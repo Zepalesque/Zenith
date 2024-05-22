@@ -38,11 +38,12 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
             return null;
         }
         ItemStack resultStack = this.getResult();
+
+        resultStack.setTag(originalStack.getTag());
+        resultStack.setCount(originalStack.getCount());
         if (resultStack.getItem() instanceof CustomStackingBehavior custom) {
             resultStack = custom.transformStack(this.ingredient, resultStack, this.type, this.additional);
         }
-        resultStack.setTag(originalStack.getTag());
-        resultStack.setCount(originalStack.getCount());
         return resultStack;
     }
 
