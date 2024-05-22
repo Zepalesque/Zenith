@@ -33,7 +33,7 @@ public class ConfigCondition implements ConditionElement<ConfigCondition> {
     @Nullable
     protected final String serializerId;
 
-    private ConfigCondition(@Nullable ConfigSerializer serializer, @Nullable ConfigValue<Boolean> config) {
+    public ConfigCondition(@Nullable ConfigSerializer serializer, @Nullable ConfigValue<Boolean> config) {
         if (!SERIALIZERS.containsValue(serializer)) {
             throw new UnsupportedOperationException("Attempted to create ConfigCondition with unregistered serializer!");
         }
