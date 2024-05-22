@@ -2,6 +2,8 @@ package net.zepalesque.zenith.api;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -62,6 +65,21 @@ public class WoodSet extends BaseWoodSet {
     @Override
     public void langGen(LanguageProvider data) {
         data.addBlock(log, DataGenUtil.getNameLocalized(log, BuiltInRegistries.BLOCK));
+    }
+
+    @Override
+    public void recipeGen(RecipeProvider data) {
+//        data.
+    }
+
+    @Override
+    public void blockTagData(BlockTagsProvider data) {
+
+    }
+
+    @Override
+    public void lootData(BlockLootSubProvider data) {
+
     }
 
     protected MapColor getPrimaryColor() {
