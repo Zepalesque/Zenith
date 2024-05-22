@@ -13,6 +13,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.zepalesque.zenith.api.condition.ConfigCondition;
+import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
 import org.slf4j.Logger;
 
@@ -23,13 +25,17 @@ public class Zenith
 {
     public static final String MODID = "zenith";
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(Zenith.MODID);
 
     public Zenith(IEventBus modEventBus, Dist dist) {
 
         modEventBus.addListener(this::commonSetup);
+
+        // Register example config serializer
+        ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));
+
         if (DIRECTORY.toFile().mkdirs())
             LOGGER.info("Created folder for Zenith config");
 
