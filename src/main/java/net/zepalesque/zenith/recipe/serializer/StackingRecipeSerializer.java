@@ -34,8 +34,6 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
     }
 
     @Override
-    @ParametersAreNonnullByDefault
-    @NotNull
     public T fromNetwork(FriendlyByteBuf buffer) {
         Ingredient ingredient = Ingredient.fromNetwork(buffer);
         ItemStack result = buffer.readItem();
@@ -44,7 +42,6 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     public void toNetwork(FriendlyByteBuf buffer, T recipe) {
         recipe.getIngredient().toNetwork(buffer);
         buffer.writeItem(recipe.getResult());
