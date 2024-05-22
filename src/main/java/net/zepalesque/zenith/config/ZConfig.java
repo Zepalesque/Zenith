@@ -1,8 +1,10 @@
 package net.zepalesque.zenith.config;
 
 import com.google.gson.JsonSyntaxException;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
