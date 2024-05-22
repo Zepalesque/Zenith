@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.neoforged.fml.ModList;
 
-public class ModLoadedCondition implements ConditionElement<ModLoadedCondition> {
+public class ModLoadedCondition implements Condition<ModLoadedCondition> {
 
     public static final Codec<ModLoadedCondition> CODEC = RecordCodecBuilder.create((condition) ->
             condition.group(Codec.STRING.fieldOf("modid").forGetter((config) -> config.modid))

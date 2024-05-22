@@ -14,7 +14,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
-import net.zepalesque.zenith.api.condition.ConditionElement;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
@@ -35,6 +36,8 @@ public class Zenith
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
+        bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.CODEC, Condition.CODEC));
+
         ConditionElements.ELEMENTS.register(bus);
 
         // Register example config serializer
@@ -65,7 +68,8 @@ public class Zenith
     }
 
     public static class Keys {
-        public static final ResourceKey<Registry<Codec<? extends ConditionElement<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_serializer"));
+        public static final ResourceKey<Registry<Codec<? extends Condition<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_element"));
+        public static final ResourceKey<Registry<Condition<?>>> CONDITION = ResourceKey.createRegistryKey(Zenith.loc("condition"));
 
     }
 

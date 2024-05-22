@@ -1,6 +1,5 @@
 package net.zepalesque.zenith.api.condition;
 
-import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class ConfigCondition implements ConditionElement<ConfigCondition> {
+public class ConfigCondition implements Condition<ConfigCondition> {
 
     private static final HashMap<String, ConfigSerializer> SERIALIZERS = new HashMap<>();
 
@@ -23,7 +22,7 @@ public class ConfigCondition implements ConditionElement<ConfigCondition> {
                     )
                     .apply(condition, (serializerId, configPath) -> {
                         @Nullable ConfigSerializer serializer = SERIALIZERS.get(serializerId);
-                        return new ConfigCondition(serializer, serializer == null ? null : serializer.deserialize(configPath));
+                        return new ConfigCondition(serializerId, serializer == null ? null : serializer.deserialize(configPath));
                     }));
 
     @Nullable
@@ -33,19 +32,13 @@ public class ConfigCondition implements ConditionElement<ConfigCondition> {
     @Nullable
     protected final String serializerId;
 
-    public ConfigCondition(@Nullable ConfigSerializer serializer, @Nullable ConfigValue<Boolean> config) {
-        if (!SERIALIZERS.containsValue(serializer)) {
+    public ConfigCondition(@Nullable String serializerId, @Nullable ConfigValue<Boolean> config) {
+        if (!SERIALIZERS.containsKey(serializerId)) {
             throw new UnsupportedOperationException("Attempted to create ConfigCondition with unregistered serializer!");
         }
-        this.serializer = serializer;
+        this.serializerId = serializerId;
+        this.serializer = SERIALIZERS.get(serializerId);
         this.config = config;
-        String s = null;
-        for (Map.Entry<String, ConfigSerializer> entry : SERIALIZERS.entrySet()) {
-            if (Objects.equals(serializer, entry.getValue())) {
-                s = entry.getKey();
-            }
-        }
-        this.serializerId = s;
     }
 
     @Override
