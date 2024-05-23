@@ -15,6 +15,11 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
+import net.neoforged.neoforge.registries.datamaps.DataMapType;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+import net.zepalesque.zenith.api.biometint.BiomeTint;
+import net.zepalesque.zenith.api.biometint.BiomeTints;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
@@ -40,9 +45,11 @@ public class Zenith
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
+        bus.addListener(this::registerDataMaps);
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
         ConditionElements.ELEMENTS.register(bus);
+        BiomeTints.TINTS.register(bus);
         ZenithRecipeConditions.CODECS.register(bus);
         ZenithPlacementModifiers.FILTERS.register(bus);
         ZenithLootConditions.LOOT_CONDITIONS.register(bus);
@@ -61,6 +68,10 @@ public class Zenith
 
     }
 
+    private void registerDataMaps(RegisterDataMapTypesEvent event) {
+        BiomeTint.MAPS.forEach(event::register);
+    }
+
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
@@ -76,9 +87,10 @@ public class Zenith
     }
 
     public static class Keys {
+
         public static final ResourceKey<Registry<Codec<? extends Condition<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_element"));
         public static final ResourceKey<Registry<Condition<?>>> CONDITION = ResourceKey.createRegistryKey(Zenith.loc("condition"));
-
+        public static final ResourceKey<Registry<BiomeTint>> BIOME_TINT = ResourceKey.createRegistryKey(Zenith.loc("biome_tint"));
     }
 
 
