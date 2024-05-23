@@ -57,14 +57,6 @@ public class Zenith
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ZConfig.COMMON_SPEC, MODID + "/common.toml");
     }
 
-
-
-
-
-
-
-
-
     private void commonSetup(final FMLCommonSetupEvent event) {
 
     }
