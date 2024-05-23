@@ -20,6 +20,7 @@ import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
+import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -36,9 +37,10 @@ public class Zenith
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
-        bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.CODEC, Condition.CODEC));
+        bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
         ConditionElements.ELEMENTS.register(bus);
+        ZenithRecipeConditions.CODECS.register(bus);
 
         // Register example config serializer
         ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));

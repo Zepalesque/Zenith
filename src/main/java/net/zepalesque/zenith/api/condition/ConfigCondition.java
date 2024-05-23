@@ -42,7 +42,7 @@ public class ConfigCondition implements Condition<ConfigCondition> {
     }
 
     @Override
-    public boolean isMet() {
+    public boolean test() {
         return this.config == null || this.config.get();
     }
 

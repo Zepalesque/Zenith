@@ -8,8 +8,8 @@ public class LogicConditions {
     public static class And<E extends Condition<?>, T extends Condition<?>> implements Condition<And<?, ?>> {
 
         public static final Codec<And<?, ?>> CODEC = RecordCodecBuilder.create((condition) ->
-                condition.group(Condition.CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
-                                Condition.CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
+                condition.group(Condition.ELEMENT_CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
+                                Condition.ELEMENT_CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
                         .apply(condition, And::new));
 
         protected final E arg1;
@@ -21,8 +21,8 @@ public class LogicConditions {
         }
 
         @Override
-        public boolean isMet() {
-            return this.arg1.isMet() && this.arg2.isMet();
+        public boolean test() {
+            return this.arg1.test() && this.arg2.test();
         }
 
         @Override
@@ -35,7 +35,7 @@ public class LogicConditions {
     public static class Not<E extends Condition<?>> implements Condition<Not<?>> {
 
         public static final Codec<Not<?>> CODEC = RecordCodecBuilder.create((condition) ->
-                condition.group(Condition.CODEC.fieldOf("inverted").forGetter((cond) -> cond.condition))
+                condition.group(Condition.ELEMENT_CODEC.fieldOf("inverted").forGetter((cond) -> cond.condition))
                         .apply(condition, Not::new));
 
         protected final E condition;
@@ -48,8 +48,8 @@ public class LogicConditions {
         }
 
         @Override
-        public boolean isMet() {
-            return !this.condition.isMet();
+        public boolean test() {
+            return !this.condition.test();
         }
 
         @Override
@@ -61,8 +61,8 @@ public class LogicConditions {
     public static class Or<E extends Condition<?>, T extends Condition<?>> implements Condition<Or<?, ?>> {
 
         public static final Codec<Or<?, ?>> CODEC = RecordCodecBuilder.create((condition) ->
-                condition.group(Condition.CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
-                                Condition.CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
+                condition.group(Condition.ELEMENT_CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
+                                Condition.ELEMENT_CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
                         .apply(condition, Or::new));
 
         protected final E arg1;
@@ -77,8 +77,8 @@ public class LogicConditions {
         }
 
         @Override
-        public boolean isMet() {
-            return this.arg1.isMet() || this.arg2.isMet();
+        public boolean test() {
+            return this.arg1.test() || this.arg2.test();
         }
 
         @Override

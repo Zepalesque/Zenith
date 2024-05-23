@@ -17,7 +17,7 @@ public class ModLoadedCondition implements Condition<ModLoadedCondition> {
     }
 
     @Override
-    public boolean isMet() {
+    public boolean test() {
         return ModList.get().isLoaded(this.modid);
     }
 
