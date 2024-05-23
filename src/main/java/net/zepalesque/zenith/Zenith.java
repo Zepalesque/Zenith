@@ -69,7 +69,7 @@ public class Zenith
     }
 
     private void registerDataMaps(RegisterDataMapTypesEvent event) {
-        BiomeTint.MAPS.forEach(event::register);
+        BiomeTints.TINT_REGISTRY.forEach(tint -> tint.register(event));
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

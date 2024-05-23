@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,12 +17,9 @@ public class BiomeTint {
     private final DataMapType<Biome, Integer> dataMap;
     private Map<Biome, Integer> tints = null;
     private final int defaultColor;
-
-    public static Collection<DataMapType<Biome, Integer>> MAPS = new ArrayList<>();
-
+    
     public BiomeTint(ResourceLocation loc, int defaultColor) {
         DataMapType<Biome, Integer> dataMap = createTintMap(loc);
-        MAPS.add(dataMap);
         this.dataMap = dataMap;
         this.defaultColor = defaultColor;
     }
@@ -55,5 +53,9 @@ public class BiomeTint {
 
     public DataMapType<Biome, Integer> getDataMap() {
         return this.dataMap;
+    }
+
+    public void register(RegisterDataMapTypesEvent event) {
+        event.register(this.dataMap);
     }
 }
