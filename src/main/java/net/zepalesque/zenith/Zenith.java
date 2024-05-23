@@ -14,14 +14,16 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
+import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
+import net.zepalesque.zenith.world.placement.ZenithPlacementModifiers;
+import net.zepalesque.zenith.world.state.ZenithStateProviders;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -42,6 +44,9 @@ public class Zenith
 
         ConditionElements.ELEMENTS.register(bus);
         ZenithRecipeConditions.CODECS.register(bus);
+        ZenithPlacementModifiers.FILTERS.register(bus);
+        ZenithLootConditions.LOOT_CONDITIONS.register(bus);
+        ZenithStateProviders.PROVIDERS.register(bus);
 
         // Register example config serializer
         ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));

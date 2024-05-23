@@ -11,6 +11,6 @@ public class ZenithRecipeConditions {
 
     public static final DeferredRegister<Codec<? extends ICondition>> CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, Zenith.MODID);
 
-    public static final DeferredHolder<Codec<? extends ICondition>, Codec<ConditionCondition>> ZCOND_PREDICATE = CODECS.register("when", () -> ConditionCondition.CODEC);
-
+    public static final DeferredHolder<Codec<? extends ICondition>, Codec<ConditionRecipeModule>> RECIPE_MODULE =
+            CODECS.register("when", () -> ConditionRecipeModule.CODEC);
 }

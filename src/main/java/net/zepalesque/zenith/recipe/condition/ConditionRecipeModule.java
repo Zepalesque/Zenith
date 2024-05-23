@@ -9,16 +9,16 @@ import net.zepalesque.zenith.api.condition.Condition;
 import java.util.Objects;
 import java.util.Optional;
 
-public  class ConditionCondition implements ICondition {
+public  class ConditionRecipeModule implements ICondition {
 
-    public static Codec<ConditionCondition> CODEC = RecordCodecBuilder.create(
+    public static Codec<ConditionRecipeModule> CODEC = RecordCodecBuilder.create(
             builder -> builder
-                    .group(Condition.CODEC.fieldOf("condition").forGetter(cc -> cc.condition))
-                    .apply(builder, ConditionCondition::new));
+                    .group(Condition.CODEC.fieldOf("condition").forGetter(module -> module.condition))
+                    .apply(builder, ConditionRecipeModule::new));
 
     public final Holder<Condition<?>> condition;
 
-    public ConditionCondition(Holder<Condition<?>> pCondition)
+    public ConditionRecipeModule(Holder<Condition<?>> pCondition)
     {
         this.condition = pCondition;
     }
@@ -28,7 +28,6 @@ public  class ConditionCondition implements ICondition {
         Optional<Condition<?>> optional = this.condition.unwrap().right();
         return optional.isEmpty() || optional.get().test();
     }
-
 
     @Override
     public Codec<? extends ICondition> codec() {
