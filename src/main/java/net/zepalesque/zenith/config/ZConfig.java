@@ -19,8 +19,8 @@ public class ZConfig {
         public Common(ModConfigSpec.Builder builder) {
             builder.push("TODO");
             placeholder = builder
-                    .comment("Temporary placeholder config")
-                    .define("placeholder", true);
+                    .comment("Temporary placeholder config, used")
+                    .define("Placeholder Config", true);
             builder.pop();
         }
     }

@@ -14,6 +14,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConditionElements;
@@ -50,6 +51,14 @@ public class Zenith
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ZConfig.COMMON_SPEC, MODID + "/common.toml");
     }
+
+
+
+
+
+
+
+
 
     private void commonSetup(final FMLCommonSetupEvent event) {
 
