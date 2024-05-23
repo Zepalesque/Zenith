@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.zepalesque.zenith.recipe.CustomStackingBehavior;
+import net.zepalesque.zenith.item.CustomStackingBehavior;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
