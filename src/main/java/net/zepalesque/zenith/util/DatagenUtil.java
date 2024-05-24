@@ -14,7 +14,7 @@ public class DatagenUtil {
     }
 
     public static String getNameLocalized(String id) {
-        return StringUtils.capitalise(id.replace('_', ' '));
+        return StringUtils.capitaliseAllWords(id.replace('_', ' '));
     }
 
     public static <T> String getNameLocalized(Supplier<? extends T> object, Registry<T> registry) {
