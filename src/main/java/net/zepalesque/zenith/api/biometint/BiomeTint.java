@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+import net.zepalesque.zenith.Zenith;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class BiomeTint {
 
     private final DataMapType<Biome, Integer> dataMap;
-    private Map<Biome, Integer> tints = null;
+    private final Map<Biome, Integer> tints = new HashMap<>();
     private final int defaultColor;
 
     /**
@@ -39,43 +40,34 @@ public class BiomeTint {
     }
 
     /**
-     * Returns the color for the given biome. Note that this will throw an exception if the tint map has not been initialized yet.
+     * Returns the color for the given biome.
      * @param biome The biome to check for.
      * @return The color that should be used, as an integer.
      */
     public int getColor(Biome biome) {
-        if (this.tints == null) {
-            throw new UnsupportedOperationException("Biome tints have not been initialized yet!");
-        } else {
-            return this.tints.getOrDefault(biome, defaultColor);
+        if (this.tints.isEmpty()) {
+            Zenith.LOGGER.warn("Attempted to get tint color when tint map was empty for BiomeTint {}! This likely means it has not been initialized yet!", BiomeTints.TINT_REGISTRY.getKey(this));
         }
+        return this.tints.getOrDefault(biome, defaultColor);
     }
 
     /**
      *  Clears or initializes the tint map. Used before adding new tints whenever the player joins a new world. Should not be called, as this is handled by Zenith.
      */
-    public void tintInit() {
-        if (this.tints == null) {
-            this.tints = new HashMap<>();
-        } else {
-            this.tints.clear();
-        }
+    public void clear() {
+        this.tints.clear();
     }
 
     /**
      *  Adds a tint color to the map. Used to add tints from the data map whenever the player joins a new world. Should not be called, as this is handled by Zenith.
      */
     public void addTint(Biome biome, int color) {
-        if (this.tints == null) {
-            throw new UnsupportedOperationException("Biome tints have not been initialized yet!");
-        } else {
-            this.tints.put(biome, color);
-        }
+        this.tints.put(biome, color);
     }
 
     /**
      * Access for the {@link DataMapType} this object uses.
-     * @return The data map type. Should mainly be used for datagen purposes
+     * @return The data map type. Should mainly be used for datagen purposes.
      */
     public DataMapType<Biome, Integer> getDataMap() {
         return this.dataMap;

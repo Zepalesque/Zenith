@@ -19,7 +19,7 @@ public class BiomeTintListener {
     @SubscribeEvent
     public static void sendColors(ClientPlayerNetworkEvent.LoggingIn event) {
         BiomeTints.TINT_REGISTRY.forEach(tint -> {
-            tint.tintInit();
+            tint.clear();
             Registry<Biome> registry = event.getPlayer().level().registryAccess().registryOrThrow(Registries.BIOME);
             for (Map.Entry<ResourceKey<Biome>, Integer> entry : registry.getDataMap(tint.getDataMap()).entrySet()) {
                 Biome b = registry.get(entry.getKey());

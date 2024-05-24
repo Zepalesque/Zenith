@@ -4,6 +4,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.neoforged.fml.loading.FMLLoader;
 
+/**
+ *
+ */
 public class DevEnvironmentCondition implements Condition<DevEnvironmentCondition> {
 
     public static final DevEnvironmentCondition INSTANCE = new DevEnvironmentCondition();
