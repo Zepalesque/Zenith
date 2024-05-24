@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.function.Supplier;
 
-public abstract class ZenithWallSignBlock extends WallSignBlock {
+public class ZenithWallSignBlock extends WallSignBlock {
 
     private final Supplier<BlockEntityType<?>> entity;
 

@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -109,8 +110,8 @@ public abstract class BaseWoodSet implements BlockSet {
     protected abstract BlockSetType setType(String id);
     public abstract BlockSetType setType();
 
-    protected abstract BlockSetType woodType(String id, BlockSetType type);
-    public abstract BlockSetType woodType();
+    protected abstract WoodType woodType(String id, BlockSetType type);
+    public abstract WoodType woodType();
 
 
     public Supplier<Item> getStick() {
