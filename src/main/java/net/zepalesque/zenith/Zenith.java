@@ -20,6 +20,7 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
@@ -54,6 +55,7 @@ public class Zenith
         bus.addListener(this::commonSetup);
         bus.addListener(this::dataSetup);
         bus.addListener(this::registerDataMaps);
+        bus.addListener(this::registerRegistries);
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
         ConditionElements.ELEMENTS.register(bus);
@@ -88,6 +90,11 @@ public class Zenith
 
     private void registerDataMaps(RegisterDataMapTypesEvent event) {
         BiomeTints.TINT_REGISTRY.forEach(tint -> tint.register(event));
+    }
+
+    private void registerRegistries(NewRegistryEvent event) {
+        event.register(ConditionElements.ELEMENT_REGISTRY);
+        event.register(BiomeTints.TINT_REGISTRY);
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
