@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.world.placement;
+package net.zepalesque.zenith.world.feature.placement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

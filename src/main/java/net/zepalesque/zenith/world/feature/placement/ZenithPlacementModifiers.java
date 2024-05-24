@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.world.placement;
+package net.zepalesque.zenith.world.feature.placement;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;

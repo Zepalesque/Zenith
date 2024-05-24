@@ -17,13 +17,10 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
-import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.api.biometint.BiomeTints;
@@ -36,7 +33,8 @@ import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
-import net.zepalesque.zenith.world.placement.ZenithPlacementModifiers;
+import net.zepalesque.zenith.world.feature.gen.ZenithFeatures;
+import net.zepalesque.zenith.world.feature.placement.ZenithPlacementModifiers;
 import net.zepalesque.zenith.world.state.ZenithStateProviders;
 import org.slf4j.Logger;
 
@@ -66,6 +64,7 @@ public class Zenith {
         ZenithPlacementModifiers.FILTERS.register(bus);
         ZenithLootConditions.LOOT_CONDITIONS.register(bus);
         ZenithStateProviders.PROVIDERS.register(bus);
+        ZenithFeatures.FEATURES.register(bus);
 
         // Register example config serializer
         ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));
