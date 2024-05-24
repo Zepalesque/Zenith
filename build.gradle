@@ -109,7 +109,6 @@ tasks.register('sourceJar', Jar) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // TODO: figure out package name issues
             artifactId project.archivesBaseName
             artifact project.jar
             artifact project.sourceJar
