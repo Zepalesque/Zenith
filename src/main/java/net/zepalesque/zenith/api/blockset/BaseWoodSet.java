@@ -13,6 +13,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zepalesque.zenith.entity.misc.ZenithBoat;
 import net.zepalesque.zenith.entity.misc.ZenithChestBoat;
+import net.zepalesque.zenith.tile.ZenithHangingSignBlockEntity;
+import net.zepalesque.zenith.tile.ZenithSignBlockEntity;
 
 import java.util.function.Supplier;
 
@@ -62,17 +64,17 @@ public abstract class BaseWoodSet implements BlockSet {
     protected abstract DeferredBlock<?> button(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> button();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> signBlock(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<? extends BaseEntityBlock> signBlock();
+    protected abstract DeferredBlock<? extends BaseEntityBlock> sign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    public abstract DeferredBlock<? extends BaseEntityBlock> sign();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> wallSignBlock(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<? extends BaseEntityBlock> wallSignBlock();
+    protected abstract DeferredBlock<? extends BaseEntityBlock> wallSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    public abstract DeferredBlock<? extends BaseEntityBlock> wallSign();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> hangingSignBlock(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<? extends BaseEntityBlock> hangingSignBlock();
+    protected abstract DeferredBlock<? extends BaseEntityBlock> hangingSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    public abstract DeferredBlock<? extends BaseEntityBlock> hangingSign();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> wallHangingSignBlock(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<? extends BaseEntityBlock> wallHangingSignBlock();
+    protected abstract DeferredBlock<? extends BaseEntityBlock> wallHangingSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    public abstract DeferredBlock<? extends BaseEntityBlock> wallHangingSign();
 
 
     // Items
@@ -95,11 +97,11 @@ public abstract class BaseWoodSet implements BlockSet {
 
     // Block Entities
 
-    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> sign(DeferredRegister<BlockEntityType<?>> registry, String id);
-    public abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> sign();
+    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithSignBlockEntity>> signEntity(DeferredRegister<BlockEntityType<?>> registry, String id);
+    public abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithSignBlockEntity>> signEntity();
 
-    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> hangingSign(DeferredRegister<BlockEntityType<?>> registry, String id);
-    public abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> hangingSign();
+    protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithHangingSignBlockEntity>> hangingSignEntity(DeferredRegister<BlockEntityType<?>> registry, String id);
+    public abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithHangingSignBlockEntity>> hangingSignEntity();
 
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
