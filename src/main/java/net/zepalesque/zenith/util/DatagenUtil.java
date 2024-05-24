@@ -24,4 +24,8 @@ public class DatagenUtil {
     public static <T> String getNameLocalized(DeferredHolder<?, ?> holder) {
         return getNameLocalized(holder.getId().getPath());
     }
+
+    public static boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
 }

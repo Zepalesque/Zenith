@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.zepalesque.zenith.api.blockset.util.WoodSetNamed;
 import net.zepalesque.zenith.entity.misc.ZenithBoat;
 import net.zepalesque.zenith.entity.misc.ZenithChestBoat;
 import net.zepalesque.zenith.tile.ZenithHangingSignBlockEntity;
@@ -23,7 +24,7 @@ import java.util.function.Supplier;
 /**
  * Should implement methods by having the first of each (with the parameters) used as a construction method and the second (without parameters) as a getter function
  */
-public abstract class BaseWoodSet implements BlockSet {
+public abstract class BaseWoodSet implements BlockSet, WoodSetNamed {
 
     // Blocks
 
