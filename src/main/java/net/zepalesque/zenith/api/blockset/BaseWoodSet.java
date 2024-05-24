@@ -1,5 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
+import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -118,5 +120,14 @@ public abstract class BaseWoodSet implements BlockSet, WoodSetNamed {
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
     }
+
+    // Datagen
+
+    /**
+     * Generate entity tag data for this BaseWoodSet
+     * @param data the {@link EntityTypeTagsProvider} used
+     */
+    public abstract void entityTagData(EntityTypeTagsProvider data);
+    
 }
 

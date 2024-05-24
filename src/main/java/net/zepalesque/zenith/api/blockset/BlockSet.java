@@ -2,6 +2,7 @@ package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -42,6 +43,12 @@ public interface BlockSet {
      * @param data the {@link BlockTagsProvider} used
      */
     void blockTagData(BlockTagsProvider data);
+
+    /**
+     * Generate item tag data for this BlockSet
+     * @param data the {@link ItemTagsProvider} used
+     */
+    void itemTagData(ItemTagsProvider data);
 
     /**
      * Generate block loot data for this BlockSet
