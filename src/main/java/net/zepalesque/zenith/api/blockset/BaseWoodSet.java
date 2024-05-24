@@ -27,52 +27,52 @@ public abstract class BaseWoodSet implements BlockSet {
 
     // Blocks
 
-    protected abstract DeferredBlock<?> log(DeferredRegister.Blocks registry, String id, MapColor woodColor, MapColor barkColor, SoundType soundType);
+    protected abstract DeferredBlock<?> log(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor woodColor, MapColor barkColor, SoundType soundType);
     public abstract DeferredBlock<?> log();
 
-    protected abstract DeferredBlock<?> strippedLog(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> strippedLog(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> strippedLog();
 
-    protected abstract DeferredBlock<?> wood(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> wood(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> wood();
 
-    protected abstract DeferredBlock<?> strippedWood(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> strippedWood(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> strippedWood();
 
-    protected abstract DeferredBlock<?> planks(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> planks(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> planks();
 
-    protected abstract DeferredBlock<?> stairs(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> stairs(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> stairs();
 
-    protected abstract DeferredBlock<?> slab(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> slab(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> slab();
 
-    protected abstract DeferredBlock<?> fence(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> fence(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> fence();
 
-    protected abstract DeferredBlock<?> fenceGate(DeferredRegister.Blocks registry, String id, MapColor color);
+    protected abstract DeferredBlock<?> fenceGate(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> fenceGate();
 
-    protected abstract DeferredBlock<?> door(DeferredRegister.Blocks registry, String id, MapColor color);
+    protected abstract DeferredBlock<?> door(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> door();
 
-    protected abstract DeferredBlock<?> trapDoor(DeferredRegister.Blocks registry, String id, MapColor color);
+    protected abstract DeferredBlock<?> trapDoor(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> trapDoor();
 
-    protected abstract DeferredBlock<?> pressurePlate(DeferredRegister.Blocks registry, String id, MapColor color);
+    protected abstract DeferredBlock<?> pressurePlate(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> pressurePlate();
 
-    protected abstract DeferredBlock<?> button(DeferredRegister.Blocks registry, String id, MapColor color);
+    protected abstract DeferredBlock<?> button(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> button();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> sign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<? extends BaseEntityBlock> sign(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<? extends BaseEntityBlock> sign();
 
     protected abstract DeferredBlock<? extends BaseEntityBlock> wallSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<? extends BaseEntityBlock> wallSign();
 
-    protected abstract DeferredBlock<? extends BaseEntityBlock> hangingSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<? extends BaseEntityBlock> hangingSign(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<? extends BaseEntityBlock> hangingSign();
 
     protected abstract DeferredBlock<? extends BaseEntityBlock> wallHangingSign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
@@ -107,10 +107,10 @@ public abstract class BaseWoodSet implements BlockSet {
 
     // Other
 
-    protected abstract BlockSetType setType(String id);
+    protected abstract BlockSetType setType(String id, SoundType sound);
     public abstract BlockSetType setType();
 
-    protected abstract WoodType woodType(String id, BlockSetType type);
+    protected abstract WoodType woodType(String id, BlockSetType type, SoundType sound);
     public abstract WoodType woodType();
 
 
