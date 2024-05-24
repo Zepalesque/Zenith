@@ -1,0 +1,12 @@
+{
+  "arg1": {
+    "condition": "zenith:mod_loaded",
+    "modid": "zenith"
+  },
+  "arg2": {
+    "condition": "zenith:config_enabled",
+    "config_path": "[TODO, Placeholder Config]",
+    "serializer": "zenith"
+  },
+  "condition": "zenith:and"
+}
