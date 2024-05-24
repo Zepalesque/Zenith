@@ -17,6 +17,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
@@ -32,6 +33,7 @@ import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
 import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
+import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
 import net.zepalesque.zenith.world.placement.ZenithPlacementModifiers;
@@ -86,6 +88,10 @@ public class Zenith
 
 
         generator.addProvider(event.includeServer(), new ZenithDataMapGen(packOutput, lookupProvider));
+
+        ZenithRegistrySets registrySets = new ZenithRegistrySets(packOutput, lookupProvider);
+//        CompletableFuture<HolderLookup.Provider> registryProvider = registrySets.getRegistryProvider();
+        generator.addProvider(event.includeServer(), registrySets);
     }
 
     private void registerDataMaps(RegisterDataMapTypesEvent event) {
