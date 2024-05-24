@@ -1,0 +1,9 @@
+{
+  "values": {
+    "#minecraft:is_mountain": 16099768,
+    "#minecraft:is_taiga": 6016762,
+    "minecraft:cherry_grove": 16099768,
+    "minecraft:plains": 6016762,
+    "minecraft:the_end": 16777215
+  }
+}
