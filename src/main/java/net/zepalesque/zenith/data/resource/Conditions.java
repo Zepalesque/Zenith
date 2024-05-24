@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 public class Conditions {
 
-    public static final ResourceKey<Condition<?>> EXAMPLE_CONDITION = createKey("example");
+    public static final ResourceKey<Condition<?>> EXAMPLE_CONDITION = createKey("example_condition");
 
     private static ResourceKey<Condition<?>> createKey(String name) {
         return ResourceKey.create(Zenith.Keys.CONDITION, Zenith.loc(name));
