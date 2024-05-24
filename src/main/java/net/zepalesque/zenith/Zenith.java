@@ -43,9 +43,9 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
+// TODO: More documentation
 @Mod(Zenith.MODID)
-public class Zenith
-{
+public class Zenith {
     public static final String MODID = "zenith";
 
     public static final Logger LOGGER = LogUtils.getLogger();
