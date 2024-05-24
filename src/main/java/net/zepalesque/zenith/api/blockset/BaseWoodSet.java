@@ -6,6 +6,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -49,19 +50,19 @@ public abstract class BaseWoodSet implements BlockSet {
     protected abstract DeferredBlock<?> fence(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> fence();
 
-    protected abstract DeferredBlock<?> fenceGate(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> fenceGate(DeferredRegister.Blocks registry, String id, MapColor color);
     public abstract DeferredBlock<?> fenceGate();
 
-    protected abstract DeferredBlock<?> door(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> door(DeferredRegister.Blocks registry, String id, MapColor color);
     public abstract DeferredBlock<?> door();
 
-    protected abstract DeferredBlock<?> trapDoor(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> trapDoor(DeferredRegister.Blocks registry, String id, MapColor color);
     public abstract DeferredBlock<?> trapDoor();
 
-    protected abstract DeferredBlock<?> pressurePlate(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> pressurePlate(DeferredRegister.Blocks registry, String id, MapColor color);
     public abstract DeferredBlock<?> pressurePlate();
 
-    protected abstract DeferredBlock<?> button(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
+    protected abstract DeferredBlock<?> button(DeferredRegister.Blocks registry, String id, MapColor color);
     public abstract DeferredBlock<?> button();
 
     protected abstract DeferredBlock<? extends BaseEntityBlock> sign(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
@@ -102,6 +103,15 @@ public abstract class BaseWoodSet implements BlockSet {
 
     protected abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithHangingSignBlockEntity>> hangingSignEntity(DeferredRegister<BlockEntityType<?>> registry, String id);
     public abstract DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ZenithHangingSignBlockEntity>> hangingSignEntity();
+
+    // Other
+
+    protected abstract BlockSetType setType(String id);
+    public abstract BlockSetType setType();
+
+    protected abstract BlockSetType woodType(String id, BlockSetType type);
+    public abstract BlockSetType woodType();
+
 
     public Supplier<Item> getStick() {
         return () -> Items.STICK;

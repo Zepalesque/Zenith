@@ -5,14 +5,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.function.Supplier;
+
 public class ZenithSignBlockEntity extends SignBlockEntity {
-    private final BlockEntityType<ZenithSignBlockEntity> signBlockEntity;
-    public ZenithSignBlockEntity(BlockPos pos, BlockState state, BlockEntityType<ZenithSignBlockEntity> pSignBlockEntity) {
+    private final Supplier<BlockEntityType<? extends ZenithSignBlockEntity>> type;
+    public ZenithSignBlockEntity(BlockPos pos, BlockState state, Supplier<BlockEntityType<? extends ZenithSignBlockEntity>> type) {
         super(pos, state);
-        this.signBlockEntity = pSignBlockEntity;
+        this.type = type;
     }
 
-    public BlockEntityType<ZenithSignBlockEntity> getType() {
-        return this.signBlockEntity;
+    public BlockEntityType<? extends ZenithSignBlockEntity> getType() {
+        return this.type.get();
     }
 }
