@@ -4,11 +4,15 @@ import javax.annotation.Nullable;
 
 public interface WoodSetNamed {
 
-    public String logSuffix(boolean isLang);
+    public String logSuffix(LangType type);
 
-    public String woodSuffix(boolean isLang);
+    public String woodSuffix(LangType type);
 
-    public String treesName(boolean isLang);
+    public String treesName(LangType type);
 
     public String processName(String s);
+
+    public static enum LangType {
+        ID, LANG, LANG_PLURAL
+    }
 }
