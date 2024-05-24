@@ -5,9 +5,9 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-// TODO (so I don't forget): Add missing datagen stuff, such as data maps (furnace fuel and stuff)
 /**
  * A set of auto-datagenned blocks. Not to be confused with {@link net.minecraft.world.level.block.state.properties.BlockSetType}!
  */
@@ -48,5 +48,11 @@ public interface BlockSet {
      * @param data the {@link BlockLootSubProvider} used
      */
     void lootData(BlockLootSubProvider data);
+
+    /**
+     * Generate datamap data for this BlockSet
+     * @param data the {@link DataMapProvider} used
+     */
+    void mapData(DataMapProvider data);
 
 }
