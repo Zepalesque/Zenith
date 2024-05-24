@@ -2,7 +2,10 @@ package net.zepalesque.zenith;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -14,6 +17,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
@@ -25,6 +30,7 @@ import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
+import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
 import net.zepalesque.zenith.world.placement.ZenithPlacementModifiers;
@@ -32,6 +38,7 @@ import net.zepalesque.zenith.world.state.ZenithStateProviders;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(Zenith.MODID)
 public class Zenith
@@ -45,6 +52,7 @@ public class Zenith
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
+        bus.addListener(this::dataSetup);
         bus.addListener(this::registerDataMaps);
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
@@ -66,6 +74,16 @@ public class Zenith
 
     private void commonSetup(final FMLCommonSetupEvent event) {
 
+    }
+
+    private void dataSetup(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        ExistingFileHelper fileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        PackOutput packOutput = generator.getPackOutput();
+
+
+        generator.addProvider(event.includeServer(), new ZenithDataMapGen(packOutput, lookupProvider));
     }
 
     private void registerDataMaps(RegisterDataMapTypesEvent event) {

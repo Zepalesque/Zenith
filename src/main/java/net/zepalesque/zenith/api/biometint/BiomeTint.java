@@ -10,7 +10,9 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-/** A class used to easily create biome-dependent tint systems. */
+/**
+ * A class used to easily create biome-dependent tint systems.
+ */
 public class BiomeTint {
 
     private final DataMapType<Biome, Integer> dataMap;
