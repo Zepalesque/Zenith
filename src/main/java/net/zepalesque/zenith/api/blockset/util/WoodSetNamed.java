@@ -8,7 +8,7 @@ public interface WoodSetNamed {
 
     public String woodSuffix(LangType type);
 
-    public String treesName(LangType type);
+    public String treesName(boolean isPlural);
 
     public String processName(String s);
 
