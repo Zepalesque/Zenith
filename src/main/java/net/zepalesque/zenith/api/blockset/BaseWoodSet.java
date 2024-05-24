@@ -57,8 +57,8 @@ public abstract class BaseWoodSet implements BlockSet {
     protected abstract DeferredBlock<?> door(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> door();
 
-    protected abstract DeferredBlock<?> trapDoor(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
-    public abstract DeferredBlock<?> trapDoor();
+    protected abstract DeferredBlock<?> trapdoor(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
+    public abstract DeferredBlock<?> trapdoor();
 
     protected abstract DeferredBlock<?> pressurePlate(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color);
     public abstract DeferredBlock<?> pressurePlate();
