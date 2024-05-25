@@ -6,6 +6,6 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "zenith.refmap.json",
   "mixins": [
-    "common.BoatAccessor"
+    "common.accessor.BoatAccessor"
   ]
 }

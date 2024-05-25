@@ -4,7 +4,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
-import net.zepalesque.zenith.mixin.mixins.common.BoatAccessor;
+import net.zepalesque.zenith.mixin.mixins.common.accessor.BoatAccessor;
 
 public interface ZenithBoatBehavior {
     default void fall(Boat boat, double y, boolean onGround) {

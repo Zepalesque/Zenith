@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.mixin.mixins.common;
+package net.zepalesque.zenith.mixin.mixins.common.accessor;
 
 import net.minecraft.world.entity.vehicle.Boat;
 import org.spongepowered.asm.mixin.Mixin;

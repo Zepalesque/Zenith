@@ -14,6 +14,10 @@ Zenith is a library designed to simplify a variety of tedious processes in a way
 
 The main reason the mod exists is for the Aether: Redux, but it may be used in the future, and may be useful as well.
  '''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
 [[dependencies.zenith]] #optional
 modId="neoforge" #mandatory
 type="required" #mandatory
