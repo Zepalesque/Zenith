@@ -17,35 +17,35 @@ import net.zepalesque.zenith.api.biometint.BiomeTints;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public record BiomeTintSyncPacket(ResourceLocation id, Map<ResourceLocation, Integer> tintMap) implements CustomPacketPayload {
+public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, Integer>> types) implements CustomPacketPayload {
 
     public static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "sync_biome_tints");
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.id)
-        buf.writeMap(this.tintMap, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt);
+        buf.writeMap(types, FriendlyByteBuf::writeResourceLocation, (b1, map) -> b1.writeMap(map, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt));
     }
 
     public static BiomeTintSyncPacket decode(FriendlyByteBuf buf) {
-        ResourceLocation id = buf.readResourceLocation();
-        Map<ResourceLocation, Integer> map = buf.readMap(FriendlyByteBuf::readResourceLocation, FriendlyByteBuf::readInt);
-        return new BiomeTintSyncPacket(id, map);
+        Map<ResourceLocation, Map<ResourceLocation, Integer>> map = buf.readMap(FriendlyByteBuf::readResourceLocation, b1 -> b1.readMap(FriendlyByteBuf::readResourceLocation, FriendlyByteBuf::readInt));
+        return new BiomeTintSyncPacket(map);
     }
 
     public void execute(Player player) {
         if (Minecraft.getInstance().player != null) {
             Level level = Minecraft.getInstance().player.level();
-            Registry<Biome> registry = level.registryAccess().registryOrThrow(Registries.BIOME);
-            @Nullable BiomeTint tint = BiomeTints.TINT_REGISTRY.get(this.id);
-            if (tint != null) {
-                tint.clear();
-                this.tintMap.forEach((biomeLoc, color) ->{
-                    Biome b = registry.get(biomeLoc);
-                    tint.addTint(b, color);
-                });
-            } else {
-                Zenith.LOGGER.warn("Attempted to read non-existent BiomeTint {}!", this.id);
-            }
+            this.types.forEach((tintType, map) ->{
+                @Nullable BiomeTint tint = BiomeTints.TINT_REGISTRY.get(tintType);
+                if (tint != null) {
+                    tint.clear();
+                    Registry<Biome> registry = level.registryAccess().registryOrThrow(Registries.BIOME);
+                    for (Map.Entry<ResourceLocation, Integer> entry : map.entrySet()) {
+                        Biome b = registry.get(entry.getKey());
+                        tint.addTint(b, entry.getValue());
+                    }
+                } else {
+                    Zenith.LOGGER.warn("Attempted to read non-existent BiomeTint {}!", tintType);
+                }
+            });
         }
     }
 
