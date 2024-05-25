@@ -22,7 +22,7 @@ public record BiomeTintSyncPacket(ResourceLocation id, Map<ResourceLocation, Int
     public static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "sync_biome_tints");
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.id)
+        buf.writeResourceLocation(this.id);
         buf.writeMap(this.tintMap, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt);
     }
 

@@ -28,21 +28,19 @@ public class BiomeTintListener {
     public static void updateTints(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             Registry<Biome> registry = player.level().registryAccess().registryOrThrow(Registries.BIOME);
-            Map<ResourceLocation, Map<ResourceLocation, Integer>> map = new HashMap<>();
             BiomeTints.TINT_REGISTRY.forEach(tint -> {
                 ResourceLocation loc = BiomeTints.TINT_REGISTRY.getKey(tint);
-                Map<ResourceLocation, Integer> tints = registry.getDataMap(tint.getDataMap()).entrySet().stream().collect(Collectors.toMap(
-                        entry -> entry.getKey().location(), Map.Entry::getValue
-                ));
-                map.put(loc, tints);
+                ZenithNetworking.sendToPlayer(new BiomeTintSyncPacket(loc,
+                        registry.getDataMap(tint.getDataMap()).entrySet().stream().collect(Collectors.toMap(
+                        entry -> entry.getKey().location(), Map.Entry::getValue))
+                ), player);
             });
-            ZenithNetworking.sendToPlayer(new BiomeTintSyncPacket(map), player);
         }
     }
 
 
-    @SubscribeEvent
+/*    @SubscribeEvent
     public static void clearTints(ClientPlayerNetworkEvent.LoggingOut event) {
         BiomeTints.TINT_REGISTRY.forEach(BiomeTint::clear);
-    }
+    }*/
 }
