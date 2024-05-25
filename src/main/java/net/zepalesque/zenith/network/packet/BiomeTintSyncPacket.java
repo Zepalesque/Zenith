@@ -17,11 +17,10 @@ import net.zepalesque.zenith.api.biometint.BiomeTints;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public record BiomeTintSyncPacket(ResourceLocation id, Map<ResourceLocation, Integer> tintMap) implements BasePacket {
+public record BiomeTintSyncPacket(ResourceLocation id, Map<ResourceLocation, Integer> tintMap) implements CustomPacketPayload {
 
     public static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "sync_biome_tints");
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.id);
         buf.writeMap(this.tintMap, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt);
@@ -49,6 +48,11 @@ public record BiomeTintSyncPacket(ResourceLocation id, Map<ResourceLocation, Int
             }
         }
     }
+
+    public void handle(PlayPayloadContext context) {
+        context.workHandler().execute(() -> this.execute(context.player().orElse(null)));
+    }
+
 
     @Override
     public ResourceLocation id() {
