@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.event.listener;
 
 
+import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
