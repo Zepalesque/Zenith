@@ -1,11 +1,12 @@
 package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 /**
  * Should implement methods by having the first of each (with the parameters) used as a construction method and the second (without parameters) as a getter function
  */
-public abstract class BaseWoodSet implements BlockSet, WoodSetNamed {
+public abstract class AbstractWoodSet implements BlockSet, WoodSetNamed {
 
     // Blocks
 
@@ -116,6 +117,12 @@ public abstract class BaseWoodSet implements BlockSet, WoodSetNamed {
     protected abstract WoodType woodType(String id, BlockSetType type, SoundType sound);
     public abstract WoodType woodType();
 
+    protected abstract TagKey<Item> logsTag(String id);
+    public abstract TagKey<Item> logsTag();
+
+    protected abstract TagKey<Block> logsBlockTag(String id);
+    public abstract TagKey<Block> logsBlockTag();
+
 
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
@@ -128,6 +135,6 @@ public abstract class BaseWoodSet implements BlockSet, WoodSetNamed {
      * @param data the {@link EntityTypeTagsProvider} used
      */
     public abstract void entityTagData(EntityTypeTagsProvider data);
-    
+
 }
 

@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -35,8 +36,9 @@ public interface BlockSet {
     /**
      * Generate recipe data for this BlockSet
      * @param data the {@link RecipeProvider} used
+     * @param output the {@link RecipeOutput} that the recipe provider uses
      */
-    void recipeGen(RecipeProvider data);
+    void recipeGen(RecipeProvider data, RecipeOutput output);
 
     /**
      * Generate block tag data for this BlockSet

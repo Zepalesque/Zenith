@@ -7,17 +7,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.zepalesque.zenith.api.blockset.BaseWoodSet;
+import net.zepalesque.zenith.api.blockset.AbstractWoodSet;
 
 import javax.annotation.Nonnull;
 
 public class ZenithBoat extends Boat implements ZenithBoatBehavior {
-    private BaseWoodSet set;
+    private AbstractWoodSet set;
     public ZenithBoat(EntityType<? extends ZenithBoat> type, Level level) {
         super(type, level);
     }
 
-    public ZenithBoat(BaseWoodSet set, Level level, double x, double y, double z) {
+    public ZenithBoat(AbstractWoodSet set, Level level, double x, double y, double z) {
         this(set.boatEntity().get(), level);
         this.setPos(x, y, z);
         this.xo = x;

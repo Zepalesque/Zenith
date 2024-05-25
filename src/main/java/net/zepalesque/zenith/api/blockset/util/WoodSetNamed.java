@@ -11,6 +11,6 @@ public interface WoodSetNamed {
     public String treesName(boolean isPlural);
 
     public static enum LangType {
-        ID, LANG, LANG_PLURAL
+        ID, PLURAL, LANG, LANG_PLURAL
     }
 }
