@@ -4,6 +4,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -69,4 +70,9 @@ public interface BlockSet {
      */
     void flammables();
 
+    /**
+     * Register any block entity or just regular old entity renderers for this BlockSet.
+     * @param event The event used for registration
+     */
+    void registerRenderers(EntityRenderersEvent.RegisterRenderers event);
 }
