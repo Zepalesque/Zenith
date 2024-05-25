@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.Zenith;
@@ -31,12 +32,12 @@ public class BiomeTint {
     }
 
     /**
-     * Creates a {@link DataMapType} that should be used for this object. Whenever the player joins a world, this will be used to update the tint map.
+     * Creates a {@link DataMapType} that should be used for this object. Whenever the player joins a world, this will be sent to the client to update the tint map.
      * @param location The {@link ResourceLocation} that should be used for this data map. This will automatically be prefixed with "tint/".
      * @return a new {@link DataMapType}
      */
     private static DataMapType<Biome, Integer> createTintMap(ResourceLocation location) {
-        return DataMapType.builder(location.withPrefix("tint/"), Registries.BIOME, Codec.INT).synced(Codec.INT, true).build();
+        return DataMapType.builder(location.withPrefix("tint/"), Registries.BIOME, Codec.INT).build();
     }
 
     /**
@@ -62,6 +63,10 @@ public class BiomeTint {
      *  Adds a tint color to the map. Used to add tints from the data map whenever the player joins a new world. Should not be called, as this is handled by Zenith.
      */
     public void addTint(Biome biome, int color) {
+        if (biome == null) {
+            Zenith.LOGGER.warn("Attempted to put nonexistent biome in tint map!");
+            return;
+        }
         this.tints.put(biome, color);
     }
 

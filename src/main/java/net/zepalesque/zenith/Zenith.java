@@ -19,6 +19,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
@@ -32,6 +34,7 @@ import net.zepalesque.zenith.config.ZConfig;
 import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
+import net.zepalesque.zenith.network.packet.BiomeTintSyncPacket;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
 import net.zepalesque.zenith.world.feature.gen.ZenithFeatures;
 import net.zepalesque.zenith.world.feature.placement.ZenithPlacementModifiers;
@@ -53,9 +56,10 @@ public class Zenith {
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
-        bus.addListener(this::dataSetup);
+        bus.addListener(this::registerPackets);
         bus.addListener(this::registerDataMaps);
         bus.addListener(this::registerRegistries);
+        bus.addListener(this::dataSetup);
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
         ConditionElements.ELEMENTS.register(bus);
@@ -76,6 +80,12 @@ public class Zenith {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+
+    }
+
+    public void registerPackets(RegisterPayloadHandlerEvent event) {
+        IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+        registrar.play(BiomeTintSyncPacket.ID, BiomeTintSyncPacket::decode, payload -> payload.client(BiomeTintSyncPacket::handle));
 
     }
 
