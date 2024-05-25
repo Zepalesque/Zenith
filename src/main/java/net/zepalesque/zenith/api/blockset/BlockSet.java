@@ -19,26 +19,26 @@ public interface BlockSet {
      * Generate blockstate files and block models for this BlockSet
      * @param data the {@link BlockStateProvider} used
      */
-    void blockGen(BlockStateProvider data);
+    void blockData(BlockStateProvider data);
 
     /**
      * Generate item models for this BlockSet
      * @param data the {@link ItemModelProvider} used
      */
-    void itemGen(ItemModelProvider data);
+    void itemData(ItemModelProvider data);
 
     /**
      * Generate language data for this BlockSet
      * @param data the {@link LanguageProvider} used
      */
-    void langGen(LanguageProvider data);
+    void langData(LanguageProvider data);
 
     /**
      * Generate recipe data for this BlockSet
      * @param data the {@link RecipeProvider} used
      * @param output the {@link RecipeOutput} that the recipe provider uses
      */
-    void recipeGen(RecipeProvider data, RecipeOutput output);
+    void recipeData(RecipeProvider data, RecipeOutput output);
 
     /**
      * Generate block tag data for this BlockSet
@@ -63,5 +63,10 @@ public interface BlockSet {
      * @param data the {@link DataMapProvider} used
      */
     void mapData(DataMapProvider data);
+
+    /**
+     * Set the flammability of this BlockSet's blocks
+     */
+    void flammables();
 
 }

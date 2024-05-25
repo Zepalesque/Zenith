@@ -127,14 +127,5 @@ public abstract class AbstractWoodSet implements BlockSet, WoodSetNamed {
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
     }
-
-    // Datagen
-
-    /**
-     * Generate entity tag data for this BaseWoodSet
-     * @param data the {@link EntityTypeTagsProvider} used
-     */
-    public abstract void entityTagData(EntityTypeTagsProvider data);
-
 }
 
