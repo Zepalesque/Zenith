@@ -1,6 +1,5 @@
 package net.zepalesque.zenith.api.blockset;
 
-import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -16,7 +15,6 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.zepalesque.zenith.api.blockset.util.WoodSetNamed;
 import net.zepalesque.zenith.entity.misc.ZenithBoat;
 import net.zepalesque.zenith.entity.misc.ZenithChestBoat;
 import net.zepalesque.zenith.tile.ZenithHangingSignBlockEntity;
@@ -27,7 +25,7 @@ import java.util.function.Supplier;
 /**
  * Should implement methods by having the first of each (with the parameters) used as a construction method and the second (without parameters) as a getter function
  */
-public abstract class AbstractWoodSet implements BlockSet, WoodSetNamed {
+public abstract class AbstractWoodSet implements BlockSet {
 
     // Blocks
 
@@ -127,5 +125,14 @@ public abstract class AbstractWoodSet implements BlockSet, WoodSetNamed {
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
     }
+
+
+    // Language data helpers
+
+    public abstract String logSuffix(boolean isPlural, boolean isLocalized);
+
+    public abstract String woodSuffix(boolean isPlural, boolean isLocalized);
+
+    public abstract String treesName(boolean isPlural);
 }
 
