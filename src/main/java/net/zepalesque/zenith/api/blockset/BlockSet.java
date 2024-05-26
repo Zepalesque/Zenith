@@ -4,14 +4,13 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.zepalesque.zenith.mixin.mixins.common.accessor.FireAccessor;
 
 /**
  * A set of auto-datagenned blocks. Not to be confused with {@link net.minecraft.world.level.block.state.properties.BlockSetType}!
@@ -69,8 +68,9 @@ public interface BlockSet {
 
     /**
      * Set the flammability of this BlockSet's blocks
+     * @param accessor the {@link FireAccessor} used to set the flammability
      */
-    void flammables();
+    void flammables(FireAccessor accessor);
 
     /**
      * Register any block entity or just regular old entity renderers for this BlockSet.
