@@ -11,17 +11,17 @@ import java.util.function.Supplier;
 
 public abstract class AbstractStoneSet implements BlockSet {
 
-    protected abstract DeferredBlock<?> baseBlock(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<?> baseBlock();
+    protected abstract DeferredBlock<?> block(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);
+    public abstract DeferredBlock<?> block();
 
-    protected abstract DeferredBlock<?> wallBlock(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<?> wallBlock();
+    protected abstract DeferredBlock<?> wall(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);
+    public abstract DeferredBlock<?> wall();
 
-    protected abstract DeferredBlock<?> stairsBlock(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<?> stairsBlock();
+    protected abstract DeferredBlock<?> stairs(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);
+    public abstract DeferredBlock<?> stairs();
 
-    protected abstract DeferredBlock<?> slabBlock(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType);
-    public abstract DeferredBlock<?> slabBlock();
+    protected abstract DeferredBlock<?> slab(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);
+    public abstract DeferredBlock<?> slab();
 
     protected abstract AbstractStoneSet craftsInto(AbstractStoneSet set, CraftingMatrix shape);
 
