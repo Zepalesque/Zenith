@@ -13,6 +13,7 @@ import java.util.function.Function;
 @Mixin(SharedSuggestionProvider.class)
 public interface SharedSuggestionProviderMixin {
 
+    // TODO: Try making it check each substring in the input
     /**
      * @author Zepalesque
      * @reason Because typing out the modid over and over drives you near to the brink of insanity, and I know this from experience.
