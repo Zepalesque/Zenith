@@ -23,16 +23,16 @@ public abstract class AbstractStoneSet implements BlockSet {
     protected abstract DeferredBlock<?> slabBlock(DeferredRegister.Blocks registry, String id, MapColor color, SoundType soundType);
     public abstract DeferredBlock<?> slabBlock();
 
-    protected abstract void craftsInto(AbstractStoneSet set, CraftingMatrix shape);
+    protected abstract AbstractStoneSet craftsInto(AbstractStoneSet set, CraftingMatrix shape);
 
-    protected abstract void craftsInto(Supplier<Block> block, CraftingMatrix shape);
+    protected abstract AbstractStoneSet craftsInto(Supplier<Block> block, CraftingMatrix shape);
 
-    protected abstract void stonecutInto(AbstractStoneSet set);
+    protected abstract AbstractStoneSet stonecutInto(AbstractStoneSet set);
 
-    protected abstract void stonecutInto(Supplier<Block> block);
+    protected abstract AbstractStoneSet stonecutInto(Supplier<Block> block);
 
-    protected abstract void smeltsInto(AbstractStoneSet set, float experience);
+    protected abstract AbstractStoneSet smeltsInto(AbstractStoneSet set, float experience);
 
-    protected abstract void smeltsInto(Supplier<Block> block, float experience);
+    protected abstract AbstractStoneSet smeltsInto(Supplier<Block> block, float experience);
 
 }
