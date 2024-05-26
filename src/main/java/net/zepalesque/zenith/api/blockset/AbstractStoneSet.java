@@ -35,5 +35,5 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     protected abstract AbstractStoneSet smeltsInto(Supplier<Block> block, float experience);
 
-    protected abstract String nameSuffix(boolean isBaseBlock);
+    protected abstract String baseName(boolean isBaseBlock);
 }
