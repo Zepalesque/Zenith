@@ -13,7 +13,7 @@ public class DevEnvironmentCondition implements Condition<DevEnvironmentConditio
 
     public static final Codec<DevEnvironmentCondition> CODEC = MapCodec.unit(INSTANCE).stable().codec();
 
-    private DevEnvironmentCondition() {
+    public DevEnvironmentCondition() {
     }
 
     @Override

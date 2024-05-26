@@ -1,10 +1,8 @@
 package net.zepalesque.zenith.config;
 
 import com.google.gson.JsonSyntaxException;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
-import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
@@ -14,14 +12,19 @@ public class ZConfig {
 
     public static class Common {
 
-        public final ConfigValue<Boolean> placeholder;
+        public final ConfigValue<Boolean> allow_nonminecraft_autocomplete;
+        public final ConfigValue<Boolean> search_as_containing;
 
         public Common(ModConfigSpec.Builder builder) {
-            builder.push("TODO");
-            placeholder = builder
-                    .comment("Temporary placeholder config, used")
-                    .define("Placeholder Config", true);
-            builder.pop();
+            builder.push("Tweaks");
+            builder.push("Suggestion Provider");
+            allow_nonminecraft_autocomplete = builder
+                    .comment("Allows non-minecraft namespaced results to come up when using commands to autocomplete an ID.")
+                    .define("Allow Non-Minecraft Autocompletion", true);
+            search_as_containing = builder
+                    .comment("Searches for matches that CONTAIN the input rather than just ones that equal it. For instance, typing 'axe' will still return pickaxes with this enabled.")
+                    .define("Search for IDs containing input", false);
+            builder.pop(2);
         }
     }
 

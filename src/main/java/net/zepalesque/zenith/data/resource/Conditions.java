@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.zepalesque.zenith.Zenith;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
+import net.zepalesque.zenith.api.condition.DevEnvironmentCondition;
 import net.zepalesque.zenith.api.condition.LogicConditions;
 import net.zepalesque.zenith.api.condition.ModLoadedCondition;
 import net.zepalesque.zenith.config.ZConfig;
@@ -25,7 +26,7 @@ public class Conditions {
         context.register(EXAMPLE_CONDITION,
                 new LogicConditions.And<>(
                         new ModLoadedCondition(Zenith.MODID),
-                        new ConfigCondition("zenith", ZConfig.COMMON.placeholder)
+                        new DevEnvironmentCondition()
                 ));
     }
 
