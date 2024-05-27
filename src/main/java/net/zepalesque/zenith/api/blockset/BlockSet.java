@@ -5,6 +5,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -90,5 +91,5 @@ public interface BlockSet {
      * @param prev The previous block added, in case these should be put consecutively.
      * @return The new block to use as the next set's {@code prev} parameter.
      */
-    Supplier<Block> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<Block> prev);
+    Supplier<? extends ItemLike> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> prev);
 }
