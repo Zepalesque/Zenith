@@ -36,6 +36,7 @@ import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.network.packet.BiomeTintSyncPacket;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
+import net.zepalesque.zenith.world.biome.modifier.ZenithModifiers;
 import net.zepalesque.zenith.world.feature.gen.ZenithFeatures;
 import net.zepalesque.zenith.world.feature.placement.ZenithPlacementModifiers;
 import net.zepalesque.zenith.world.state.ZenithStateProviders;
@@ -69,6 +70,7 @@ public class Zenith {
         ZenithLootConditions.LOOT_CONDITIONS.register(bus);
         ZenithStateProviders.PROVIDERS.register(bus);
         ZenithFeatures.FEATURES.register(bus);
+        ZenithModifiers.CODECS.register(bus);
 
         // Register example config serializer
         ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));
