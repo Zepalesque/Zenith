@@ -2,6 +2,8 @@ package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
@@ -27,19 +29,21 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     public abstract AbstractStoneSet craftsInto(AbstractStoneSet set, CraftingMatrix shape);
 
-    public abstract AbstractStoneSet craftsInto(Supplier<Block> block, CraftingMatrix shape);
+    public abstract AbstractStoneSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
 
     public abstract AbstractStoneSet stonecutInto(AbstractStoneSet set);
 
-    public abstract AbstractStoneSet stonecutInto(Supplier<Block> block, int count);
+    public abstract AbstractStoneSet stonecutInto(Supplier<? extends ItemLike> result, int count);
 
     public abstract AbstractStoneSet smeltsInto(AbstractStoneSet set, float experience);
 
-    public abstract AbstractStoneSet smeltsInto(Supplier<Block> block, float experience);
+    public abstract AbstractStoneSet smeltsInto(Supplier<? extends ItemLike> result, float experience);
 
     public abstract AbstractStoneSet withTag(TagKey<Block> tag, boolean allBlocks);
 
-    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<Block> placeAfter, boolean allBlocks);
+    public abstract AbstractStoneSet withItemTag(TagKey<Item> tag, boolean allBlocks);
+
+    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
 
     protected abstract String baseName(boolean isBaseBlock);
 }
