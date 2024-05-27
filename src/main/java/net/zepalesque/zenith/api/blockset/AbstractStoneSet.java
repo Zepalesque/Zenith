@@ -27,15 +27,15 @@ public abstract class AbstractStoneSet implements BlockSet {
     protected abstract DeferredBlock<?> slab(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);
     public abstract DeferredBlock<?> slab();
 
-    public abstract AbstractStoneSet craftsInto(AbstractStoneSet set, CraftingMatrix shape);
+    public abstract AbstractStoneSet craftsIntoSet(Supplier<AbstractStoneSet> set, CraftingMatrix shape);
 
     public abstract AbstractStoneSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
 
-    public abstract AbstractStoneSet stonecutInto(AbstractStoneSet set);
+    public abstract AbstractStoneSet stonecutIntoSet(Supplier<AbstractStoneSet> set);
 
     public abstract AbstractStoneSet stonecutInto(Supplier<? extends ItemLike> result, int count);
 
-    public abstract AbstractStoneSet smeltsInto(AbstractStoneSet set, float experience);
+    public abstract AbstractStoneSet smeltsIntoSet(Supplier<AbstractStoneSet> set, float experience);
 
     public abstract AbstractStoneSet smeltsInto(Supplier<? extends ItemLike> result, float experience);
 
