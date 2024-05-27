@@ -37,7 +37,7 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     public abstract AbstractStoneSet smeltsInto(Supplier<Block> block, float experience);
 
-    public abstract AbstractStoneSet withTag(TagKey<Block> tag);
+    public abstract AbstractStoneSet withTag(TagKey<Block> tag, boolean allBlocks);
 
     public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<Block> placeAfter, boolean allBlocks);
 
