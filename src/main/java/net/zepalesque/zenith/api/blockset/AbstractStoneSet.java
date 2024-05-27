@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
@@ -37,6 +38,8 @@ public abstract class AbstractStoneSet implements BlockSet {
     public abstract AbstractStoneSet smeltsInto(Supplier<Block> block, float experience);
 
     public abstract AbstractStoneSet withTag(TagKey<Block> tag);
+
+    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<Block> placeAfter, boolean allBlocks);
 
     protected abstract String baseName(boolean isBaseBlock);
 }

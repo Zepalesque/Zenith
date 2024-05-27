@@ -4,13 +4,19 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.FireAccessor;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A set of auto-datagenned blocks. Not to be confused with {@link net.minecraft.world.level.block.state.properties.BlockSetType}!
@@ -77,4 +83,12 @@ public interface BlockSet {
      * @param event The event used for registration
      */
     void registerRenderers(EntityRenderersEvent.RegisterRenderers event);
+
+    /**
+     * Adds the blocks from this set to specific creative tabs.
+     * @param event The {@link BuildCreativeModeTabContentsEvent} used.
+     * @param prev The previous block added, in case these should be put consecutively.
+     * @return The new block to use as the next set's {@code prev} parameter.
+     */
+    Supplier<Block> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<Block> prev);
 }
