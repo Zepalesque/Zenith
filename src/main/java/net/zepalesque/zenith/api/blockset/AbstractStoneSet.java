@@ -29,7 +29,7 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     protected abstract AbstractStoneSet stonecutInto(AbstractStoneSet set);
 
-    protected abstract AbstractStoneSet stonecutInto(Supplier<Block> block);
+    protected abstract AbstractStoneSet stonecutInto(Supplier<Block> block, int count);
 
     protected abstract AbstractStoneSet smeltsInto(AbstractStoneSet set, float experience);
 
