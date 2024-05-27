@@ -20,6 +20,7 @@ import net.zepalesque.zenith.entity.misc.ZenithChestBoat;
 import net.zepalesque.zenith.tile.ZenithHangingSignBlockEntity;
 import net.zepalesque.zenith.tile.ZenithSignBlockEntity;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -125,6 +126,11 @@ public abstract class AbstractWoodSet implements BlockSet {
     public Supplier<Item> getStick() {
         return () -> Items.STICK;
     }
+
+
+    // Tool conversions
+
+    public abstract void setupStrippables(Map<Block, Block> strippingMap);
 
 
     // Language data helpers
