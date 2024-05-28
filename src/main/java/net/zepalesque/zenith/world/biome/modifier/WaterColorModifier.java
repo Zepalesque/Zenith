@@ -18,6 +18,8 @@ public record WaterColorModifier(
         int water, int fog,
         Optional<Holder<Condition<?>>> condition) implements BiomeModifier {
 
+    public static Codec<CodecPredicates.DualInt> WATER_PREDICATE = CodecPredicates.DualInt.createCodec("water", "fog");
+
     public static final Codec<WaterColorModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(WaterColorModifier::biomes),
             WaterColorModifier.WATER_PREDICATE.fieldOf("predicate").forGetter(WaterColorModifier::predicate),
@@ -36,8 +38,7 @@ public record WaterColorModifier(
 
     }
 
-    public static Codec<CodecPredicates.DualInt> WATER_PREDICATE = CodecPredicates.DualInt.createCodec("water", "fog");
-    
+
     @Override
     public Codec<? extends BiomeModifier> codec() {
         return CODEC;

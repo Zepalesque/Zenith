@@ -17,6 +17,8 @@ public record SkyModifier(HolderSet<Biome> biomes,
                           int sky, int fog,
                           Optional<Holder<Condition<?>>> condition) implements BiomeModifier {
 
+    public static Codec<CodecPredicates.DualInt> SKY_PREDICATE = CodecPredicates.DualInt.createCodec("sky", "fog");
+
     public static final Codec<SkyModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(SkyModifier::biomes),
             SkyModifier.SKY_PREDICATE.fieldOf("predicate").forGetter(SkyModifier::predicate),
@@ -37,7 +39,6 @@ public record SkyModifier(HolderSet<Biome> biomes,
 
     }
 
-    public static Codec<CodecPredicates.DualInt> SKY_PREDICATE = CodecPredicates.DualInt.createCodec("sky", "fog");
 
     @Override
     public Codec<? extends BiomeModifier> codec() {

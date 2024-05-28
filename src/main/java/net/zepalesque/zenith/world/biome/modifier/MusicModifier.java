@@ -23,6 +23,8 @@ public record MusicModifier(
         Optional<CodecPredicates.Bool> replacePredicate
 ) implements BiomeModifier {
 
+    public static Codec<CodecPredicates.DualInt> DELAY = CodecPredicates.DualInt.createCodec("min", "max");
+
     public static final Codec<MusicModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(MusicModifier::biomes),
             SoundEvent.CODEC.optionalFieldOf("sound").forGetter(MusicModifier::event),
@@ -33,7 +35,6 @@ public record MusicModifier(
             CodecPredicates.Bool.CODEC.optionalFieldOf("replace_predicate").forGetter(MusicModifier::replacePredicate))
             .apply(builder, MusicModifier::new));
 
-    public static Codec<CodecPredicates.DualInt> DELAY = CodecPredicates.DualInt.createCodec("min", "max");
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
