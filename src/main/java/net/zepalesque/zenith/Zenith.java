@@ -31,6 +31,7 @@ import net.zepalesque.zenith.api.condition.ConditionElements;
 import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
+import net.zepalesque.zenith.config.ZConfigHandler;
 import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
@@ -74,12 +75,8 @@ public class Zenith {
 
         // Register example config serializer
         ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Common.Serializer::serialize, ZConfig.Common.Serializer::deserialize));
-
-        if (DIRECTORY.toFile().mkdirs())
-            LOGGER.info("Created folder for Zenith config");
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ZConfig.COMMON_SPEC, MODID + "/common.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ZConfig.CLIENT_SPEC, MODID + "/client.toml");
+        
+        ZConfigHandler.setup(bus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
