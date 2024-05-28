@@ -79,6 +79,7 @@ public class Zenith {
             LOGGER.info("Created folder for Zenith config");
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ZConfig.COMMON_SPEC, MODID + "/common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ZConfig.CLIENT_SPEC, MODID + "/client.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
