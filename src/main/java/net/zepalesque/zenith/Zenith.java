@@ -73,7 +73,7 @@ public class Zenith {
         ZenithModifiers.CODECS.register(bus);
 
         // Register example config serializer
-        ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Serializer::serialize, ZConfig.Serializer::deserialize));
+        ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Common.Serializer::serialize, ZConfig.Common.Serializer::deserialize));
 
         if (DIRECTORY.toFile().mkdirs())
             LOGGER.info("Created folder for Zenith config");

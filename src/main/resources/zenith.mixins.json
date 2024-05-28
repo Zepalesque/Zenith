@@ -9,5 +9,8 @@
     "common.SharedSuggestionProviderMixin",
     "common.accessor.BoatAccessor",
     "common.accessor.FireAccessor"
+  ],
+  "client": [
+    "client.BiomeClientMixin"
   ]
 }
