@@ -1,6 +1,5 @@
 package net.zepalesque.zenith.world.density;
 
-import com.aetherteam.aetherii.mixin.mixins.common.accessor.PerlinNoiseAccessor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.KeyDispatchDataCodec;
@@ -8,6 +7,7 @@ import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
+import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
 
 public class PerlinNoiseFunction implements DensityFunction {
 
