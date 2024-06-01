@@ -7,13 +7,14 @@ import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class DataSerializableConfig {
 
-    protected final ModConfigSpec spec;
+    protected final Supplier<ModConfigSpec> spec;
     protected final String id;
 
-    public DataSerializableConfig(ModConfigSpec spec, String id) {
+    public DataSerializableConfig(Supplier<ModConfigSpec> spec, String id) {
         this.spec = spec;
         this.id = id;
     }
@@ -37,7 +38,7 @@ public class DataSerializableConfig {
     }
 
     public ModConfigSpec spec() {
-        return spec;
+        return spec.get();
     }
 
     public String serializerID() {
