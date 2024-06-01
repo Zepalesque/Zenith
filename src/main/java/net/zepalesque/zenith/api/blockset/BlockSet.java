@@ -7,6 +7,8 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -83,6 +85,7 @@ public interface BlockSet {
      * Register any block entity or just regular old entity renderers for this BlockSet.
      * @param event The event used for registration
      */
+    @OnlyIn(Dist.CLIENT)
     void registerRenderers(EntityRenderersEvent.RegisterRenderers event);
 
     /**
