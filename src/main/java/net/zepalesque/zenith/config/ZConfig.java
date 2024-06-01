@@ -16,7 +16,7 @@ public class ZConfig {
         public final ConfigValue<Boolean> search_as_containing;
 
         public Common(ModConfigSpec.Builder builder) {
-            super(COMMON_SPEC, "zenith");
+            super(() -> COMMON_SPEC, "zenith");
             builder.push("Tweaks");
             builder.push("Suggestion Provider");
             allow_nonminecraft_autocomplete = builder
