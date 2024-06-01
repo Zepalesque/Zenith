@@ -26,8 +26,7 @@ public class BiomeTint {
      * @param defaultColor The fallback color that should be used if a biome does not exist in the tint map.
      */
     public BiomeTint(ResourceLocation loc, int defaultColor) {
-        DataMapType<Biome, Integer> dataMap = createTintMap(loc);
-        this.dataMap = dataMap;
+        this.dataMap = createTintMap(loc);
         this.defaultColor = defaultColor;
     }
 

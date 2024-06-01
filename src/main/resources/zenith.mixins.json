@@ -8,7 +8,8 @@
   "mixins": [
     "common.SharedSuggestionProviderMixin",
     "common.accessor.BoatAccessor",
-    "common.accessor.FireAccessor"
+    "common.accessor.FireAccessor",
+    "common.accessor.PerlinNoiseAccessor"
   ],
   "client": [
     "client.BiomeClientMixin"
