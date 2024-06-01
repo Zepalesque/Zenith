@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.zepalesque.zenith.Zenith;
 
-public class ZenithModifiers {
+public class ZenithBiomeModifiers {
     public static final DeferredRegister<Codec<? extends BiomeModifier>> CODECS = DeferredRegister.create(NeoForgeRegistries.BIOME_MODIFIER_SERIALIZERS, Zenith.MODID);
 
     public static final DeferredHolder<Codec<? extends BiomeModifier>, Codec<MusicModifier>> MUSIC = CODECS.register("music", () -> MusicModifier.CODEC);

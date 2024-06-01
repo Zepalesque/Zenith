@@ -10,12 +10,13 @@ import java.util.List;
 
 public class ZConfig {
 
-    public static class Common {
+    public static class Common extends DataSerializableConfig {
 
         public final ConfigValue<Boolean> allow_nonminecraft_autocomplete;
         public final ConfigValue<Boolean> search_as_containing;
 
         public Common(ModConfigSpec.Builder builder) {
+            super(COMMON_SPEC, "zenith");
             builder.push("Tweaks");
             builder.push("Suggestion Provider");
             allow_nonminecraft_autocomplete = builder
@@ -25,24 +26,6 @@ public class ZConfig {
                     .comment("Searches for matches that CONTAIN the input rather than just ones that equal it. For instance, typing 'axe' will still return pickaxes with this enabled.")
                     .define("Search for IDs containing input", false);
             builder.pop(2);
-        }
-
-        // whaaaa??? inner class in an inner class???? inner class ception?????????? o:
-        public static class Serializer {
-            public static String serialize(ConfigValue<Boolean> config) {
-                try {
-                    return config.getPath().toString();
-                } catch (NullPointerException e) {
-                    throw new JsonSyntaxException("Error loading config entry from JSON! Maybe the config key is incorrect?");
-                }
-            }
-
-            public static ConfigValue<Boolean> deserialize(String string) {
-                List<String> path = Arrays.asList(string.replace("[", "").replace("]", "").split(", "));
-                ConfigValue<Boolean> config =   COMMON_SPEC.getValues().get(path);
-
-                return config;
-            }
         }
     }
 

@@ -11,9 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
@@ -22,14 +20,13 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.api.biometint.BiomeTints;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.ConditionElements;
-import net.zepalesque.zenith.api.condition.ConfigCondition;
-import net.zepalesque.zenith.api.condition.config.ConfigSerializer;
 import net.zepalesque.zenith.config.ZConfig;
 import net.zepalesque.zenith.config.ZConfigHandler;
 import net.zepalesque.zenith.data.generator.ZenithDataMapGen;
@@ -37,11 +34,12 @@ import net.zepalesque.zenith.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.loot.condition.ZenithLootConditions;
 import net.zepalesque.zenith.network.packet.BiomeTintSyncPacket;
 import net.zepalesque.zenith.recipe.condition.ZenithRecipeConditions;
-import net.zepalesque.zenith.world.biome.modifier.ZenithModifiers;
+import net.zepalesque.zenith.world.biome.modifier.ZenithBiomeModifiers;
 import net.zepalesque.zenith.world.density.ZenithDensityFunctions;
 import net.zepalesque.zenith.world.feature.gen.ZenithFeatures;
 import net.zepalesque.zenith.world.feature.placement.ZenithPlacementModifiers;
 import net.zepalesque.zenith.world.state.ZenithStateProviders;
+import net.zepalesque.zenith.world.structure.modifier.ZenithStructureModifiers;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -65,18 +63,25 @@ public class Zenith {
         bus.addListener(this::dataSetup);
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
 
-        ConditionElements.ELEMENTS.register(bus);
-        BiomeTints.TINTS.register(bus);
-        ZenithRecipeConditions.CODECS.register(bus);
-        ZenithPlacementModifiers.FILTERS.register(bus);
-        ZenithLootConditions.LOOT_CONDITIONS.register(bus);
-        ZenithStateProviders.PROVIDERS.register(bus);
-        ZenithFeatures.FEATURES.register(bus);
-        ZenithModifiers.CODECS.register(bus);
-        ZenithDensityFunctions.FUNCTIONS.register(bus);
+        DeferredRegister<?>[] registers = {
+                ConditionElements.ELEMENTS,
+                BiomeTints.TINTS,
+                ZenithRecipeConditions.CODECS,
+                ZenithPlacementModifiers.FILTERS,
+                ZenithLootConditions.LOOT_CONDITIONS,
+                ZenithStateProviders.PROVIDERS,
+                ZenithFeatures.FEATURES,
+                ZenithBiomeModifiers.CODECS,
+                ZenithStructureModifiers.CODECS,
+                ZenithDensityFunctions.FUNCTIONS
+        };
+
+        for (DeferredRegister<?> register : registers) {
+            register.register(bus);
+        }
 
         // Register example config serializer
-        ConfigCondition.registerSerializer("zenith", new ConfigSerializer(ZConfig.Common.Serializer::serialize, ZConfig.Common.Serializer::deserialize));
+        ZConfig.COMMON.registerSerializer();
         
         ZConfigHandler.setup(bus);
     }
