@@ -15,8 +15,7 @@ import java.util.Optional;
 public record WaterColorModifier(
         HolderSet<Biome> biomes,
         CodecPredicates.DualInt predicate,
-        int water, int fog,
-        Optional<Holder<Condition<?>>> condition) implements BiomeModifier {
+        int water, int fog) implements BiomeModifier {
 
     public static Codec<CodecPredicates.DualInt> WATER_PREDICATE = CodecPredicates.DualInt.createCodec("water", "fog");
 
@@ -24,15 +23,13 @@ public record WaterColorModifier(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(WaterColorModifier::biomes),
             WaterColorModifier.WATER_PREDICATE.fieldOf("predicate").forGetter(WaterColorModifier::predicate),
             Codec.INT.fieldOf("water_color").forGetter(WaterColorModifier::water),
-            Codec.INT.fieldOf("water_fog_color").forGetter(WaterColorModifier::fog), 
-            Condition.CODEC.optionalFieldOf("condition").forGetter(WaterColorModifier::condition))
+            Codec.INT.fieldOf("water_fog_color").forGetter(WaterColorModifier::fog))
             .apply(builder, WaterColorModifier::new));
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.AFTER_EVERYTHING &&
                 biomes.contains(biome) &&
-                (condition.isEmpty() || (!condition.get().isBound() || condition.get().value().test())) &&
                 predicate.test(builder.getSpecialEffects().waterColor(), builder.getSpecialEffects().getWaterFogColor()))
         { builder.getSpecialEffects().waterColor(water).waterFogColor(fog); }
 

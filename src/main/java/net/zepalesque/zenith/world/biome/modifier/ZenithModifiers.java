@@ -14,4 +14,5 @@ public class ZenithModifiers {
     public static final DeferredHolder<Codec<? extends BiomeModifier>, Codec<WaterColorModifier>> WATER_COLOR = CODECS.register("water_color", () -> WaterColorModifier.CODEC);
     public static final DeferredHolder<Codec<? extends BiomeModifier>, Codec<SkyModifier>> SKY_COLOR = CODECS.register("sky_color", () -> SkyModifier.CODEC);
     public static final DeferredHolder<Codec<? extends BiomeModifier>, Codec<GrassFoliageModifier>> GRASS_FOLIAGE_COLOR = CODECS.register("grass_foliage_color", () -> GrassFoliageModifier.CODEC);
+    public static final DeferredHolder<Codec<? extends BiomeModifier>, Codec<ConditionalBiomeModifier>> CONDITIONAL_MODIFIER = CODECS.register("conditional", () -> ConditionalBiomeModifier.CODEC);
 }
