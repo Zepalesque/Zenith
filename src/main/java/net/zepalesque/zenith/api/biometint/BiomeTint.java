@@ -45,9 +45,6 @@ public class BiomeTint {
      * @return The color that should be used, as an integer.
      */
     public int getColor(Biome biome) {
-        if (this.tints.isEmpty()) {
-            Zenith.LOGGER.warn("Attempted to get tint color when tint map was empty for BiomeTint {}! This likely means it has not been initialized yet!", BiomeTints.TINT_REGISTRY.getKey(this));
-        }
         return this.tints.getOrDefault(biome, defaultColor);
     }
 
