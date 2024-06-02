@@ -40,8 +40,9 @@ public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, In
                     Registry<Biome> registry = level.registryAccess().registryOrThrow(Registries.BIOME);
                     for (Map.Entry<ResourceLocation, Integer> entry : map.entrySet()) {
                         Biome b = registry.get(entry.getKey());
-                        tint.addTint(b, entry.getValue());
+                        tint.addTint(b, entry.getValue(), entry.getKey());
                     }
+                    tint.markInitialized();
                 } else {
                     Zenith.LOGGER.warn("Attempted to read non-existent BiomeTint {}!", tintType);
                 }

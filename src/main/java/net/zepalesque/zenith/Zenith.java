@@ -52,8 +52,6 @@ public class Zenith {
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(Zenith.MODID);
-
     public Zenith(IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
