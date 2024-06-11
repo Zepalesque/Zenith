@@ -76,7 +76,7 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     }
 
     public interface Factory<T extends AbstractStackingRecipe> {
-        T create(Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional);
+        T create(Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional, Optional<Holder<SoundEvent>> sound);
     }
 
 }
