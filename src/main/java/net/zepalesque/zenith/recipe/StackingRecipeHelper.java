@@ -17,15 +17,14 @@ import net.zepalesque.zenith.recipe.recipes.AbstractStackingRecipe;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class StackingRecipeHelper {
 
-    private static final Map<Holder<? extends RecipeType<?>>, Holder<RecipeType<?>>> HOLDER_MAP = new HashMap<>();
+    private static final Map<RecipeType<?>, Holder<RecipeType<?>>> DIRECT_HOLDERS = new HashMap<>();
 
     // Additional behavior such as ClickAction types should be done in the event listener/hook
     // The return value of this should be used to cancel the event. False means do not cancel, true means DO cancel
-    public static <R extends AbstractStackingRecipe> boolean stack(ItemStackedOnOtherEvent event, Predicate<ItemStack> carriedPredicate, Holder<? extends RecipeType<R>> type) {
+    public static <R extends AbstractStackingRecipe> boolean stack(ItemStackedOnOtherEvent event, Predicate<ItemStack> carriedPredicate, RecipeType<R> type) {
         // These seem to be inverted for whatever reason?
         ItemStack carried = event.getStackedOnItem();
         ItemStack stackedOn = event.getCarriedItem();
@@ -33,7 +32,7 @@ public class StackingRecipeHelper {
         Player player = event.getPlayer();
         Slot slot = event.getSlot();
         if (carriedPredicate.test(carried)) {
-            for (RecipeHolder<R> holder : level.getRecipeManager().getAllRecipesFor(type.value())) {
+            for (RecipeHolder<R> holder : level.getRecipeManager().getAllRecipesFor(type)) {
                 if (holder != null) {
                     R recipe = holder.value();
                     if (recipe.matches(level, stackedOn)) {
@@ -41,7 +40,7 @@ public class StackingRecipeHelper {
                         if (newStack != null) {
                             if (!level.isClientSide()) {
                                 // Crazy wacko holder magic because java's type generics hate me
-                                ZenithAdvancementTriggers.STACKING_RECIPE.get().trigger((ServerPlayer) player, stackedOn, newStack, HOLDER_MAP.computeIfAbsent(type, key -> Holder.direct(key.value())));
+                                ZenithAdvancementTriggers.STACKING_RECIPE.get().trigger((ServerPlayer) player, stackedOn, newStack, DIRECT_HOLDERS.computeIfAbsent(type, Holder::direct));
                             }
                             if (stackedOn.getCount() <= 1) {
                                 slot.set(newStack);
