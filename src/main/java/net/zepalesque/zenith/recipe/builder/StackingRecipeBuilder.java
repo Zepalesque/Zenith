@@ -69,7 +69,7 @@ public class StackingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceLocation id) {
-        AbstractStackingRecipe recipe = this.factory.create(this.getIngredient(), this.getResultStack(), this.extra);
+        AbstractStackingRecipe recipe = this.factory.create(this.getIngredient(), this.getResultStack(), this.extra, this.sound);
         output.accept(id, recipe, null);
     }
 }

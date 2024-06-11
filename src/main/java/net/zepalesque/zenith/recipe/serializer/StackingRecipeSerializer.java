@@ -2,8 +2,11 @@ package net.zepalesque.zenith.recipe.serializer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -38,7 +41,8 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
         Ingredient ingredient = Ingredient.fromNetwork(buffer);
         ItemStack result = buffer.readItem();
         Optional<CompoundTag> function = buffer.readOptional(FriendlyByteBuf::readNbt);
-        return this.factory.create(ingredient, result, function);
+        Optional<Holder<SoundEvent>> sound = buffer.readOptional(buf -> buf.readById(BuiltInRegistries.SOUND_EVENT.asHolderIdMap(), SoundEvent::readFromNetwork));
+        return this.factory.create(ingredient, result, function, sound);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
         recipe.getIngredient().toNetwork(buffer);
         buffer.writeItem(recipe.getResult());
         buffer.writeOptional(recipe.getAdditionalData(), FriendlyByteBuf::writeNbt);
+        buffer.writeOptional(recipe.getSound(), (buf, holder) -> buf.writeId(BuiltInRegistries.SOUND_EVENT.asHolderIdMap(), holder, (buf1, sound) -> sound.writeToNetwork(buf1)));
     }
 }
 
