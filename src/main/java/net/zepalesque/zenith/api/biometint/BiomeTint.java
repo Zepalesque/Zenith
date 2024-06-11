@@ -73,7 +73,7 @@ public class BiomeTint {
 
     /**
      * Access for the {@link DataMapType} this object uses.
-     * @return The data map type. Should mainly be used for datagen purposes.
+     * @return The data map types. Should mainly be used for datagen purposes.
      */
     public DataMapType<Biome, Integer> getDataMap() {
         return this.dataMap;

@@ -1,8 +1,10 @@
 package net.zepalesque.zenith.recipe.recipes;
 
 
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,12 +22,14 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     protected final ItemStack result;
     // TODO: figure out if a CompoundTag is the best solution for this or not
     protected final Optional<CompoundTag> additional;
+    protected final Optional<Holder<SoundEvent>> sound;
 
-    public AbstractStackingRecipe(RecipeType<?> type, Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional) {
+    public AbstractStackingRecipe(RecipeType<?> type, Ingredient ingredient, ItemStack result, Optional<CompoundTag> additional, Optional<Holder<SoundEvent>> sound) {
         this.type = type;
         this.ingredient = ingredient;
         this.result = result;
         this.additional = additional;
+        this.sound = sound;
     }
 
     public boolean matches(Level level, ItemStack item) {
@@ -65,6 +69,10 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
 
     public Optional<CompoundTag> getAdditionalData() {
         return additional;
+    }
+
+    public Optional<Holder<SoundEvent>> getSound() {
+        return sound;
     }
 
     public interface Factory<T extends AbstractStackingRecipe> {

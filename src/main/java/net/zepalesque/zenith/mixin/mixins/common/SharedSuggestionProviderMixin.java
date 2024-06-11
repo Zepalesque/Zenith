@@ -17,10 +17,10 @@ public interface SharedSuggestionProviderMixin {
     /**
      * @author Zepalesque
      * @reason Because typing out the modid over and over drives you near to the brink of insanity, and I know this from experience.
-     * @param <T> The type of the object
+     * @param <T> The types of the object
      * @param resources The resources avaliable to be displayed
      * @param input The inputted string the player has typed
-     * @param function Converts an object of type {@code T} to a resource location
+     * @param function Converts an object of types {@code T} to a resource location
      * @param consumer Accepts values that match
      */
     @Overwrite

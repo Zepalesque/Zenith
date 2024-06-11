@@ -23,6 +23,7 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+import net.zepalesque.zenith.advancement.trigger.ZenithAdvancementTriggers;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.api.biometint.BiomeTints;
 import net.zepalesque.zenith.api.condition.Condition;
@@ -71,7 +72,8 @@ public class Zenith {
                 ZenithFeatures.FEATURES,
                 ZenithBiomeModifiers.CODECS,
                 ZenithStructureModifiers.CODECS,
-                ZenithDensityFunctions.FUNCTIONS
+                ZenithDensityFunctions.FUNCTIONS,
+                ZenithAdvancementTriggers.TRIGGERS
         };
 
         for (DeferredRegister<?> register : registers) {
