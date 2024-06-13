@@ -39,12 +39,12 @@ public class StackingRecipeBuilder implements RecipeBuilder {
         return this;
     }
 
-    public RecipeBuilder withExtra(CompoundTag data) {
+    public StackingRecipeBuilder withExtra(CompoundTag data) {
         this.extra = Optional.of(data);
         return this;
     }
 
-    public RecipeBuilder withSound(Holder<SoundEvent> sound) {
+    public StackingRecipeBuilder withSound(Holder<SoundEvent> sound) {
         this.sound = Optional.of(sound);
         return this;
     }

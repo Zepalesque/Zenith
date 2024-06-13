@@ -20,7 +20,6 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     protected final RecipeType<?> type;
     protected final Ingredient ingredient;
     protected final ItemStack result;
-    // TODO: figure out if a CompoundTag is the best solution for this or not
     protected final Optional<CompoundTag> additional;
     protected final Optional<Holder<SoundEvent>> sound;
 
