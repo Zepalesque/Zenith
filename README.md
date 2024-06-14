@@ -75,8 +75,8 @@ and then finally this to the `dependencies` code block (note that you will have 
 ```
 implementation "net.zepalesque.zenith:zenith:${project.zenith_version}"
 jarJar fg.deobf("net.zepalesque.zenith:zenith:${project.zenith_version}") {
-  jarJar.ranged(it, "[${project.zenith_version},)")
-  jarJar.pin(it, "${project.zenith_version}")
+    jarJar.ranged(it, "[${project.zenith_version},)")
+    jarJar.pin(it, "${project.zenith_version}")
 }
 ```
 </details>
