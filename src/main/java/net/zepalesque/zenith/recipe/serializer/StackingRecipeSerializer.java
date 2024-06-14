@@ -27,7 +27,7 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
             Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractStackingRecipe::getIngredient),
             ItemStack.CODEC.fieldOf("result").forGetter(AbstractStackingRecipe::getResult),
             CompoundTag.CODEC.optionalFieldOf("additional_data").forGetter(AbstractStackingRecipe::getAdditionalData),
-            SoundEvent.CODEC.optionalFieldOf("additional_data").forGetter(AbstractStackingRecipe::getSound)
+            SoundEvent.CODEC.optionalFieldOf("sound").forGetter(AbstractStackingRecipe::getSound)
         ).apply(inst, this.factory::create));
     }
 
