@@ -1,12 +1,15 @@
 package net.zepalesque.zenith.recipe.recipes;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -18,7 +21,7 @@ public interface StackingRecipe extends Recipe<Container> {
 
     Ingredient getIngredient();
 
-    ItemStack getResult();
+    ItemStackConstructor getResult();
 
     ItemStack getResultStack(ItemStack originalState);
 

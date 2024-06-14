@@ -11,27 +11,28 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
 import net.zepalesque.zenith.recipe.recipes.AbstractStackingRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class StackingRecipeBuilder implements RecipeBuilder {
-    private final ItemStack result;
     private final Ingredient ingredient;
+    private final ItemStackConstructor result;
     private Optional<CompoundTag> extra = Optional.empty();
     private Optional<Holder<SoundEvent>> sound = Optional.empty();
     private final AbstractStackingRecipe.Factory<?> factory;
 
-    public StackingRecipeBuilder(ItemStack result, Ingredient ingredient, AbstractStackingRecipe.Factory<?> factory) {
-        this.result = result;
+    public StackingRecipeBuilder(Ingredient ingredient, ItemStackConstructor result, AbstractStackingRecipe.Factory<?> factory) {
         this.ingredient = ingredient;
+        this.result = result;
         this.factory = factory;
 
     }
 
-    public static StackingRecipeBuilder recipe(Ingredient ingredient, ItemStack result, AbstractStackingRecipe.Factory<?> factory) {
-        return new StackingRecipeBuilder(result, ingredient, factory);
+    public static StackingRecipeBuilder recipe(Ingredient ingredient, ItemStackConstructor result, AbstractStackingRecipe.Factory<?> factory) {
+        return new StackingRecipeBuilder(ingredient, result, factory);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class StackingRecipeBuilder implements RecipeBuilder {
         return this.ingredient;
     }
 
-    public ItemStack getResultStack() {
+    public ItemStackConstructor getResultStack() {
         return this.result;
     }
 
