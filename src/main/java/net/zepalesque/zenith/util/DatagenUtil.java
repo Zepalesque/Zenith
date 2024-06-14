@@ -2,6 +2,7 @@ package net.zepalesque.zenith.util;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -27,5 +28,9 @@ public class DatagenUtil {
 
     public static boolean isVowel(char c) {
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+
+    public static String subtitleFor(SoundEvent sound) {
+        return "subtitles." + sound.getLocation().getNamespace() + "." + sound.getLocation().getPath();
     }
 }
