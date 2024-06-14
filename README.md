@@ -25,3 +25,14 @@
 - A couple of minor improvements, such as an improved version of the `SharedSuggestionProvider`, inspired by the [Suggestion Provider Fix](https://www.curseforge.com/minecraft/mc-mods/suggestion-provider-fix) mod (which, as of writing this, has not yet been updated past 1.20.1)
 - A variety of useful `BiomeModifier`s and a few useful `StructureModifier`s
 - A few useful world generation classes
+
+
+To use this library in your workspace, simply add this to the `repositories` code block of your `build.gradle` file:
+```
+    maven githubPackage.invoke("Zepalesque/Zenith")
+```
+
+and this to the `dependencies` code block:
+```
+    implementation "net.zepalesque.zenith:zenith:[MC VERSION]-[ZENITH VERSION]-neoforge"
+```
