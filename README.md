@@ -26,13 +26,57 @@
 - A variety of useful `BiomeModifier`s and a few useful `StructureModifier`s
 - A few useful world generation classes
 
+<br>
 
-To use this library in your workspace, simply add this to the `repositories` code block of your `build.gradle` file:
+To use this library in your workspace, you will have a few steps to do. 
+First of all, enable the GitHub Packages plugin by adding this to your `settings.gradle` file (or insert it in the existing code block if one exists):
+
+<details>
+<summary>Plugin Settings</summary>
+
 ```
-    maven githubPackage.invoke("Zepalesque/Zenith")
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
 ```
 
-and this to the `dependencies` code block:
+</details>
+
+and this to your `build.gradle` (or again, add it to the existing code block if one exists):
+<details>
+<summary>Plugin Buildscript</summary>
+    
 ```
-    implementation "net.zepalesque.zenith:zenith:[MC VERSION]-[ZENITH VERSION]-neoforge"
+plugins {
+    id 'io.github.0ffz.github-packages' version '[1,2)'
+}
 ```
+
+</details>
+
+Next, add this to the `repositories` code block of your `build.gradle` file to use the repository's package:
+
+<details>
+<summary>Repositories</summary>
+    
+```
+maven githubPackage.invoke("Zepalesque/Zenith")
+```
+
+</details>
+
+
+and then finally this to the `dependencies` code block (note that you will have to define the ${project.zenith_version} variable in your `gradle.properties` file, which should be formatted as `[MC VERSION]-[ZENITH VERSION]-[MODLOADER]`, for instance `1.20.4-1.0.48-neoforge`):
+<details>
+<summary>Dependencies</summary>
+    
+```
+implementation "net.zepalesque.zenith:zenith:${project.zenith_version}"
+jarJar fg.deobf("net.zepalesque.zenith:zenith:${project.zenith_version}") {
+  jarJar.ranged(it, "[${project.zenith_version},)")
+  jarJar.pin(it, "${project.zenith_version}")
+}
+```
+</details>
