@@ -1,12 +1,10 @@
 {
   "arg1": {
-    "condition": "zenith:mod_loaded",
-    "modid": "zenith"
+    "modid": "zenith",
+    "when": "zenith:mod_loaded"
   },
   "arg2": {
-    "condition": "zenith:config_enabled",
-    "config_path": "[TODO, Placeholder Config]",
-    "serializer": "zenith"
+    "when": "zenith:dev_environment"
   },
-  "condition": "zenith:and"
+  "when": "zenith:and"
 }
