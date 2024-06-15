@@ -1,10 +1,10 @@
 {
   "arg1": {
-    "modid": "zenith",
-    "when": "zenith:mod_loaded"
+    "element": "zenith:mod_loaded",
+    "modid": "zenith"
   },
   "arg2": {
-    "when": "zenith:dev_environment"
+    "element": "zenith:dev_environment"
   },
-  "when": "zenith:and"
+  "element": "zenith:and"
 }
