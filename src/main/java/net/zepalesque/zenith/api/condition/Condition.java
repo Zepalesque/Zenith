@@ -15,7 +15,7 @@ import java.util.function.Function;
 public interface Condition<T extends Condition<T>> {
 
     Codec<Condition<?>> ELEMENT_CODEC = ExtraCodecs.lazyInitializedCodec(
-            () -> ConditionElements.ELEMENT_REGISTRY.byNameCodec().dispatch("condition", Condition::codec, Function.identity()));
+            () -> ConditionElements.ELEMENT_REGISTRY.byNameCodec().dispatch("when", Condition::codec, Function.identity()));
 
     Codec<Holder<Condition<?>>> CODEC = RegistryFileCodec.create(Zenith.Keys.CONDITION, ELEMENT_CODEC);
 

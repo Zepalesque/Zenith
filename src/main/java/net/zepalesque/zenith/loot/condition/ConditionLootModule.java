@@ -19,8 +19,7 @@ public class ConditionLootModule implements LootItemCondition {
 
     private final Holder<Condition<?>> condition;
 
-    public ConditionLootModule(Holder<Condition<?>> condition)
-    {
+    public ConditionLootModule(Holder<Condition<?>> condition) {
         this.condition = condition;
     }
 
