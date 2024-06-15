@@ -14,12 +14,12 @@ public class ConditionLootModule implements LootItemCondition {
 
     public static Codec<ConditionLootModule> CODEC = RecordCodecBuilder.create(
             builder -> builder
-                    .group(Condition.CODEC.fieldOf("zenith_condition").forGetter(module -> module.condition))
+                    .group(Condition.ELEMENT_CODEC.fieldOf("inline_condition").forGetter(module -> module.condition))
                     .apply(builder, ConditionLootModule::new));
 
-    private final Holder<Condition<?>> condition;
+    private final Condition<?> condition;
 
-    public ConditionLootModule(Holder<Condition<?>> condition) {
+    public ConditionLootModule(Condition<?> condition) {
         this.condition = condition;
     }
 
@@ -28,8 +28,7 @@ public class ConditionLootModule implements LootItemCondition {
     }
 
     public boolean test(LootContext lootContext) {
-        Optional<Condition<?>> optional = this.condition.unwrap().right();
-        return optional.isEmpty() || optional.get().test();
+        return this.condition.test();
     }
 
 }
