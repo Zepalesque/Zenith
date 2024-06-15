@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public class ConditionLootModule implements LootItemCondition {
 
+    // For some reason or another, loot conditions don't like registry codecs, so just use the inline codec instead
     public static Codec<ConditionLootModule> CODEC = RecordCodecBuilder.create(
             builder -> builder
                     .group(Condition.ELEMENT_CODEC.fieldOf("inline_condition").forGetter(module -> module.condition))
