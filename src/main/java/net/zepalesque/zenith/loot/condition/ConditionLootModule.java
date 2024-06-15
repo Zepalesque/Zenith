@@ -14,7 +14,7 @@ public class ConditionLootModule implements LootItemCondition {
 
     public static Codec<ConditionLootModule> CODEC = RecordCodecBuilder.create(
             builder -> builder
-                    .group(Condition.CODEC.fieldOf("condition").forGetter(module -> module.condition))
+                    .group(Condition.CODEC.fieldOf("zenith_condition").forGetter(module -> module.condition))
                     .apply(builder, ConditionLootModule::new));
 
     private final Holder<Condition<?>> condition;
