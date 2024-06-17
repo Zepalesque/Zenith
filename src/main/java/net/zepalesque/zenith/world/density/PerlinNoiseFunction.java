@@ -26,7 +26,7 @@ public class PerlinNoiseFunction implements DensityFunction {
                     .apply(p_208798_, PerlinNoiseFunction::new)));
 
     @Nullable
-    public PerlinNoise noise;
+    public PerlinNoise noise = null;
     public final NormalNoise.NoiseParameters params;
     private final long seed;
     private final double xzScale;
@@ -37,11 +37,6 @@ public class PerlinNoiseFunction implements DensityFunction {
         this.params = params;
         this.xzScale = xzScale;
         this.yScale = yScale;
-    }
-
-    public PerlinNoiseFunction initialize(Function<Long, RandomSource> rand) {
-        this.noise = PerlinNoise.create(rand.apply(this.seed), this.params.firstOctave(), this.params.amplitudes());
-        return this;
     }
 
     public double compute(FunctionContext pContext) {
@@ -63,6 +58,7 @@ public class PerlinNoiseFunction implements DensityFunction {
         return pVisitor.apply(this);
     }
 
+
     @Override
     public double minValue() {
         return -this.maxValue();
@@ -71,6 +67,15 @@ public class PerlinNoiseFunction implements DensityFunction {
     @Override
     public double maxValue() {
         return ((PerlinNoiseAccessor)this.noise).callMaxValue();
+    }
+
+    public PerlinNoiseFunction initialize(Function<Long, RandomSource> rand) {
+        this.noise = PerlinNoise.create(rand.apply(this.seed), this.params.firstOctave(), this.params.amplitudes());
+        return this;
+    }
+
+    public boolean initialized() {
+        return this.noise != null;
     }
 
 
