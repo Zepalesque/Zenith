@@ -27,6 +27,8 @@ public class PerlinNoiseFunction implements DensityFunction {
 
     @Nullable
     public PerlinNoise noise = null;
+    // This is used before the seed is initialized, for methods such as DensityFunction#maxValue
+    private final PerlinNoise fakeNoise;
     public final NormalNoise.NoiseParameters params;
     private final long seed;
     private final double xzScale;
@@ -37,25 +39,26 @@ public class PerlinNoiseFunction implements DensityFunction {
         this.params = params;
         this.xzScale = xzScale;
         this.yScale = yScale;
+        this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seed), params.firstOctave(), params.amplitudes());
     }
 
-    public double compute(FunctionContext pContext) {
+    public double compute(FunctionContext context) {
         if (this.noise == null) {
             throw new NullPointerException("Perlin noise has not been initialized yet!");
         } else {
             return this.noise
-                    .getValue((double)pContext.blockX() * this.xzScale, (double)pContext.blockY() * this.yScale, (double)pContext.blockZ() * this.xzScale);
+                    .getValue((double)context.blockX() * this.xzScale, (double)context.blockY() * this.yScale, (double)context.blockZ() * this.xzScale);
         }
     }
 
     @Override
-    public void fillArray(double[] pArray, ContextProvider pContextProvider) {
-        pContextProvider.fillAllDirectly(pArray, this);
+    public void fillArray(double[] array, ContextProvider contextProvider) {
+        contextProvider.fillAllDirectly(array, this);
     }
 
     @Override
-    public DensityFunction mapAll(Visitor pVisitor) {
-        return pVisitor.apply(this);
+    public DensityFunction mapAll(Visitor visitor) {
+        return visitor.apply(this);
     }
 
 
@@ -66,7 +69,11 @@ public class PerlinNoiseFunction implements DensityFunction {
 
     @Override
     public double maxValue() {
-        return ((PerlinNoiseAccessor)this.noise).callMaxValue();
+        if (this.noise != null) {
+            return ((PerlinNoiseAccessor)this.noise).callMaxValue();
+        } else {
+            return ((PerlinNoiseAccessor)this.fakeNoise).callMaxValue();
+        }
     }
 
     public PerlinNoiseFunction initialize(Function<Long, RandomSource> rand) {
@@ -77,7 +84,6 @@ public class PerlinNoiseFunction implements DensityFunction {
     public boolean initialized() {
         return this.noise != null;
     }
-
 
     @Override
     public KeyDispatchDataCodec<? extends DensityFunction> codec() {
