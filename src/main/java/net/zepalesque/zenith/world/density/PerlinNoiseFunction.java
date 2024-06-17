@@ -9,10 +9,10 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class PerlinNoiseFunction implements DensityFunction {
 
@@ -84,19 +84,13 @@ public class PerlinNoiseFunction implements DensityFunction {
         return CODEC;
     }
 
-    public record PerlinSeedSetter(long seed) implements DensityFunction.Visitor {
-
+    public record PerlinNoiseVisitor(UnaryOperator<PerlinNoiseFunction> operator) implements DensityFunction.Visitor {
         @Override
         public DensityFunction apply(DensityFunction function) {
             if (function instanceof PerlinNoiseFunction pnf) {
-                return pnf.initialize(offset -> createRandom(seed, offset));
+                return operator.apply(pnf);
             }
             return function;
         }
-
-        public static RandomSource createRandom(long seed, long seedOffset) {
-            return new XoroshiroRandomSource(seed + seedOffset);
-        }
     }
-
 }
