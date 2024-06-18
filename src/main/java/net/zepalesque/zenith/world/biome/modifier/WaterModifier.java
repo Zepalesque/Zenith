@@ -36,7 +36,7 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
                 }
 
                 if (fogMap.containsKey(biome)) {
-                    builder.getSpecialEffects().fogColor(fogMap.get(biome));
+                    builder.getSpecialEffects().waterFogColor(fogMap.get(biome));
                 }
             }
         }
