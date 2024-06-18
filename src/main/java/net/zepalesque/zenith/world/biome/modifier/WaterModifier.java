@@ -28,7 +28,7 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
             if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
                 if (settings.isPresent()) {
                     settings.get().water.ifPresent(builder.getSpecialEffects()::waterColor);
-                    settings.get().fog.ifPresent(builder.getSpecialEffects()::fogColor);
+                    settings.get().fog.ifPresent(builder.getSpecialEffects()::waterFogColor);
                 }
 
                 if (waterMap.containsKey(biome)) {
