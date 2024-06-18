@@ -17,22 +17,24 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
-public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, MusicPredicate predicate) implements BiomeModifier {
+public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Optional<MusicPredicate> predicate) implements BiomeModifier {
 
 
     public static final Codec<MusicModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(MusicModifier::biomes),
             MusicOperator.CODEC.fieldOf("new_track").forGetter(MusicModifier::newMusic),
-            MusicPredicate.CODEC.fieldOf("predicate").forGetter(MusicModifier::predicate)).apply(builder, MusicModifier::new));
+            MusicPredicate.CODEC.optionalFieldOf("predicate").forGetter(MusicModifier::predicate)).apply(builder, MusicModifier::new));
 
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.AFTER_EVERYTHING && this.biomes.contains(biome) && builder.getSpecialEffects().getBackgroundMusic().isPresent()) {
             Music music = builder.getSpecialEffects().getBackgroundMusic().get();
-            Music transformed = newMusic.apply(music);
-            if (transformed != music) {
-                builder.getSpecialEffects().backgroundMusic(transformed);
+            if (predicate.isEmpty() || predicate.get().test(music)) {
+                Music transformed = newMusic.apply(music);
+                if (transformed != music) {
+                    builder.getSpecialEffects().backgroundMusic(transformed);
+                }
             }
         }
     }
