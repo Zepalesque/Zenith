@@ -26,7 +26,7 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
 
-    public abstract AbstractFlowerSet craftsIntoShapeless(Supplier<? extends ItemLike> block, int resultCount);
+    public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, Supplier<? extends ItemLike> result, int resultCount);
 
     public abstract AbstractFlowerSet withTag(TagKey<Block> tag, boolean pot);
 
