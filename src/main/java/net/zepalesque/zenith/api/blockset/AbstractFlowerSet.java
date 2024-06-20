@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,9 +26,9 @@ public abstract class AbstractFlowerSet implements BlockSet {
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
     public abstract DeferredBlock<?> pot();
 
-    public abstract AbstractFlowerSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
+    public abstract AbstractFlowerSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape, RecipeCategory category);
 
-    public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, Supplier<? extends ItemLike> result, int resultCount);
+    public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, Supplier<? extends ItemLike> result, int resultCount, RecipeCategory category);
 
     public abstract AbstractFlowerSet withFlowerTag(TagKey<Block> tag);
 
