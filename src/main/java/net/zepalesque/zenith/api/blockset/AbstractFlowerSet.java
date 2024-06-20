@@ -1,5 +1,6 @@
 package net.zepalesque.zenith.api.blockset;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
@@ -38,5 +39,11 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet compost(float amount);
 
+    public abstract AbstractFlowerSet flammable(int encouragement, int flammability);
+
+    public abstract AbstractFlowerSet inflammable();
+
     public abstract AbstractFlowerSet withProperties(UnaryOperator<Properties> properties);
+
+    public abstract AbstractFlowerSet withPotProperties(UnaryOperator<Properties> properties);
 }
