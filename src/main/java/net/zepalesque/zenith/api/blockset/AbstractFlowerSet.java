@@ -12,7 +12,7 @@ import net.zepalesque.zenith.api.blockset.util.CraftingMatrix;
 
 import java.util.function.Supplier;
 
-public abstract class AbstractFlowerSet {
+public abstract class AbstractFlowerSet implements BlockSet {
 
     protected abstract DeferredBlock<?> block(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, OffsetType offset, SoundType soundType);
     public abstract DeferredBlock<?> block();
