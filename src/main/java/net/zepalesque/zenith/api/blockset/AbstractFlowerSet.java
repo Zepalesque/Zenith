@@ -20,7 +20,7 @@ import java.util.function.UnaryOperator;
 
 public abstract class AbstractFlowerSet implements BlockSet {
 
-    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, Supplier<MobEffect> effect, int duration, OffsetType offset, SoundType sound);
+    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, Supplier<? extends Block> constructor);
     public abstract DeferredBlock<?> flower();
 
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
@@ -43,8 +43,6 @@ public abstract class AbstractFlowerSet implements BlockSet {
     public abstract AbstractFlowerSet flammable(int encouragement, int flammability);
 
     public abstract AbstractFlowerSet inflammable();
-
-    public abstract AbstractFlowerSet withProperties(UnaryOperator<Properties> properties);
 
     public abstract AbstractFlowerSet withPotProperties(UnaryOperator<Properties> properties);
 }
