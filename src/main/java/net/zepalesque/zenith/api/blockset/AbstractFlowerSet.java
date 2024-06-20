@@ -28,11 +28,13 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, Supplier<? extends ItemLike> result, int resultCount);
 
-    public abstract AbstractFlowerSet withTag(TagKey<Block> tag, boolean pot);
+    public abstract AbstractFlowerSet withFlowerTag(TagKey<Block> tag);
+
+    public abstract AbstractFlowerSet withPotTag(TagKey<Block> tag);
 
     public abstract AbstractFlowerSet withItemTag(TagKey<Item> tag);
 
-    public abstract AbstractFlowerSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
+    public abstract AbstractFlowerSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter);
 
     public abstract AbstractFlowerSet compost(float amount);
 
