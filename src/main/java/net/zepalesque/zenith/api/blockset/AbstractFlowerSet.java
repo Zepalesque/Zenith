@@ -21,15 +21,15 @@ public abstract class AbstractFlowerSet implements BlockSet {
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
     public abstract DeferredBlock<?> pot();
 
-    public abstract AbstractStoneSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
+    public abstract AbstractFlowerSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
 
-    public abstract AbstractStoneSet craftsIntoShapeless(Supplier<? extends ItemLike> block, int resultCount);
+    public abstract AbstractFlowerSet craftsIntoShapeless(Supplier<? extends ItemLike> block, int resultCount);
 
-    public abstract AbstractStoneSet withTag(TagKey<Block> tag, boolean allBlocks);
+    public abstract AbstractFlowerSet withTag(TagKey<Block> tag, boolean allBlocks);
 
-    public abstract AbstractStoneSet withItemTag(TagKey<Item> tag, boolean allBlocks);
+    public abstract AbstractFlowerSet withItemTag(TagKey<Item> tag, boolean allBlocks);
 
-    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
+    public abstract AbstractFlowerSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
 
 
 
