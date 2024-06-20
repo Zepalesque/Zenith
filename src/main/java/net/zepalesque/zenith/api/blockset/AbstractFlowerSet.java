@@ -45,4 +45,6 @@ public abstract class AbstractFlowerSet implements BlockSet {
     public abstract AbstractFlowerSet inflammable();
 
     public abstract AbstractFlowerSet withPotProperties(UnaryOperator<Properties> properties);
+
+    public abstract AbstractFlowerSet withPottedPrefix();
 }
