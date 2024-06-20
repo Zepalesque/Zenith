@@ -14,8 +14,8 @@ import java.util.function.Supplier;
 
 public abstract class AbstractFlowerSet implements BlockSet {
 
-    protected abstract DeferredBlock<?> block(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, OffsetType offset, SoundType soundType);
-    public abstract DeferredBlock<?> block();
+    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, OffsetType offset, SoundType soundType);
+    public abstract DeferredBlock<?> flower();
 
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
     public abstract DeferredBlock<?> pot();
