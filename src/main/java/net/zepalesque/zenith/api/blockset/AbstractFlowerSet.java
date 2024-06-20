@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +28,9 @@ public abstract class AbstractFlowerSet implements BlockSet {
     public abstract AbstractStoneSet withTag(TagKey<Block> tag, boolean allBlocks);
 
     public abstract AbstractStoneSet withItemTag(TagKey<Item> tag, boolean allBlocks);
+
+    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
+
 
 
 
