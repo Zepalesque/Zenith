@@ -20,7 +20,7 @@ import java.util.function.UnaryOperator;
 
 public abstract class AbstractFlowerSet implements BlockSet {
 
-    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, Supplier<? extends Block> constructor);
+    protected abstract <T extends Block> DeferredBlock<T> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, Supplier<T> constructor);
     public abstract DeferredBlock<?> flower();
 
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
