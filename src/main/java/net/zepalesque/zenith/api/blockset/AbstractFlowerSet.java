@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
 
 public abstract class AbstractFlowerSet implements BlockSet {
 
-    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, OffsetType offset, SoundType soundType);
+    protected abstract DeferredBlock<?> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, Supplier<MobEffect> effect, String id, OffsetType offset, SoundType sound);
     public abstract DeferredBlock<?> flower();
 
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
