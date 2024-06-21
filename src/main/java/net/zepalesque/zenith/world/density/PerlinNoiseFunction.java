@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -79,6 +80,16 @@ public class PerlinNoiseFunction implements DensityFunction {
     public PerlinNoiseFunction initialize(Function<Long, RandomSource> rand) {
         this.noise = PerlinNoise.create(rand.apply(this.seed), this.params.firstOctave(), this.params.amplitudes());
         return this;
+    }
+
+    public static PerlinNoiseVisitor createVisitor(WorldGenLevel level) {
+        return new PerlinNoiseVisitor(noise -> {
+            if (noise.initialized()) {
+                return noise;
+            } else {
+                return noise.initialize(offset -> new XoroshiroRandomSource(level.getSeed() + offset));
+            }
+        });
     }
 
     public boolean initialized() {
