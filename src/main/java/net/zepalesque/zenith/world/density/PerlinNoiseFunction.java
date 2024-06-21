@@ -12,6 +12,8 @@ import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
@@ -28,6 +30,7 @@ public class PerlinNoiseFunction implements DensityFunction {
 
     @Nullable
     public PerlinNoise noise = null;
+    private static final Map<Long, PerlinNoiseVisitor> VISITORS = new HashMap<>();
     // This is used before the seed is initialized, for methods such as DensityFunction#maxValue
     private final PerlinNoise fakeNoise;
     public final NormalNoise.NoiseParameters params;
@@ -82,14 +85,14 @@ public class PerlinNoiseFunction implements DensityFunction {
         return this;
     }
 
-    public static PerlinNoiseVisitor createVisitor(WorldGenLevel level) {
-        return new PerlinNoiseVisitor(noise -> {
+    public static PerlinNoiseVisitor createOrGetVisitor(long seed) {
+        return VISITORS.computeIfAbsent(seed, l -> new PerlinNoiseVisitor(noise -> {
             if (noise.initialized()) {
                 return noise;
             } else {
-                return noise.initialize(offset -> new XoroshiroRandomSource(level.getSeed() + offset));
+                return noise.initialize(offset -> new XoroshiroRandomSource(l + offset));
             }
-        });
+        }));
     }
 
     public boolean initialized() {
