@@ -8,6 +8,7 @@
   "mixins": [
     "common.SharedSuggestionProviderMixin",
     "common.accessor.BoatAccessor",
+    "common.accessor.ChunkAccessAccessor",
     "common.accessor.FireAccessor",
     "common.accessor.PerlinNoiseAccessor"
   ],
