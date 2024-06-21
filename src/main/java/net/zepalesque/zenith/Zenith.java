@@ -41,6 +41,7 @@ import net.zepalesque.zenith.world.feature.gen.ZenithFeatures;
 import net.zepalesque.zenith.world.feature.placement.ZenithPlacementModifiers;
 import net.zepalesque.zenith.world.state.ZenithStateProviders;
 import net.zepalesque.zenith.world.structure.modifier.ZenithStructureModifiers;
+import net.zepalesque.zenith.world.tree.trunk.ZenithTrunkPlacers;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -73,7 +74,8 @@ public class Zenith {
                 ZenithBiomeModifiers.CODECS,
                 ZenithStructureModifiers.CODECS,
                 ZenithDensityFunctions.FUNCTIONS,
-                ZenithAdvancementTriggers.TRIGGERS
+                ZenithAdvancementTriggers.TRIGGERS,
+                ZenithTrunkPlacers.TRUNK_PLACERS
         };
 
         for (DeferredRegister<?> register : registers) {
