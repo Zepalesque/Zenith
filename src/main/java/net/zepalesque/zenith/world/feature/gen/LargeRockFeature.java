@@ -62,7 +62,9 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                 BlockPos imm1 = origin.relative(d);
                 if (i < 2 || (potentiallyPlaceAbove.contains(d) && rand.nextFloat() < 0.7)) {
                     setBlock(imm1.above(i), context);
-                    placedAbove.add(d);
+                    if (i == 2) {
+                        placedAbove.add(d);
+                    }
                 }
             }
         }
