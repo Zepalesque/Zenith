@@ -34,12 +34,15 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         WorldGenLevel level = context.level();
         RandomSource rand = context.random();
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        // Place main pillar
         for (int i = -1; i < 4; i++) {
             mutable.setWithOffset(origin, 0, i, 0);
             setBlock(mutable, context);
         }
-        Collection<Direction> placeAbove = new ArrayList<>();
+        Collection<Direction> potentiallyPlaceAbove = new ArrayList<>();
+        Collection<Direction> placedAbove = new ArrayList<>();
         for (Direction d : Direction.Plane.HORIZONTAL) {
+            // Places corner pieces, stores directions next to them for potential height bumps
             if (rand.nextFloat() < 0.7) {
                 BlockPos imm = origin.relative(d).relative(d.getCounterClockWise());
                 setBlock(imm, context);
@@ -48,23 +51,25 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                         mutable.setWithOffset(imm, d1);
                         setBlock(mutable, context);
                         if (d1 == Direction.UP) {
-                            placeAbove.add(d);
-                            placeAbove.add(d.getCounterClockWise());
+                            potentiallyPlaceAbove.add(d);
+                            potentiallyPlaceAbove.add(d.getCounterClockWise());
                         }
                     }
                 }
             }
+            // Keep a list of directions that actually had a chunk placed above
             for (int i = -1; i < 3; i++) {
                 BlockPos imm1 = origin.relative(d);
-                if (i < 2 || (placeAbove.contains(d) && rand.nextFloat() < 0.7)) {
+                if (i < 2 || (potentiallyPlaceAbove.contains(d) && rand.nextFloat() < 0.7)) {
                     setBlock(imm1.above(i), context);
+                    placedAbove.add(d);
                 }
             }
         }
-        if (!placeAbove.isEmpty()) {
-            int count = placeAbove.size();
-            float chance = count == 1 ? 0.3F : count == 2 ? 0.7F : 1;
-            if (count >= 3 || rand.nextFloat() < chance) {
+        int count = placedAbove.size();
+        if (count > 1) {
+            float chance = count == 2 ? 0.3F : count == 3 ? 0.7F : 1;
+            if (count > 3 || rand.nextFloat() < chance) {
                 setBlock(origin.above(4), context);
             }
         }
