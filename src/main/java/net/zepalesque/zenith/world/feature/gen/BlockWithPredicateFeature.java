@@ -45,13 +45,10 @@ public class BlockWithPredicateFeature extends Feature<BlockWithPredicateFeature
       }
    }
 
-   public record Config(BlockStateProvider toPlace,
-                        BlockPredicate predicate) implements FeatureConfiguration {
-       public static final Codec<Config> CODEC =
-               RecordCodecBuilder.create((config) ->
-                       config.group(
-                               BlockStateProvider.CODEC.fieldOf("to_place").forGetter(Config::toPlace),
-                               BlockPredicate.CODEC.fieldOf("predicate").forGetter(Config::predicate)
-                       ).apply(config, Config::new));
+   public record Config(BlockStateProvider toPlace, BlockPredicate predicate) implements FeatureConfiguration {
+       public static final Codec<Config> CODEC = RecordCodecBuilder.create((config) -> config.group(
+               BlockStateProvider.CODEC.fieldOf("to_place").forGetter(Config::toPlace),
+               BlockPredicate.CODEC.fieldOf("predicate").forGetter(Config::predicate)
+       ).apply(config, Config::new));
    }
 }

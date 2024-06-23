@@ -11,5 +11,5 @@ public class ZenithFeatures {
 
     public static DeferredHolder<Feature<?>, Feature<BlockWithPredicateFeature.Config>> BLOCK_WITH_PREDICATE = FEATURES.register("block_with_predicate", () -> new BlockWithPredicateFeature(BlockWithPredicateFeature.Config.CODEC));
     public static DeferredHolder<Feature<?>, Feature<SurfaceRuleLakeFeature.Config>> SURFACE_RULE_LAKE = FEATURES.register("surface_rule_lake", () -> new SurfaceRuleLakeFeature(SurfaceRuleLakeFeature.Config.CODEC));
-
+    public static DeferredHolder<Feature<?>, Feature<LargeRockFeature.Config>> LARGE_ROCK = FEATURES.register("large_rock", () -> new LargeRockFeature(LargeRockFeature.Config.CODEC));
 }
