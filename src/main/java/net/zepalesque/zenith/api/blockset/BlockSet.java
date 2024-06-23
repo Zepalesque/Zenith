@@ -94,5 +94,9 @@ public interface BlockSet {
      * @param prev The previous block added, in case these should be put consecutively.
      * @return The new block to use as the next set's {@code prev} parameter.
      */
-    Supplier<? extends ItemLike> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> prev);
+    Supplier<? extends ItemLike> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> prev, TabAdditionPhase phase);
+
+    enum TabAdditionPhase {
+        BEFORE, AFTER
+    }
 }

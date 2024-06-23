@@ -43,7 +43,11 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     public abstract AbstractStoneSet withItemTag(TagKey<Item> tag, boolean allBlocks);
 
-    public abstract AbstractStoneSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks);
+    public abstract AbstractFlowerSet tabAfter(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks, TabAdditionPhase phase);
+
+    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks, TabAdditionPhase phase);
+
+    public abstract AbstractFlowerSet tabAppend(Supplier<CreativeModeTab> tab, boolean allBlocks, TabAdditionPhase phase);
 
     protected abstract String baseName(boolean isBaseBlock);
 }

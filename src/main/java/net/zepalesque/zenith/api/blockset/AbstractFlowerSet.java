@@ -36,7 +36,11 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet withItemTag(TagKey<Item> tag);
 
-    public abstract AbstractFlowerSet creativeTab(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter);
+    public abstract AbstractFlowerSet tabAfter(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, TabAdditionPhase phase);
+
+    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, TabAdditionPhase phase);
+
+    public abstract AbstractFlowerSet tabAppend(Supplier<CreativeModeTab> tab, TabAdditionPhase phase);
 
     public abstract AbstractFlowerSet compost(float amount);
 
