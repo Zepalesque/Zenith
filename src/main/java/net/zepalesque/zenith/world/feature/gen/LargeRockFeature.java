@@ -114,7 +114,7 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         BlockStateProvider provider = config.block();
         RandomSource rand = context.random();
         Optional<HolderSet<Block>> optional = config.replaceableStates();
-        if (level.isStateAtPosition(pos, bs -> bs.isAir() || bs.canBeReplaced() || (optional.isPresent() && bs.is(optional.get())))) {
+        if (level.isStateAtPosition(pos, bs -> bs.isAir() || bs.canBeReplaced() || (!bs.isCollisionShapeFullBlock(level, pos) && bs.getDestroySpeed(level, pos) != -1.0F) || bs.getDestroySpeed(level, pos) == 0.0F || (optional.isPresent() && bs.is(optional.get())))) {
             level.setBlock(pos, provider.getState(rand, pos), 2);
         }
     }
