@@ -38,7 +38,7 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet tabAfter(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, TabAdditionPhase phase);
 
-    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, TabAdditionPhase phase);
+    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeBefore, TabAdditionPhase phase);
 
     public abstract AbstractFlowerSet tabAppend(Supplier<CreativeModeTab> tab, TabAdditionPhase phase);
 
