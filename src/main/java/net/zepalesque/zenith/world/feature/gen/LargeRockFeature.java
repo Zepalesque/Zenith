@@ -34,8 +34,9 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         WorldGenLevel level = context.level();
         RandomSource rand = context.random();
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        boolean spiky = rand.nextBoolean();
         // Place main pillar
-        for (int i = -1; i < 4; i++) {
+        for (int i = -1; i < (spiky ? 4 : 3); i++) {
             mutable.setWithOffset(origin, 0, i, 0);
             setBlock(mutable, context);
         }
@@ -68,11 +69,12 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                 }
             }
         }
+        // Make it slightly taller
         int count = placedAbove.size();
         if (count > 1) {
             float chance = count == 2 ? 0.3F : count == 3 ? 0.7F : 1;
             if (count > 3 || rand.nextFloat() < chance) {
-                setBlock(origin.above(4), context);
+                setBlock(origin.above(spiky ? 4 : 3), context);
             }
         }
 
