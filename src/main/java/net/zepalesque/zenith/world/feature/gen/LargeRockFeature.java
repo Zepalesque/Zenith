@@ -65,7 +65,7 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
             int count = placeAbove.size();
             float chance = count == 1 ? 0.3F : count == 2 ? 0.7F : 1;
             if (count >= 3 || rand.nextFloat() < chance) {
-                setBlock(origin.above(5), context);
+                setBlock(origin.above(4), context);
             }
         }
 
