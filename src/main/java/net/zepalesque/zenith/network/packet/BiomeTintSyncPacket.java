@@ -1,5 +1,6 @@
 package net.zepalesque.zenith.network.packet;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -16,17 +17,23 @@ import net.zepalesque.zenith.api.biometint.BiomeTints;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Optional;
 
-public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, Integer>> types) implements CustomPacketPayload {
+public record BiomeTintSyncPacket(Map<ResourceLocation, Pair<Map<ResourceLocation, Integer>, Optional<Integer>>> types) implements CustomPacketPayload {
 
     public static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "sync_biome_tints");
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeMap(types, FriendlyByteBuf::writeResourceLocation, (b1, map) -> b1.writeMap(map, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt));
+        buf.writeMap(types,
+                FriendlyByteBuf::writeResourceLocation,
+                (b1, map) -> b1.writeMap(map, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt));
     }
 
     public static BiomeTintSyncPacket decode(FriendlyByteBuf buf) {
-        Map<ResourceLocation, Map<ResourceLocation, Integer>> map = buf.readMap(FriendlyByteBuf::readResourceLocation, b1 -> b1.readMap(FriendlyByteBuf::readResourceLocation, FriendlyByteBuf::readInt));
+        Map<ResourceLocation, Map<ResourceLocation, Integer>> map =
+                buf.readMap(
+                        FriendlyByteBuf::readResourceLocation,
+                        b1 -> b1.readMap(FriendlyByteBuf::readResourceLocation, FriendlyByteBuf::readInt));
         return new BiomeTintSyncPacket(map);
     }
 

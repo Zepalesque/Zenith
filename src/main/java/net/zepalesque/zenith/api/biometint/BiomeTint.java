@@ -1,25 +1,26 @@
 package net.zepalesque.zenith.api.biometint;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
-import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.Zenith;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A class used to easily create biome-dependent tint systems.
  */
 public class BiomeTint {
 
-    private final DataMapType<Biome, Integer> dataMap;
     private final Map<Biome, Integer> tints = new HashMap<>();
+    private final Map<ResourceKey<Biome>, Integer> serverTints = new HashMap<>();
     private final int defaultColor;
+    @Nonnull
+    private Optional<Integer> defaultOverride = Optional.empty();
     private boolean initialized = false;
 
     /**
@@ -27,17 +28,7 @@ public class BiomeTint {
      * @param defaultColor The fallback color that should be used if a biome does not exist in the tint map.
      */
     public BiomeTint(ResourceLocation loc, int defaultColor) {
-        this.dataMap = createTintMap(loc);
         this.defaultColor = defaultColor;
-    }
-
-    /**
-     * Creates a {@link DataMapType} that should be used for this object. Whenever the player joins a world, this will be sent to the client to update the tint map.
-     * @param location The {@link ResourceLocation} that should be used for this data map. This will automatically be prefixed with "tint/".
-     * @return a new {@link DataMapType}
-     */
-    private static DataMapType<Biome, Integer> createTintMap(ResourceLocation location) {
-        return DataMapType.builder(location.withPrefix("tint/"), Registries.BIOME, Codec.INT).build();
     }
 
     /**
@@ -49,7 +40,7 @@ public class BiomeTint {
         if (!this.initialized) {
             Zenith.LOGGER.warn("Attempted to get uninitialized BiomeTint: {}!", BiomeTints.TINT_REGISTRY.getKey(this));
         }
-        return this.tints.getOrDefault(biome, defaultColor);
+        return this.tints.getOrDefault(biome, getDefaultColor());
     }
 
     /**
@@ -58,6 +49,7 @@ public class BiomeTint {
     public void clear() {
         this.tints.clear();
         this.initialized = false;
+        this.defaultOverride = Optional.empty();
     }
 
     /**
@@ -72,18 +64,23 @@ public class BiomeTint {
     }
 
     /**
-     * Access for the {@link DataMapType} this object uses.
-     * @return The data map types. Should mainly be used for datagen purposes.
+     * Sets the override color for the map. Should not be called, as this is handled by Zenith.
+     * @param color the color for the override
      */
-    public DataMapType<Biome, Integer> getDataMap() {
-        return this.dataMap;
+    public void setOverride(int color) {
+        this.defaultOverride = Optional.of(color);
     }
 
-    /**
-     * Registers this object's {@link DataMapType}. Should not be called, as this is handled by Zenith.
-     */
-    public void register(RegisterDataMapTypesEvent event) {
-        event.register(this.dataMap);
+    public int getDefaultColor() {
+        return this.defaultOverride.orElse(this.defaultColor);
+    }
+
+    public Map<ResourceKey<Biome>, Integer> toSync() {
+        return this.serverTints;
+    }
+
+    public Optional<Integer> getOverride() {
+        return this.defaultOverride;
     }
 
     public void markInitialized() {

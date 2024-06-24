@@ -2,6 +2,7 @@ package net.zepalesque.zenith.event.listener;
 
 
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -20,6 +21,7 @@ import net.zepalesque.zenith.network.packet.BiomeTintSyncPacket;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Zenith.MODID)
@@ -32,10 +34,10 @@ public class BiomeTintListener {
             Map<ResourceLocation, Map<ResourceLocation, Integer>> map = new HashMap<>();
             BiomeTints.TINT_REGISTRY.forEach(tint -> {
                 ResourceLocation loc = BiomeTints.TINT_REGISTRY.getKey(tint);
-                Map<ResourceLocation, Integer> tints = registry.getDataMap(tint.getDataMap()).entrySet().stream().collect(Collectors.toMap(
+                Map<ResourceLocation, Integer> tints = tint.toSync().entrySet().stream().collect(Collectors.toMap(
                         entry -> entry.getKey().location(), Map.Entry::getValue
                 ));
-                map.put(loc, tints);
+                map.put(loc, tints, tint.getOverride());
             });
             ZenithNetworking.sendToPlayer(new BiomeTintSyncPacket(map), player);
         }

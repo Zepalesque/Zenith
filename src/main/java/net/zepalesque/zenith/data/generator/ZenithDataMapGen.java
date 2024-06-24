@@ -21,11 +21,11 @@ public class ZenithDataMapGen extends DataMapProvider {
 
     @Override
     protected void gather() {
-        Builder<Integer, Biome> tints = this.builder(BiomeTints.EXAMPLE_TINT.get().getDataMap());
-        tints.add(Biomes.PLAINS, 0x5BCEFA, false);
-        tints.add(Biomes.CHERRY_GROVE, 0xF5A9B8, false);
-        tints.add(Biomes.THE_END, 0xFFFFFF, false);
-        tints.add(BiomeTags.IS_MOUNTAIN, 0xF5A9B8, false);
-        tints.add(BiomeTags.IS_TAIGA, 0x5BCEFA, false);
+//        Builder<Integer, Biome> tints = this.builder(BiomeTints.EXAMPLE_TINT.get().getDataMap());
+//        tints.add(Biomes.PLAINS, 0x5BCEFA, false);
+//        tints.add(Biomes.CHERRY_GROVE, 0xF5A9B8, false);
+//        tints.add(Biomes.THE_END, 0xFFFFFF, false);
+//        tints.add(BiomeTags.IS_MOUNTAIN, 0xF5A9B8, false);
+//        tints.add(BiomeTags.IS_TAIGA, 0x5BCEFA, false);
     }
 }
