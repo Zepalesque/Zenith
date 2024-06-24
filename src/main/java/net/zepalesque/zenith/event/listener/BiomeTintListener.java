@@ -40,10 +40,4 @@ public class BiomeTintListener {
             ZenithNetworking.sendToPlayer(new BiomeTintSyncPacket(map), player);
         }
     }
-
-
-    @SubscribeEvent
-    public static void clearTints(ClientPlayerNetworkEvent.LoggingOut event) {
-        BiomeTints.TINT_REGISTRY.forEach(BiomeTint::clear);
-    }
 }
