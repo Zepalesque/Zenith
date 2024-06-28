@@ -15,7 +15,7 @@ import net.zepalesque.zenith.util.codec.ZenithCodecs;
 import java.util.Map;
 import java.util.Optional;
 
-public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Either<Holder<Biome>, ResourceKey<Biome>>, Integer> waterMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
+public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<Biome>, Integer> waterMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
 
     public static final Codec<WaterModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultWaterSettings.CODEC.optionalFieldOf("default_colors").forGetter(WaterModifier::settings),
