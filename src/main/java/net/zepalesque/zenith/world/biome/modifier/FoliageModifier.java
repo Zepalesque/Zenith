@@ -8,18 +8,17 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
+import net.zepalesque.zenith.util.codec.ZenithCodecs;
 
 import java.util.Map;
 import java.util.Optional;
 
 public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Holder<Biome>, Integer> grassMap, Map<Holder<Biome>, Integer> foliageMap) implements BiomeModifier {
 
-    public static final Codec<Map<Holder<Biome>, Integer>> MAP_CODEC = ExtraCodecs.strictUnboundedMap(Biome.CODEC, Codec.INT);
-
     public static final Codec<FoliageModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultFoliageSettings.CODEC.optionalFieldOf("default_colors").forGetter(FoliageModifier::settings),
-            MAP_CODEC.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
-            MAP_CODEC.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
+            ZenithCodecs.MAP_CODEC.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
+            ZenithCodecs.MAP_CODEC.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
 
 
     @Override

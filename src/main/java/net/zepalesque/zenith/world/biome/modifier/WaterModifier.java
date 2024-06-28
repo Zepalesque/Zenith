@@ -1,25 +1,26 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
+import net.zepalesque.zenith.util.codec.ZenithCodecs;
 
 import java.util.Map;
 import java.util.Optional;
 
-public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<Biome>, Integer> waterMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
-
-    public static final Codec<Map<Holder<Biome>, Integer>> MAP_CODEC = ExtraCodecs.strictUnboundedMap(Biome.CODEC, Codec.INT);
+public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Either<Holder<Biome>, ResourceKey<Biome>>, Integer> waterMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
 
     public static final Codec<WaterModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultWaterSettings.CODEC.optionalFieldOf("default_colors").forGetter(WaterModifier::settings),
-            MAP_CODEC.fieldOf("water_map").forGetter(WaterModifier::waterMap),
-            MAP_CODEC.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
+            ZenithCodecs.MAP_CODEC.fieldOf("water_map").forGetter(WaterModifier::waterMap),
+            ZenithCodecs.MAP_CODEC.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
 
 
     @Override
