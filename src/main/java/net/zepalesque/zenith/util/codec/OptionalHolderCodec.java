@@ -11,12 +11,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.zepalesque.zenith.mixin.mixins.common.accessor.ReferenceAccessor;
 import net.zepalesque.zenith.util.HolderUtil;
 
 import java.util.Optional;
-
-
 public class OptionalHolderCodec<E> implements Codec<Holder<E>> {
     private final ResourceKey<? extends Registry<E>> registryKey;
 
@@ -37,20 +34,19 @@ public class OptionalHolderCodec<E> implements Codec<Holder<E>> {
                     return DataResult.error(() -> "Element " + input + " is not valid in current registry set");
                 }
 
-                if (input instanceof Holder.Reference<E> reference) {
-                    if (((ReferenceAccessor<?>)reference).keyOrNull() != null) {
-                        Optional<DataResult<T>> result = HolderUtil.unwrapKey(input).map(key -> ResourceLocation.CODEC.encode(key.location(), ops, prefix));
-                        if (result.isPresent()) {
-                            return result.get();
-                        }
+                if (input.kind() != Holder.Kind.DIRECT) {
+                    Optional<DataResult<T>> result = HolderUtil.unwrapKey(input).map(key -> ResourceLocation.CODEC.encode(key.location(), ops, prefix));
+                    if (result.isPresent()) {
+                        return result.get();
                     }
-                } else if (input instanceof Holder.Direct<E>) {
+                } else {
                     return DataResult.error(() -> "Cannot encode direct holder: " + input);
                 }
-            }
-        }
-        return DataResult.error(() -> "Failed to encode key for element " + input);
 
+            }
+            return DataResult.error(() -> "Failed to encode key for element " + input);
+        }
+        return DataResult.error(() -> "Cannot encode holder with non-registry ops!");
     }
 
 
@@ -60,7 +56,7 @@ public class OptionalHolderCodec<E> implements Codec<Holder<E>> {
             Optional<HolderGetter<E>> optGet = registryops.getter(this.registryKey);
             Optional<HolderOwner<E>> optOwn = registryops.owner(this.registryKey);
             return ResourceLocation.CODEC.decode(ops, value).flatMap(pair -> {
-                Holder<E> holder = null;
+                Holder<E> holder;
                 ResourceLocation loc = pair.getFirst();
                 ResourceKey<E> key = ResourceKey.create(this.registryKey, loc);
                 if (optGet.isPresent()) {
