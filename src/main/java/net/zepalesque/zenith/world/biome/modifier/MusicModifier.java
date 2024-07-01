@@ -9,12 +9,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.util.CodecUtil;
-import net.zepalesque.zenith.util.predicate.MusicPredicate;
+import net.zepalesque.zenith.predicate.MusicPredicate;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Optional<MusicPredicate> predicate) implements BiomeModifier {

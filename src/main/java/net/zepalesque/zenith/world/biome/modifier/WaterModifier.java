@@ -1,12 +1,9 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
@@ -19,8 +16,8 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
 
     public static final Codec<WaterModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultWaterSettings.CODEC.optionalFieldOf("default_colors").forGetter(WaterModifier::settings),
-            ZenithCodecs.MAP_CODEC.fieldOf("water_map").forGetter(WaterModifier::waterMap),
-            ZenithCodecs.MAP_CODEC.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("water_map").forGetter(WaterModifier::waterMap),
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
 
 
     @Override

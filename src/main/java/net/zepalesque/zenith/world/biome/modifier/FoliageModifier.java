@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
@@ -17,8 +16,8 @@ public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Hol
 
     public static final Codec<FoliageModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultFoliageSettings.CODEC.optionalFieldOf("default_colors").forGetter(FoliageModifier::settings),
-            ZenithCodecs.MAP_CODEC.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
-            ZenithCodecs.MAP_CODEC.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
 
 
     @Override

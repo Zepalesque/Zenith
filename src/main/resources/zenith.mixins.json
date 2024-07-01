@@ -10,7 +10,8 @@
     "common.accessor.BoatAccessor",
     "common.accessor.ChunkAccessAccessor",
     "common.accessor.FireAccessor",
-    "common.accessor.PerlinNoiseAccessor"
+    "common.accessor.PerlinNoiseAccessor",
+    "common.accessor.ReferenceAccessor"
   ],
   "client": [
     "client.BiomeClientMixin"

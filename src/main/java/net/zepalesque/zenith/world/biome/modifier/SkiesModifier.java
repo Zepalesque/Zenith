@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
@@ -17,8 +16,8 @@ public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Bi
 
     public static final Codec<SkiesModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             DefaultSkySettings.CODEC.optionalFieldOf("default_colors").forGetter(SkiesModifier::settings),
-            ZenithCodecs.MAP_CODEC.fieldOf("sky_map").forGetter(SkiesModifier::skyMap),
-            ZenithCodecs.MAP_CODEC.fieldOf("fog_map").forGetter(SkiesModifier::fogMap)).apply(builder, SkiesModifier::new));
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("sky_map").forGetter(SkiesModifier::skyMap),
+            ZenithCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(SkiesModifier::fogMap)).apply(builder, SkiesModifier::new));
 
 
     @Override
