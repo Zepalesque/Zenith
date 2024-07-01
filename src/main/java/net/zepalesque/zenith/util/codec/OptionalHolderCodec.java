@@ -11,7 +11,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.event.TickEvent;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.ReferenceAccessor;
 import net.zepalesque.zenith.util.HolderUtil;
 
@@ -45,7 +44,7 @@ public class OptionalHolderCodec<E> implements Codec<Holder<E>> {
                             return result.get();
                         }
                     }
-                } else if (input instanceof Holder.Direct<E> direct) {
+                } else if (input instanceof Holder.Direct<E>) {
                     return DataResult.error(() -> "Cannot encode direct holder: " + input);
                 }
             }
@@ -80,9 +79,6 @@ public class OptionalHolderCodec<E> implements Codec<Holder<E>> {
                 return DataResult.error(() -> "Could not decode holder: " + loc.toString() + "!");
             });
         }
-        return DataResult.error(() -> "Failed to decode holder!");
+        return DataResult.error(() -> "Failed to decode holder from value " + value);
     }
-
-
-
 }
