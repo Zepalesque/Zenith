@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.util;
+package net.zepalesque.zenith.util.holder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;

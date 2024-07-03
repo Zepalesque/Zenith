@@ -11,7 +11,9 @@
     "common.accessor.ChunkAccessAccessor",
     "common.accessor.FireAccessor",
     "common.accessor.PerlinNoiseAccessor",
-    "common.accessor.ReferenceAccessor"
+    "common.accessor.ReferenceAccessor",
+    "common.accessor.MappedGetterAccessor",
+    "common.accessor.registry.RegistryOpsLookupAcessor"
   ],
   "client": [
     "client.BiomeClientMixin"
