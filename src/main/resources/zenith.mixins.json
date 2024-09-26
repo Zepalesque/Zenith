@@ -6,13 +6,14 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "zenith.refmap.json",
   "mixins": [
+    "common.RandomStateMixin",
     "common.SharedSuggestionProviderMixin",
     "common.accessor.BoatAccessor",
     "common.accessor.ChunkAccessAccessor",
     "common.accessor.FireAccessor",
+    "common.accessor.MappedGetterAccessor",
     "common.accessor.PerlinNoiseAccessor",
     "common.accessor.ReferenceAccessor",
-    "common.accessor.MappedGetterAccessor",
     "common.accessor.registry.RegistryOpsLookupAcessor"
   ],
   "client": [

@@ -48,7 +48,7 @@ public class PerlinNoiseFunction implements DensityFunction {
 
     public double compute(FunctionContext context) {
         if (this.noise == null) {
-            throw new NullPointerException("Perlin noise has not been initialized yet!");
+            throw new NullPointerException("PerlinNoiseFunction has not been initialized yet! Please initialize by running mapAll on this function or a parent function with a PerlinNoiseVisitor!");
         } else {
             return this.noise
                     .getValue((double)context.blockX() * this.xzScale, (double)context.blockY() * this.yScale, (double)context.blockZ() * this.xzScale);
