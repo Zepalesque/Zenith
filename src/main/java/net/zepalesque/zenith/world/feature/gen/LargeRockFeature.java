@@ -4,11 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +19,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -92,6 +95,7 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                 placeSecondChunk(below, mutable, context);
             }
         }
+        tryPlacePatch(context);
         return true;
     }
 
@@ -121,10 +125,47 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         }
     }
 
-    public record Config(BlockStateProvider block, Optional<HolderSet<Block>> replaceableStates) implements FeatureConfiguration {
+
+    private boolean tryPlacePatch(FeaturePlaceContext<LargeRockFeature.Config> context) {
+        Config config = context.config();
+        Optional<PatchData> optional = config.patch();
+        if (optional.isEmpty())
+            return false;
+
+        PatchData patch = optional.get();
+
+        RandomSource rand = context.random();
+        BlockPos pos = context.origin();
+        WorldGenLevel level = context.level();
+        int i = 0;
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        int j = patch.xzSpread() + 1;
+        int k = patch.ySpread() + 1;
+
+        for(int l = 0; l < patch.tries(); ++l) {
+            mutable.setWithOffset(pos, rand.nextInt(j) - rand.nextInt(j), rand.nextInt(k) - rand.nextInt(k), rand.nextInt(j) - rand.nextInt(j));
+            if (patch.feature().value().place(level, context.chunkGenerator(), rand, mutable)) {
+                ++i;
+            }
+        }
+
+        return i > 0;
+    }
+
+    public record Config(BlockStateProvider block, Optional<HolderSet<Block>> replaceableStates, Optional<PatchData> patch) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create((config) -> config.group(
                 BlockStateProvider.CODEC.fieldOf("block").forGetter(Config::block),
-                RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("replaceable_states").forGetter(Config::replaceableStates)
+                RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("replaceable_states").forGetter(Config::replaceableStates),
+                PatchData.CODEC.optionalFieldOf("patch_gen").forGetter(Config::patch)
         ).apply(config, Config::new));
+    }
+
+    public record PatchData(int tries, int xzSpread, int ySpread, Holder<PlacedFeature> feature) {
+        public static final Codec<PatchData> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+                ExtraCodecs.POSITIVE_INT.fieldOf("patch_tries").forGetter(PatchData::tries),
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("patch_xz_spread").forGetter(PatchData::xzSpread),
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("patch_y_spread").forGetter(PatchData::ySpread),
+                PlacedFeature.CODEC.fieldOf("patch_feature").forGetter(PatchData::feature)
+        ).apply(builder, PatchData::new));
     }
 }
