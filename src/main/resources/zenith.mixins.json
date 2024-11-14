@@ -3,7 +3,7 @@
   "package": "net.zepalesque.zenith.mixin.mixins",
   "plugin": "net.zepalesque.zenith.mixin.ZenithMixinPlugin",
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "zenith.refmap.json",
   "mixins": [
     "common.RandomStateMixin",
