@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.state;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -17,7 +18,7 @@ public class ConditionalStateProvider extends BlockStateProvider {
     private final Holder<Condition<?>> condition;
     private final BlockStateProvider alternative;
 
-    public static final Codec<ConditionalStateProvider> CODEC = RecordCodecBuilder.create((condition) ->
+    public static final MapCodec<ConditionalStateProvider> CODEC = RecordCodecBuilder.mapCodec((condition) ->
             condition.group(
                     BlockStateProvider.CODEC.fieldOf("base").forGetter((alt) -> alt.base),
                     Condition.CODEC.fieldOf("condition").forGetter((alt) -> alt.condition),

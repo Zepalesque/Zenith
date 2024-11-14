@@ -13,7 +13,7 @@ public class ZenithModelLayers {
     }
 
     private static ModelLayerLocation register(String name, String type) {
-        return register(new ResourceLocation(Zenith.MODID, name), type);
+        return register(ResourceLocation.fromNamespaceAndPath(Zenith.MODID, name), type);
     }
 
     private static ModelLayerLocation register(ResourceLocation location, String type) {

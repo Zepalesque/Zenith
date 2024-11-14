@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -17,7 +18,7 @@ import java.util.function.UnaryOperator;
 public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Optional<MusicPredicate> predicate) implements BiomeModifier {
 
 
-    public static final Codec<MusicModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<MusicModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(MusicModifier::biomes),
             MusicOperator.CODEC.fieldOf("new_track").forGetter(MusicModifier::newMusic),
             MusicPredicate.CODEC.optionalFieldOf("predicate").forGetter(MusicModifier::predicate)).apply(builder, MusicModifier::new));
@@ -37,13 +38,13 @@ public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Opt
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
 
     public record MusicOperator(Optional<Holder<SoundEvent>> sound, Optional<Integer> minDelay, Optional<Integer> maxDelay, Optional<Boolean> replaceCurrent) implements UnaryOperator<Music> {
 
-        public static final Codec<MusicOperator> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+        public static final MapCodec<MusicOperator> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
                 SoundEvent.CODEC.optionalFieldOf("sound").forGetter(MusicOperator::sound),
                 Codec.INT.optionalFieldOf("min_delay").forGetter(MusicOperator::minDelay),
                 Codec.INT.optionalFieldOf("max_delay").forGetter(MusicOperator::maxDelay),

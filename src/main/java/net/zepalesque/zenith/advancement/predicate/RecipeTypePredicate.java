@@ -43,7 +43,7 @@ public record RecipeTypePredicate(HolderSet<RecipeType<?>> types) {
         return new RecipeTypePredicate(BuiltInRegistries.RECIPE_TYPE.getOrCreateTag(tag));
     }
 
-    public boolean matches(Holder<RecipeType<?>> type) {
+    public boolean test(Holder<RecipeType<?>> type) {
         return this.types.contains(type);
     }
 }

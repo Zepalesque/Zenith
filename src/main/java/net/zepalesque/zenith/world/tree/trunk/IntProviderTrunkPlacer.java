@@ -2,6 +2,7 @@ package net.zepalesque.zenith.world.tree.trunk;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class IntProviderTrunkPlacer extends TrunkPlacer {
-    public static final Codec<IntProviderTrunkPlacer> CODEC = IntProvider.CODEC.fieldOf("height").xmap(IntProviderTrunkPlacer::new, placer -> placer.height).stable().codec();
+    public static final MapCodec<IntProviderTrunkPlacer> CODEC = IntProvider.CODEC.fieldOf("height").xmap(IntProviderTrunkPlacer::new, placer -> placer.height).stable();
 
     protected final IntProvider height;
     public IntProviderTrunkPlacer(IntProvider height) {

@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<Biome>, Integer> waterMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
 
-    public static final Codec<WaterModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<WaterModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultWaterSettings.CODEC.optionalFieldOf("default_colors").forGetter(WaterModifier::settings),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("water_map").forGetter(WaterModifier::waterMap),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
@@ -41,7 +42,7 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
 

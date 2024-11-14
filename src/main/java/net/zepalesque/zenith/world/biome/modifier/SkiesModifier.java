@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Biome>, Integer> skyMap, Map<Holder<Biome>, Integer> fogMap) implements BiomeModifier {
 
-    public static final Codec<SkiesModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<SkiesModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultSkySettings.CODEC.optionalFieldOf("default_colors").forGetter(SkiesModifier::settings),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("sky_map").forGetter(SkiesModifier::skyMap),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(SkiesModifier::fogMap)).apply(builder, SkiesModifier::new));
@@ -41,7 +42,7 @@ public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Bi
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
 

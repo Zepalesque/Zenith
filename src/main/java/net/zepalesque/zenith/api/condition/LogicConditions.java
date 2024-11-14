@@ -1,13 +1,14 @@
 package net.zepalesque.zenith.api.condition;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class LogicConditions {
 
     public static class And<E extends Condition<?>, T extends Condition<?>> implements Condition<And<?, ?>> {
 
-        public static final Codec<And<?, ?>> CODEC = RecordCodecBuilder.create((condition) ->
+        public static final MapCodec<And<?, ?>> CODEC = RecordCodecBuilder.mapCodec((condition) ->
                 condition.group(Condition.ELEMENT_CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
                                 Condition.ELEMENT_CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
                         .apply(condition, And::new));
@@ -26,7 +27,7 @@ public class LogicConditions {
         }
 
         @Override
-        public Codec<And<?, ?>> codec() {
+        public MapCodec<And<?, ?>> codec() {
             return CODEC;
         }
 
@@ -34,7 +35,7 @@ public class LogicConditions {
 
     public static class Not<E extends Condition<?>> implements Condition<Not<?>> {
 
-        public static final Codec<Not<?>> CODEC = RecordCodecBuilder.create((condition) ->
+        public static final MapCodec<Not<?>> CODEC = RecordCodecBuilder.mapCodec((condition) ->
                 condition.group(Condition.ELEMENT_CODEC.fieldOf("inverted").forGetter((cond) -> cond.condition))
                         .apply(condition, Not::new));
 
@@ -53,14 +54,14 @@ public class LogicConditions {
         }
 
         @Override
-        public Codec<Not<?>> codec() {
+        public MapCodec<Not<?>> codec() {
             return CODEC;
         }
     }
 
     public static class Or<E extends Condition<?>, T extends Condition<?>> implements Condition<Or<?, ?>> {
 
-        public static final Codec<Or<?, ?>> CODEC = RecordCodecBuilder.create((condition) ->
+        public static final MapCodec<Or<?, ?>> CODEC = RecordCodecBuilder.mapCodec((condition) ->
                 condition.group(Condition.ELEMENT_CODEC.fieldOf("arg1").forGetter((cond) -> cond.arg1),
                                 Condition.ELEMENT_CODEC.fieldOf("arg2").forGetter((cond) -> cond.arg2))
                         .apply(condition, Or::new));
@@ -82,7 +83,7 @@ public class LogicConditions {
         }
 
         @Override
-        public Codec<Or<?, ?>> codec() {
+        public MapCodec<Or<?, ?>> codec() {
             return CODEC;
         }
 

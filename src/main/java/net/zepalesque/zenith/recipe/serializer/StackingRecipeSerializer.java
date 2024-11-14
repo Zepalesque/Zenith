@@ -1,11 +1,16 @@
 package net.zepalesque.zenith.recipe.serializer;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,47 +21,56 @@ import net.zepalesque.zenith.recipe.recipes.AbstractStackingRecipe;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 import java.util.Optional;
 
 public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implements RecipeSerializer<T> {
     private final AbstractStackingRecipe.Factory<T> factory;
 
-    private final Codec<T> codec;
+    private final MapCodec<T> codec;
+    private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
     public StackingRecipeSerializer(AbstractStackingRecipe.Factory<T> factory) {
         this.factory = factory;
-        this.codec = RecordCodecBuilder.create(inst -> inst.group(
+        this.codec = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractStackingRecipe::getIngredient),
                 ItemStackConstructor.CODEC.fieldOf("result").forGetter(AbstractStackingRecipe::getResult),
                 CompoundTag.CODEC.optionalFieldOf("additional_data").forGetter(AbstractStackingRecipe::getAdditionalData),
                 SoundEvent.CODEC.optionalFieldOf("sound").forGetter(AbstractStackingRecipe::getSound)
         ).apply(inst, this.factory::create));
+        this.streamCodec = StreamCodec.of(this::toNetwork, this::fromNetwork);
     }
 
     @Override
     @NotNull
-    public Codec<T> codec() {
+    public MapCodec<T> codec() {
         return this.codec;
     }
 
     @Override
-    public T fromNetwork(FriendlyByteBuf buffer) {
-        Ingredient ingredient = Ingredient.fromNetwork(buffer);
-        Holder<Item> result = buffer.readById(BuiltInRegistries.ITEM.asHolderIdMap());
-        Optional<CompoundTag> resultTag = buffer.readOptional(FriendlyByteBuf::readNbt);
+    public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
+        return this.streamCodec;
+    }
+
+    private static final CompoundTag EMPTY = new CompoundTag();
+
+    public T fromNetwork(RegistryFriendlyByteBuf buffer) {
+        Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+        Holder<Item> result = buffer.readById(BuiltInRegistries.ITEM.asHolderIdMap()::byId);
+        Optional<DataComponentPatch> resultTag = buffer.readOptional(buf -> DataComponentPatch.STREAM_CODEC.decode((RegistryFriendlyByteBuf) buf));
         ItemStackConstructor stack = new ItemStackConstructor(result, resultTag);
-        Optional<CompoundTag> additional = buffer.readOptional(FriendlyByteBuf::readNbt);
-        Optional<Holder<SoundEvent>> sound = buffer.readOptional(buf -> buf.readById(BuiltInRegistries.SOUND_EVENT.asHolderIdMap(), SoundEvent::readFromNetwork));
+        Optional<CompoundTag> additional = buffer.readOptional(buf -> Objects.requireNonNullElse(buf.readNbt(), EMPTY)).flatMap(tag -> tag.isEmpty() ? Optional.empty() : Optional.of(tag));
+        Optional<Holder<SoundEvent>> sound = buffer.readOptional(buf -> SoundEvent.STREAM_CODEC.decode(buffer));
         return this.factory.create(ingredient, stack, additional, sound);
     }
 
-    @Override
-    public void toNetwork(FriendlyByteBuf buffer, T recipe) {
-        recipe.getIngredient().toNetwork(buffer);
-        buffer.writeId(BuiltInRegistries.ITEM.asHolderIdMap(), recipe.getResult().item());
-        buffer.writeOptional(recipe.getResult().tag(), FriendlyByteBuf::writeNbt);
-        buffer.writeOptional(recipe.getAdditionalData(), FriendlyByteBuf::writeNbt);
-        buffer.writeOptional(recipe.getSound(), (buf, holder) -> buf.writeId(BuiltInRegistries.SOUND_EVENT.asHolderIdMap(), holder, (buf1, sound) -> sound.writeToNetwork(buf1)));
+
+    public void toNetwork(RegistryFriendlyByteBuf buffer, T recipe) {
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getIngredient());
+        buffer.writeById(BuiltInRegistries.ITEM.asHolderIdMap()::getId, recipe.getResult().item());
+        buffer.writeOptional(recipe.getResult().tag(), (buf, tag) -> DataComponentPatch.STREAM_CODEC.encode((RegistryFriendlyByteBuf) buf, tag));
+        buffer.writeOptional(recipe.getAdditionalData(), (buf, tag) -> buf.writeNbt(tag));
+        buffer.writeOptional(recipe.getSound(), (buf, holder) -> SoundEvent.STREAM_CODEC.encode((RegistryFriendlyByteBuf)buf, holder));
     }
 }
 

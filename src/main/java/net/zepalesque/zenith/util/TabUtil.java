@@ -10,19 +10,41 @@ import java.util.function.Supplier;
 
 public class TabUtil {
 
-    public static void putAfter(Supplier<? extends ItemLike> itemBefore, Supplier<? extends ItemLike> insertedItem, BuildCreativeModeTabContentsEvent event) {
-        event.getEntries().putAfter(new ItemStack(itemBefore.get()), new ItemStack(insertedItem.get()), TabVisibility.PARENT_AND_SEARCH_TABS);
+    public static void putAfter(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> before, Supplier<? extends ItemLike> inserted, Supplier<? extends ItemLike>... others) {
+        event.insertAfter(stack(before), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
+        if (others.length > 0) {
+            event.insertAfter(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
+            for (int i = 1; i < others.length - 1; i++) {
+                event.insertAfter(stack(others[i]), stack(others[i + 1]), TabVisibility.PARENT_AND_SEARCH_TABS);
+            }
+        }
     }
 
-    public static void putBefore(Supplier<? extends ItemLike> itemAfter, Supplier<? extends ItemLike> insertedItem, BuildCreativeModeTabContentsEvent event) {
-        event.getEntries().putBefore(new ItemStack(itemAfter.get()), new ItemStack(insertedItem.get()), TabVisibility.PARENT_AND_SEARCH_TABS);
+    public static void putBefore(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> after, Supplier<? extends ItemLike> inserted, Supplier<? extends ItemLike>... others) {
+        event.insertBefore(stack(after), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
+        if (others.length > 0) {
+            event.insertBefore(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
+            for (int i = 1; i < others.length - 1; i++) {
+                event.insertBefore(new ItemStack(others[i].get()), new ItemStack(others[i + 1].get()), TabVisibility.PARENT_AND_SEARCH_TABS);
+            }
+        }
     }
 
-    public static void remove(Supplier<? extends ItemLike> toRemove, BuildCreativeModeTabContentsEvent event) {
-        event.getEntries().remove(new ItemStack(toRemove.get()));
+    public static void remove(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> removed, Supplier<? extends ItemLike>... others) {
+        event.remove(stack(removed), TabVisibility.PARENT_AND_SEARCH_TABS);
+        for (Supplier<? extends ItemLike> item : others) {
+            event.remove(stack(item), TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
     }
 
-    public static void add(Supplier<? extends ItemLike> toAdd, BuildCreativeModeTabContentsEvent event) {
-        event.getEntries().put(new ItemStack(toAdd.get()), TabVisibility.PARENT_AND_SEARCH_TABS);
+    public static void put(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> added, Supplier<? extends ItemLike>... others) {
+        event.accept(stack(added), TabVisibility.PARENT_AND_SEARCH_TABS);
+        for (Supplier<? extends ItemLike> item : others) {
+            event.accept(stack(item), TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+    }
+
+    private static ItemStack stack(Supplier<? extends ItemLike> item) {
+        return new ItemStack(item.get());
     }
 }

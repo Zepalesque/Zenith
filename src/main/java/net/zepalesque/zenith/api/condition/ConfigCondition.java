@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.api.condition;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.zepalesque.zenith.Zenith;
@@ -15,7 +16,7 @@ public class ConfigCondition implements Condition<ConfigCondition> {
 
     private static final HashMap<String, ConfigSerializer> SERIALIZERS = new HashMap<>();
 
-    public static Codec<ConfigCondition> CODEC = RecordCodecBuilder.create((condition) ->
+    public static MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec((condition) ->
             condition.group(
                             Codec.STRING.fieldOf("serializer").forGetter((config) -> config.serializerId),
                             Codec.STRING.fieldOf("config_path").forGetter((config) -> config.serializer == null || config.config == null ? "" : config.serializer.serialize(config.config))
@@ -47,7 +48,7 @@ public class ConfigCondition implements Condition<ConfigCondition> {
     }
 
     @Override
-    public Codec<ConfigCondition> codec() {
+    public MapCodec<ConfigCondition> codec() {
         return CODEC;
     }
 

@@ -2,6 +2,7 @@ package net.zepalesque.zenith;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -11,14 +12,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
@@ -44,7 +46,6 @@ import net.zepalesque.zenith.world.structure.modifier.ZenithStructureModifiers;
 import net.zepalesque.zenith.world.tree.trunk.ZenithTrunkPlacers;
 import org.slf4j.Logger;
 
-import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 // TODO: More documentation
@@ -54,7 +55,7 @@ public class Zenith {
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Zenith(IEventBus bus, Dist dist) {
+    public Zenith(ModContainer mod, IEventBus bus, Dist dist) {
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerPackets);
@@ -85,17 +86,16 @@ public class Zenith {
         // Register example config serializer
         ZConfig.COMMON.registerSerializer();
         
-        ZConfigHandler.setup(bus);
+        ZConfigHandler.setup(mod, bus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
 
     }
 
-    public void registerPackets(RegisterPayloadHandlerEvent event) {
-        IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
-        registrar.play(BiomeTintSyncPacket.ID, BiomeTintSyncPacket::decode, payload -> payload.client(BiomeTintSyncPacket::handle));
-
+    public void registerPackets(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+        registrar.playToClient(BiomeTintSyncPacket.TYPE, BiomeTintSyncPacket.STREAM_CODEC, BiomeTintSyncPacket::execute);
     }
 
     private void dataSetup(GatherDataEvent event) {
@@ -121,7 +121,7 @@ public class Zenith {
         event.register(BiomeTints.TINT_REGISTRY);
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
         @SubscribeEvent
@@ -132,12 +132,12 @@ public class Zenith {
     }
 
     public static ResourceLocation loc(String path) {
-        return new ResourceLocation(MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 
     public static class Keys {
 
-        public static final ResourceKey<Registry<Codec<? extends Condition<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_element"));
+        public static final ResourceKey<Registry<MapCodec<? extends Condition<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_element"));
         public static final ResourceKey<Registry<Condition<?>>> CONDITION = ResourceKey.createRegistryKey(Zenith.loc("condition"));
         public static final ResourceKey<Registry<BiomeTint>> BIOME_TINT = ResourceKey.createRegistryKey(Zenith.loc("biome_tint"));
     }

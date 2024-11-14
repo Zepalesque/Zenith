@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.feature.placement;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 public class ConditionPlacementModule extends PlacementFilter {
 
-    public static Codec<ConditionPlacementModule> CODEC = RecordCodecBuilder.create(
+    public static MapCodec<ConditionPlacementModule> CODEC = RecordCodecBuilder.mapCodec(
             builder -> builder
                     .group(Condition.CODEC.fieldOf("condition").forGetter(module -> module.condition))
                     .apply(builder, ConditionPlacementModule::new));

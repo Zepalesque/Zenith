@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.structure.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
@@ -14,7 +15,7 @@ import net.zepalesque.zenith.api.condition.Condition;
 
 public record ConditionalStructureModifier(Holder<StructureModifier> modifier, Holder<Condition<?>> condition) implements StructureModifier {
 
-    public static final Codec<ConditionalStructureModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<ConditionalStructureModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             StructureModifier.REFERENCE_CODEC.fieldOf("modify").forGetter(ConditionalStructureModifier::modifier),
             Condition.CODEC.fieldOf("when").forGetter(ConditionalStructureModifier::condition)
     ).apply(builder, ConditionalStructureModifier::new));
@@ -37,7 +38,7 @@ public record ConditionalStructureModifier(Holder<StructureModifier> modifier, H
     }
 
     @Override
-    public Codec<? extends StructureModifier> codec() {
+    public MapCodec<? extends StructureModifier> codec() {
         return CODEC;
     }
 }

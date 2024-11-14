@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Holder<Biome>, Integer> grassMap, Map<Holder<Biome>, Integer> foliageMap) implements BiomeModifier {
 
-    public static final Codec<FoliageModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<FoliageModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultFoliageSettings.CODEC.optionalFieldOf("default_colors").forGetter(FoliageModifier::settings),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
             ZenithCodecs.BIOME_COLOR_MAP.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
@@ -41,7 +42,7 @@ public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Hol
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
 

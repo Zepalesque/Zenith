@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.biome.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -12,7 +13,7 @@ import net.zepalesque.zenith.api.condition.Condition;
 
 public record ConditionalBiomeModifier(Holder<BiomeModifier> modifier, Holder<Condition<?>> condition) implements BiomeModifier {
     
-    public static final Codec<ConditionalBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<ConditionalBiomeModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             BiomeModifier.REFERENCE_CODEC.fieldOf("modify").forGetter(ConditionalBiomeModifier::modifier),
             Condition.CODEC.fieldOf("when").forGetter(ConditionalBiomeModifier::condition)
     ).apply(builder, ConditionalBiomeModifier::new));
@@ -33,7 +34,7 @@ public record ConditionalBiomeModifier(Holder<BiomeModifier> modifier, Holder<Co
         }
     }
     @Override
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
 }

@@ -1,16 +1,14 @@
 package net.zepalesque.zenith.data.resource;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.zepalesque.zenith.Zenith;
 import net.zepalesque.zenith.api.condition.Condition;
-import net.zepalesque.zenith.api.condition.ConfigCondition;
 import net.zepalesque.zenith.api.condition.DevEnvironmentCondition;
 import net.zepalesque.zenith.api.condition.LogicConditions;
 import net.zepalesque.zenith.api.condition.ModLoadedCondition;
-import net.zepalesque.zenith.config.ZConfig;
 
 import javax.annotation.Nullable;
 
@@ -22,7 +20,7 @@ public class Conditions {
         return ResourceKey.create(Zenith.Keys.CONDITION, Zenith.loc(name));
     }
 
-    public static void bootstrap(BootstapContext<Condition<?>> context) {
+    public static void bootstrap(BootstrapContext<Condition<?>> context) {
         context.register(EXAMPLE_CONDITION,
                 new LogicConditions.And<>(
                         new ModLoadedCondition(Zenith.MODID),
@@ -32,7 +30,7 @@ public class Conditions {
 
     @Nullable
     public static ResourceKey<Condition<?>> getResourceKey(RegistryAccess registryAccess, String location) {
-        return getResourceKey(registryAccess, new ResourceLocation(location));
+        return getResourceKey(registryAccess, ResourceLocation.parse(location));
     }
 
 
@@ -53,7 +51,7 @@ public class Conditions {
 
     @Nullable
     public static Condition<?> getCondition(RegistryAccess registryAccess, String location) {
-        return getCondition(registryAccess, new ResourceLocation(location));
+        return getCondition(registryAccess, ResourceLocation.parse(location));
     }
 
     @Nullable

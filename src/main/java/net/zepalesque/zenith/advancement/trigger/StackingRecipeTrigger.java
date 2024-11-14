@@ -36,10 +36,10 @@ public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipe
     public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> ingredient, Optional<ItemPredicate> result, Optional<RecipeTypePredicate> types) implements SimpleInstance {
 
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(Instance::player),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "ingredient").forGetter(Instance::ingredient),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "result").forGetter(Instance::result),
-                        ExtraCodecs.strictOptionalField(RecipeTypePredicate.CODEC, "recipe_types").forGetter(Instance::types))
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                        ItemPredicate.CODEC.optionalFieldOf("ingredient").forGetter(Instance::ingredient),
+                        ItemPredicate.CODEC.optionalFieldOf("result").forGetter(Instance::result),
+                        RecipeTypePredicate.CODEC.optionalFieldOf("recipe_types").forGetter(Instance::types))
                 .apply(instance, Instance::new));
 
         public static Instance forIngredient(Optional<ItemPredicate> item, Optional<RecipeTypePredicate> recipeType) {
@@ -70,9 +70,9 @@ public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipe
         }
 
         public boolean test(ItemStack ingredient, ItemStack result, Holder<RecipeType<?>> type) {
-            return (this.ingredient.isEmpty() || this.ingredient.get().matches(ingredient)) &&
-                    (this.result.isEmpty() || this.result.get().matches(result)) &&
-                    (this.types.isEmpty() || this.types.get().matches(type));
+            return (this.ingredient.isEmpty() || this.ingredient.get().test(ingredient)) &&
+                    (this.result.isEmpty() || this.result.get().test(result)) &&
+                    (this.types.isEmpty() || this.types.get().test(type));
         }
 
     }

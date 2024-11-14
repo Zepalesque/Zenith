@@ -1,6 +1,7 @@
 package net.zepalesque.zenith.world.structure.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -19,7 +20,7 @@ public record RemoveStructureModifier(HolderSet<Structure> structures) implement
 
     private static final Codec<HolderSet<Structure>> STRUCTURE_LIST = RegistryCodecs.homogeneousList(Registries.STRUCTURE, Structure.DIRECT_CODEC);
 
-    public static final Codec<RemoveStructureModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<RemoveStructureModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             STRUCTURE_LIST.fieldOf("structures").forGetter(RemoveStructureModifier::structures)
     ).apply(builder, RemoveStructureModifier::new));
 
@@ -31,7 +32,7 @@ public record RemoveStructureModifier(HolderSet<Structure> structures) implement
     }
 
     @Override
-    public Codec<? extends StructureModifier> codec() {
+    public MapCodec<? extends StructureModifier> codec() {
         return CODEC;
     }
 }

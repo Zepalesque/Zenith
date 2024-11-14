@@ -20,7 +20,7 @@ public class ZenithBoatRenderer extends BoatRenderer {
 
     public ZenithBoatRenderer(EntityRendererProvider.Context context, boolean chest, String modid, String wood) {
         super(context, chest);
-        ResourceLocation boat_texture = new ResourceLocation(modid, "textures/entity/" + (chest ? "chest_" : "") + "boat/" + wood + ".png");
+        ResourceLocation boat_texture = ResourceLocation.fromNamespaceAndPath(modid, "textures/entity/" + (chest ? "chest_" : "") + "boat/" + wood + ".png");
         this.skyrootBoatResource = Pair.of(boat_texture, chest ? new ChestBoatModel(context.bakeLayer(ZenithModelLayers.ZENITH_CHEST_BOAT)) : new BoatModel(context.bakeLayer(ZenithModelLayers.ZENITH_BOAT)));
     }
 

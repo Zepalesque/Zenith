@@ -46,7 +46,10 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
 
         ItemStack resultStack = this.getResult().createStack();
 
-        resultStack.setTag(originalStack.getTag() != null ? originalStack.getTag().copy() : null);
+        if (!originalStack.isComponentsPatchEmpty()) {
+            resultStack.applyComponents(originalStack.getComponents());
+        }
+
         resultStack.setCount(originalStack.getCount());
         if (resultStack.getItem() instanceof CustomStackingBehavior custom) {
             resultStack = custom.transformStack(this.ingredient, resultStack, this.type, this.additional);

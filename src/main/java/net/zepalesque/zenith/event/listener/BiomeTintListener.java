@@ -1,28 +1,24 @@
 package net.zepalesque.zenith.event.listener;
 
 
-import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.zepalesque.zenith.Zenith;
-import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.api.biometint.BiomeTints;
-import net.zepalesque.zenith.network.ZenithNetworking;
 import net.zepalesque.zenith.network.packet.BiomeTintSyncPacket;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Mod.EventBusSubscriber(modid = Zenith.MODID)
+@EventBusSubscriber(modid = Zenith.MODID)
 public class BiomeTintListener {
 
     @SubscribeEvent
@@ -37,7 +33,7 @@ public class BiomeTintListener {
                 ));
                 map.put(loc, tints);
             });
-            ZenithNetworking.sendToPlayer(new BiomeTintSyncPacket(map), player);
+            PacketDistributor.sendToPlayer(player, new BiomeTintSyncPacket(map));
         }
     }
 }

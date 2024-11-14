@@ -4,12 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.zepalesque.zenith.Zenith;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.api.biometint.BiomeTints;
@@ -19,21 +20,26 @@ import java.util.Map;
 
 public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, Integer>> types) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "sync_biome_tints");
+    public static final Type<BiomeTintSyncPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Zenith.MODID, "sync_biome_tints"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, BiomeTintSyncPacket> STREAM_CODEC = CustomPacketPayload.codec(
+            BiomeTintSyncPacket::write,
+            BiomeTintSyncPacket::decode);
 
     public void write(FriendlyByteBuf buf) {
         buf.writeMap(types, FriendlyByteBuf::writeResourceLocation, (b1, map) -> b1.writeMap(map, FriendlyByteBuf::writeResourceLocation, FriendlyByteBuf::writeInt));
     }
+
 
     public static BiomeTintSyncPacket decode(FriendlyByteBuf buf) {
         Map<ResourceLocation, Map<ResourceLocation, Integer>> map = buf.readMap(FriendlyByteBuf::readResourceLocation, b1 -> b1.readMap(FriendlyByteBuf::readResourceLocation, FriendlyByteBuf::readInt));
         return new BiomeTintSyncPacket(map);
     }
 
-    public void execute(Player player) {
+    public static void execute(BiomeTintSyncPacket packet, IPayloadContext context) {
         if (Minecraft.getInstance().player != null) {
             Level level = Minecraft.getInstance().player.level();
-            this.types.forEach((tintType, map) ->{
+            packet.types.forEach((tintType, map) ->{
                 @Nullable BiomeTint tint = BiomeTints.TINT_REGISTRY.get(tintType);
                 if (tint != null) {
                     tint.clear();
@@ -50,17 +56,8 @@ public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, In
         }
     }
 
-    public void handle(PlayPayloadContext context) {
-        context.workHandler().execute(() -> this.execute(context.player().orElse(null)));
-    }
-
-
     @Override
-    public ResourceLocation id() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
-
-
-
-
 }
