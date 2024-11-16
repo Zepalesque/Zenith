@@ -8,7 +8,7 @@ plugins {
     id 'net.neoforged.moddev' version "${moddevgradle_version}"
 }
 
-version = "${mc_version}-${mod_version}-neoforge"
+version = "${minecraft_version}-${mod_version}-neoforge"
 group = "net.zepalesque.zenith"
 
 base {
@@ -26,7 +26,6 @@ neoForge {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
 
             logLevel = org.slf4j.event.Level.DEBUG
-
         }
 
         client {
@@ -58,6 +57,10 @@ neoForge {
             sourceSet(sourceSets.main)
         }
     }
+    parchment {
+        minecraftVersion = "${mappings_mc_ver}"
+        mappingsVersion = "${mappings}"
+    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
@@ -66,31 +69,26 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
-//subsystems {
-//    parchment {
-//        minecraftVersion = "${mc_version}"
-//        mappingsVersion = "${mappings}"
-//    }
-//}
-//
-//subsystems {}
-
 dependencies {}
+
+repositories {
+    maven { url = 'https://maven.parchmentmc.org' }
+}
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_version            : mod_version,
-            mod_license            : mod_license,
-            mod_tracker            : mod_tracker,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description,
-            mc_version             : mc_version,
-            mc_version_range       : mc_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range
+            mod_id                     : mod_id,
+            mod_name                   : mod_name,
+            mod_version                : mod_version,
+            mod_license                : mod_license,
+            mod_tracker                : mod_tracker,
+            mod_authors                : mod_authors,
+            mod_description            : mod_description,
+            minecraft_version          : minecraft_version,
+            minecraft_version_range    : minecraft_version_range,
+            neo_version                : neo_version,
+            neo_version_range          : neo_version_range,
+            loader_version_range       : loader_version_range
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -99,20 +97,6 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 }
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
-
-/*tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                 "Specification-Title"     : project.mod_name,
-                "Specification-Vendor"    : "Zepalesque",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.mod_name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Zepalesque",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-}*/
 
 compileJava {
     options.incremental = false

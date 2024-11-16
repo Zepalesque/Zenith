@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 public class TabUtil {
 
+    @SuppressWarnings("unchecked")
     public static void putAfter(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> before, Supplier<? extends ItemLike> inserted, Supplier<? extends ItemLike>... others) {
         event.insertAfter(stack(before), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
@@ -20,6 +21,7 @@ public class TabUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void putBefore(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> after, Supplier<? extends ItemLike> inserted, Supplier<? extends ItemLike>... others) {
         event.insertBefore(stack(after), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
@@ -30,6 +32,7 @@ public class TabUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void remove(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> removed, Supplier<? extends ItemLike>... others) {
         event.remove(stack(removed), TabVisibility.PARENT_AND_SEARCH_TABS);
         for (Supplier<? extends ItemLike> item : others) {
@@ -37,6 +40,7 @@ public class TabUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void put(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> added, Supplier<? extends ItemLike>... others) {
         event.accept(stack(added), TabVisibility.PARENT_AND_SEARCH_TABS);
         for (Supplier<? extends ItemLike> item : others) {
