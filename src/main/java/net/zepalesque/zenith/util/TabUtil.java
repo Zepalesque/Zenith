@@ -27,7 +27,7 @@ public class TabUtil {
         if (others.length > 0) {
             event.insertBefore(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
             for (int i = 1; i < others.length - 1; i++) {
-                event.insertBefore(new ItemStack(others[i].get()), new ItemStack(others[i + 1].get()), TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertBefore(stack(others[i]), stack(others[i + 1]), TabVisibility.PARENT_AND_SEARCH_TABS);
             }
         }
     }
