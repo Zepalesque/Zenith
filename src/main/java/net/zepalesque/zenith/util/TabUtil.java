@@ -15,8 +15,8 @@ public class TabUtil {
         event.insertAfter(stack(before), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
             event.insertAfter(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            for (int i = 1; i < others.length - 1; i++) {
-                event.insertAfter(stack(others[i]), stack(others[i + 1]), TabVisibility.PARENT_AND_SEARCH_TABS);
+            for (int i = 1; i < others.length; i++) {
+                event.insertAfter(stack(others[i - 1]), stack(others[i]), TabVisibility.PARENT_AND_SEARCH_TABS);
             }
         }
     }
@@ -26,8 +26,8 @@ public class TabUtil {
         event.insertBefore(stack(after), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
             event.insertBefore(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            for (int i = 1; i < others.length - 1; i++) {
-                event.insertBefore(stack(others[i]), stack(others[i + 1]), TabVisibility.PARENT_AND_SEARCH_TABS);
+            for (int i = 1; i < others.length; i++) {
+                event.insertBefore(stack(others[i - 1]), stack(others[i]), TabVisibility.PARENT_AND_SEARCH_TABS);
             }
         }
     }
