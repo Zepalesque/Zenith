@@ -47,7 +47,7 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
         ItemStack resultStack = this.getResult().createStack();
 
         if (!originalStack.isComponentsPatchEmpty()) {
-            resultStack.applyComponents(originalStack.getComponents());
+            resultStack.applyComponents(originalStack.getComponentsPatch());
         }
 
         resultStack.setCount(originalStack.getCount());
