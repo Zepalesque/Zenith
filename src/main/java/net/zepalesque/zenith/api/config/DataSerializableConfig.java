@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.config;
+package net.zepalesque.zenith.api.config;
 
 import com.google.gson.JsonSyntaxException;
 import net.neoforged.neoforge.common.ModConfigSpec;

@@ -3,6 +3,7 @@ package net.zepalesque.zenith.config;
 import com.google.gson.JsonSyntaxException;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.zepalesque.zenith.api.config.DataSerializableConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
