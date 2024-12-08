@@ -1,9 +1,9 @@
 <p align="center">
-<img src="https://github.com/Zepalesque/Zenith/blob/1.20.4/src/main/resources/zenith.png" width="300">
+<img src="https://github.com/Zepalesque/Zenith/blob/1.21.1/src/main/resources/zenith.png" width="300">
 </p>
 
 <p align="center">
-<img src="https://github.com/Zepalesque/Zenith/blob/1.20.4/assets/zenith_title.png" width="500">
+<img src="https://github.com/Zepalesque/Zenith/blob/1.21.1/assets/zenith_title.png" width="500">
 </p>
 
 ---
@@ -80,3 +80,12 @@ jarJar fg.deobf("net.zepalesque.zenith:zenith:${project.zenith_version}") {
 }
 ```
 </details>
+
+
+### License
+[![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
+[![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://github.com/Zepalesque/Zenith/blob/1.21.1/LICENSE.txt)
+
+The assets (main case in point - the logo) for this mod are **unlicensed and [all rights are reserved](https://en.wikipedia.org/wiki/All_rights_reserved) by Zepalesque.**
+
+The code for the mod is licensed under the LGPL v3.0 license.
