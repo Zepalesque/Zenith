@@ -8,6 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Lifecycle;
+import com.mojang.serialization.codecs.UnboundedMapCodec;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,5 +31,9 @@ public record UnboundedHashMapCodec<K, V>(
     @Override
     public String toString() {
         return "UnboundedHashMapCodec[" + keyCodec + " -> " + elementCodec + ']';
+    }
+
+    public static <K, V> UnboundedHashMapCodec<K, V> of(final Codec<K> keyCodec, final Codec<V> elementCodec) {
+        return new UnboundedHashMapCodec<>(keyCodec, elementCodec);
     }
 }
