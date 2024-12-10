@@ -20,7 +20,7 @@ import net.zepalesque.zenith.advancement.predicate.RecipeTypePredicate;
 import java.util.Optional;
 
 /**
- * Criterion trigger used for checking an item infused with an Ambrosium Shard.
+ * Criterion trigger used for checking an item that has been changed via a stacking recipe.
  */
 public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipeTrigger.Instance> {
 
