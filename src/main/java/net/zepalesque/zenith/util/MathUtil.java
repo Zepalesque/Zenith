@@ -39,4 +39,20 @@ public class MathUtil {
         return min + (random.nextFloat() * (max - min));
     }
 
+    public static double clampedInverp(double start, double end, double delta) {
+        if (delta < start) {
+            return 0.0;
+        } else {
+            return delta > end ? 1.0 : Mth.inverseLerp(delta, start, end);
+        }
+    }
+
+    public static float clampedInverp(float start, float end, float delta) {
+        if (delta < start) {
+            return 0.0F;
+        } else {
+            return delta > end ? 1.0F : Mth.inverseLerp(delta, start, end);
+        }
+    }
+
 }
