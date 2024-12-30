@@ -30,50 +30,50 @@ public interface BlockSet {
      * Generate blockstate files and block models for this BlockSet
      * @param data the {@link BlockStateProvider} used
      */
-    void blockData(BlockStateProvider data);
+    <P extends BlockStateProvider> void blockData(P data);
 
     /**
      * Generate item models for this BlockSet
      * @param data the {@link ItemModelProvider} used
      */
-    void itemData(ItemModelProvider data);
+    <P extends ItemModelProvider> void itemData(P data);
 
     /**
      * Generate language data for this BlockSet
      * @param data the {@link LanguageProvider} used
      */
-    void langData(LanguageProvider data);
+    <P extends LanguageProvider> void langData(P data);
 
     /**
      * Generate recipe data for this BlockSet
      * @param data the {@link RecipeProvider} used
      * @param output the {@link RecipeOutput} that the recipe provider uses
      */
-    void recipeData(RecipeProvider data, RecipeOutput output);
+    <P extends RecipeProvider> void recipeData(P data, RecipeOutput output);
 
     /**
      * Generate block tag data for this BlockSet
      * @param data the {@link BlockTagsProvider} used
      */
-    void blockTagData(BlockTagsProvider data);
+    <P extends BlockTagsProvider> void blockTagData(P data);
 
     /**
      * Generate item tag data for this BlockSet
      * @param data the {@link ItemTagsProvider} used
      */
-    void itemTagData(ItemTagsProvider data);
+    <P extends ItemTagsProvider> void itemTagData(P data);
 
     /**
      * Generate block loot data for this BlockSet
      * @param data the {@link BlockLootSubProvider} used
      */
-    void lootData(BlockLootSubProvider data);
+    <P extends BlockLootSubProvider> void lootData(P data);
 
     /**
      * Generate datamap data for this BlockSet
      * @param data the {@link DataMapProvider} used
      */
-    void mapData(DataMapProvider data);
+    <P extends DataMapProvider> void mapData(P data);
 
     /**
      * Set the flammability of this BlockSet's blocks
@@ -96,6 +96,10 @@ public interface BlockSet {
      */
     Supplier<? extends ItemLike> addToCreativeTab(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> prev, TabAdditionPhase phase);
 
+    /**
+     * Whether the creative tab modifications should be done before or after your mod's other creative tab usages.
+     * TODO: Automate this
+     */
     enum TabAdditionPhase {
         BEFORE, AFTER
     }
