@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.block;
+package net.zepalesque.zenith.block.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.StandingSignBlock;
