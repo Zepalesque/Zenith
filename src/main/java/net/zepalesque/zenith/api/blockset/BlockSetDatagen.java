@@ -13,7 +13,7 @@ import net.zepalesque.zenith.Zenith;
  * @param <T> The data generator's class. For instance, an ExampleBlockstateGenerator should extend {@code BlockSetDatagen<ExampleBlockstateGenerator>}, and so on for other data generator types
  *            Note that it is still necessary to call something around the lines of this.doBlockSetGeneration() in the data generator's respective generation method.
  */
-public interface BlockSetDatagen<T extends BlockSetDatagen<T, B>, B extends BlockSet> {
+public interface BlockSetDatagen<T extends BlockSetDatagen<T>> {
 
     /**
      * The respective method for generating a given BlockSet's data.<br>
@@ -26,28 +26,17 @@ public interface BlockSetDatagen<T extends BlockSetDatagen<T, B>, B extends Bloc
      * </code></pre>
      * @param set The
      */
-    void generateDataForBlockSet(B set);
-
-
-    default void tryGenerateDataForBlockSet(BlockSet set) {
-        try {
-            @SuppressWarnings("unchecked")
-            B cast = (B) set;
-            generateDataForBlockSet(cast);
-        } catch (ClassCastException e) {
-            Zenith.LOGGER.error("Some Blockset datagen failed!", e);
-        }
-    }
+    <B extends BlockSet> void generateDataForBlockSet(B set);
 
     /**
      * Generate the data for this generator's set BlockSets. Should be called in the generator's respective method of generation.
      * For example, a {@link BlockStateProvider} would do this in its {@link BlockStateProvider#registerStatesAndModels() registerStatesAndModels()} method.
      */
     default void doBlockSetGeneration() {
-        this.getSets().forEach(registry -> registry.forEach(this::tryGenerateDataForBlockSet));
+        this.getSets().forEach(registry -> registry.forEach(this::generateDataForBlockSet));
     }
 
-    Map<BlockSetDatagen<?, ?>, Collection<Collection<? extends BlockSet>>> SETS_FOR_GENERATORS = new HashMap<>();
+    Map<BlockSetDatagen<?>, Collection<Collection<? extends BlockSet>>> SETS_FOR_GENERATORS = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     default T withBlockSets(Collection<BlockSet> registry, Collection<BlockSet>... others) {
