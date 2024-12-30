@@ -15,7 +15,7 @@ import net.zepalesque.zenith.api.blockset.BlockSet;
  * @param <T> The data generator's class. For instance, an ExampleBlockstateGenerator should extend {@code BlockSetDatagen<ExampleBlockstateGenerator>}, and so on for other data generator types
  *            Note that it is still necessary to call something around the lines of this.doBlockSetGeneration() in the data generator's respective generation method.
  */
-public interface BlockSetDatagen<T extends BlockSetDatagen<T> & DataProvider> extends DataProvider {
+public interface BlockSetDatagen<T extends BlockSetDatagen<T>> {
 
     /**
      * The respective method for generating a given BlockSet's data.<br>
