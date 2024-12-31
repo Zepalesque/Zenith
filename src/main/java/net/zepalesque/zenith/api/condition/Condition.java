@@ -4,13 +4,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
-import net.minecraft.world.level.storage.loot.providers.score.ScoreboardNameProviders;
-import net.zepalesque.zenith.Zenith;
+import net.zepalesque.zenith.core.Zenith;
+import net.zepalesque.zenith.core.registry.ConditionElements;
 
-import java.util.Map;
 import java.util.function.Function;
 
 /**

@@ -2,7 +2,7 @@ package net.zepalesque.zenith.mixin.mixins.common;
 
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.zepalesque.zenith.config.ZConfig;
+import net.zepalesque.zenith.core.config.ZConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

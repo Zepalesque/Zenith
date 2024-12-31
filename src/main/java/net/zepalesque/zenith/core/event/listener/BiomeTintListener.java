@@ -1,0 +1,39 @@
+package net.zepalesque.zenith.core.event.listener;
+
+
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.biome.Biome;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.zepalesque.zenith.core.Zenith;
+import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.network.packet.BiomeTintSyncPacket;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@EventBusSubscriber(modid = Zenith.MODID)
+public class BiomeTintListener {
+
+    @SubscribeEvent
+    public static void updateTints(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
+            Registry<Biome> registry = player.level().registryAccess().registryOrThrow(Registries.BIOME);
+            Map<ResourceLocation, Map<ResourceLocation, Integer>> map = new HashMap<>();
+            BiomeTints.TINT_REGISTRY.forEach(tint -> {
+                ResourceLocation loc = BiomeTints.TINT_REGISTRY.getKey(tint);
+                Map<ResourceLocation, Integer> tints = registry.getDataMap(tint.getDataMap()).entrySet().stream().collect(Collectors.toMap(
+                        entry -> entry.getKey().location(), Map.Entry::getValue
+                ));
+                map.put(loc, tints);
+            });
+            PacketDistributor.sendToPlayer(player, new BiomeTintSyncPacket(map));
+        }
+    }
+}

@@ -8,7 +8,7 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseRouter;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.zepalesque.zenith.world.density.PerlinNoiseFunction;
+import net.zepalesque.zenith.api.world.density.PerlinNoiseFunction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

@@ -1,0 +1,31 @@
+package net.zepalesque.zenith.api.condition.type;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.neoforged.fml.ModList;
+import net.zepalesque.zenith.api.condition.Condition;
+
+public class ModLoadedCondition implements Condition<ModLoadedCondition> {
+
+    public static final MapCodec<ModLoadedCondition> CODEC = RecordCodecBuilder.mapCodec((condition) ->
+            condition.group(Codec.STRING.fieldOf("modid").forGetter((config) -> config.modid))
+                    .apply(condition, ModLoadedCondition::new));
+
+    protected final String modid;
+
+    public ModLoadedCondition(String modid) {
+        this.modid = modid;
+    }
+
+    @Override
+    public boolean test() {
+        return ModList.get().isLoaded(this.modid);
+    }
+
+    @Override
+    public MapCodec<ModLoadedCondition> codec() {
+        return CODEC;
+    }
+
+}

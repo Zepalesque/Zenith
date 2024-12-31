@@ -4,10 +4,9 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
-import net.zepalesque.zenith.Zenith;
+import net.zepalesque.zenith.core.Zenith;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,0 +1,61 @@
+package net.zepalesque.zenith.core.data.resource;
+
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.zepalesque.zenith.core.Zenith;
+import net.zepalesque.zenith.api.condition.Condition;
+import net.zepalesque.zenith.api.condition.type.DevEnvironmentCondition;
+import net.zepalesque.zenith.api.condition.type.LogicConditions;
+import net.zepalesque.zenith.api.condition.type.ModLoadedCondition;
+
+import javax.annotation.Nullable;
+
+public class Conditions {
+
+    public static final ResourceKey<Condition<?>> EXAMPLE_CONDITION = createKey("example_condition");
+
+    private static ResourceKey<Condition<?>> createKey(String name) {
+        return ResourceKey.create(Zenith.Keys.CONDITION, Zenith.loc(name));
+    }
+
+    public static void bootstrap(BootstrapContext<Condition<?>> context) {
+        context.register(EXAMPLE_CONDITION,
+                new LogicConditions.And<>(
+                        new ModLoadedCondition(Zenith.MODID),
+                        new DevEnvironmentCondition()
+                ));
+    }
+
+    @Nullable
+    public static ResourceKey<Condition<?>> getResourceKey(RegistryAccess registryAccess, String location) {
+        return getResourceKey(registryAccess, ResourceLocation.parse(location));
+    }
+
+
+    @Nullable
+    public static ResourceKey<Condition<?>> getResourceKey(RegistryAccess registryAccess, ResourceLocation location) {
+        Condition<?> condition = getCondition(registryAccess, location);
+        if (condition != null) {
+            return registryAccess.registryOrThrow(Zenith.Keys.CONDITION).getResourceKey(condition).orElse(null);
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static ResourceKey<Condition<?>> getResourceKey(RegistryAccess registryAccess, Condition<?> condition) {
+        return registryAccess.registryOrThrow(Zenith.Keys.CONDITION).getResourceKey(condition).orElse(null);
+    }
+
+    @Nullable
+    public static Condition<?> getCondition(RegistryAccess registryAccess, String location) {
+        return getCondition(registryAccess, ResourceLocation.parse(location));
+    }
+
+    @Nullable
+    public static Condition<?> getCondition(RegistryAccess registryAccess, ResourceLocation location) {
+        return registryAccess.registryOrThrow(Zenith.Keys.CONDITION).get(location);
+    }
+}

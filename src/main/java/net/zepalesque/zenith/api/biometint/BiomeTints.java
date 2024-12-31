@@ -4,7 +4,7 @@ import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.RegistryBuilder;
-import net.zepalesque.zenith.Zenith;
+import net.zepalesque.zenith.core.Zenith;
 
 public class BiomeTints {
 
