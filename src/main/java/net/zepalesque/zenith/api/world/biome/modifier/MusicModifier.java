@@ -10,7 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.api.predicate.MusicPredicate;
+import net.zepalesque.zenith.api.function.type.MusicPredicate;
 
 import java.util.Optional;
 import java.util.function.UnaryOperator;

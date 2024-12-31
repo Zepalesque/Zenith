@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.advancement.predicate;
+package net.zepalesque.zenith.api.function.type;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -11,13 +11,14 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * <p>Tweaked version of RecipeTypePredicate (??)</p>
  * <p><b>TODO:</b> Figure out what the 'tweaked' part meant</p>
  * @param types The valid {@link RecipeType RecipeTypes} that will satisfy this predicate's requirements.
  */
-public record RecipeTypePredicate(HolderSet<RecipeType<?>> types) {
+public record RecipeTypePredicate(HolderSet<RecipeType<?>> types) implements Predicate<Holder<RecipeType<?>>> {
     public static final Codec<RecipeTypePredicate> CODEC = Codec.either(
                     TagKey.hashedCodec(Registries.RECIPE_TYPE), BuiltInRegistries.RECIPE_TYPE.holderByNameCodec()
             )

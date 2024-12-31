@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.predicate;
+package net.zepalesque.zenith.api.function.type;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
