@@ -49,12 +49,12 @@ import java.util.concurrent.CompletableFuture;
 
 // TODO: More documentation
 @Mod(Zenith.MODID)
-public record Zenith(ModContainer mod, IEventBus bus, Dist dist) {
+public class Zenith {
     public static final String MODID = "zenith";
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Zenith {
+    public Zenith(ModContainer mod, IEventBus bus, Dist dist) {
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerPackets);
         bus.addListener(this::registerDataMaps);
