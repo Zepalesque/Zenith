@@ -12,7 +12,6 @@ import java.nio.file.Files;
 public class ZConfigHandler {
 
     public static void setup(ModContainer mod, IEventBus bus) {
-
         try {
             Files.createDirectories(FMLPaths.CONFIGDIR.get().resolve(Zenith.MODID));
             mod.registerConfig(ModConfig.Type.CLIENT, ZConfig.CLIENT_SPEC, Zenith.MODID + "/client.toml");

@@ -1,9 +1,10 @@
-package net.zepalesque.zenith.api.biometint;
+package net.zepalesque.zenith.core.registry;
 
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.RegistryBuilder;
+import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.core.Zenith;
 
 public class BiomeTints {

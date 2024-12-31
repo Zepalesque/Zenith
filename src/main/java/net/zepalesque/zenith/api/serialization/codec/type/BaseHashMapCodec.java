@@ -19,7 +19,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-/** CODE COPY: {@link com.mojang.serialization.codecs.BaseMapCodec} -- Uses {@link HashMap} instead of {@link ImmutableMap} */
+/**
+ * <p>CODE COPY: {@link com.mojang.serialization.codecs.BaseMapCodec}</p>
+ * <p>Uses {@link HashMap} instead of {@link ImmutableMap}</p>
+ * */
 public interface BaseHashMapCodec<K, V> {
     Codec<K> keyCodec();
 

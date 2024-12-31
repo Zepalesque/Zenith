@@ -7,7 +7,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
-import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 
 import java.util.concurrent.CompletableFuture;
 

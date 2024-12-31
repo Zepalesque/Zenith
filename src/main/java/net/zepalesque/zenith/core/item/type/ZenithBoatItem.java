@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.item;
+package net.zepalesque.zenith.core.item.type;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;

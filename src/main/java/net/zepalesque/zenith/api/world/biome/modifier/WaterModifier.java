@@ -8,7 +8,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.api.serialization.codec.CodecUtil;
+import net.zepalesque.zenith.api.serialization.codec.MoreCodecs;
 
 import java.util.Map;
 import java.util.Optional;
@@ -17,8 +17,8 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
 
     public static final MapCodec<WaterModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultWaterSettings.CODEC.optionalFieldOf("default_colors").forGetter(WaterModifier::settings),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("water_map").forGetter(WaterModifier::waterMap),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("water_map").forGetter(WaterModifier::waterMap),
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(WaterModifier::fogMap)).apply(builder, WaterModifier::new));
 
 
     @Override

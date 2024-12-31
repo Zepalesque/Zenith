@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.zepalesque.zenith.core.Zenith;
-import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 import net.zepalesque.zenith.core.network.packet.BiomeTintSyncPacket;
 
 import java.util.HashMap;

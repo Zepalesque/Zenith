@@ -12,7 +12,11 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.Optional;
 
-// Tweaked version of RecipeTypePredicate
+/**
+ * <p>Tweaked version of RecipeTypePredicate (??)</p>
+ * <p><b>TODO:</b> Figure out what the 'tweaked' part meant</p>
+ * @param types The valid {@link RecipeType RecipeTypes} that will satisfy this predicate's requirements.
+ */
 public record RecipeTypePredicate(HolderSet<RecipeType<?>> types) {
     public static final Codec<RecipeTypePredicate> CODEC = Codec.either(
                     TagKey.hashedCodec(Registries.RECIPE_TYPE), BuiltInRegistries.RECIPE_TYPE.holderByNameCodec()

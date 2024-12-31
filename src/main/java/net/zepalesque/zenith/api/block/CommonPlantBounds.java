@@ -3,6 +3,9 @@ package net.zepalesque.zenith.api.block;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+/**
+ * Some useful {@link VoxelShape VoxelShapes} for plant-like blocks.
+ */
 public class CommonPlantBounds {
 
     public static final VoxelShape BUSH = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);

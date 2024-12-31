@@ -10,7 +10,10 @@ import com.mojang.serialization.Lifecycle;
 
 import java.util.Map;
 
-/** CODE COPY: {@link com.mojang.serialization.codecs.UnboundedMapCodec} -- Implements {@link BaseHashMapCodec} rather than {@link com.mojang.serialization.codecs.BaseMapCodec} */
+/**
+ * <p>CODE COPY: {@link com.mojang.serialization.codecs.UnboundedMapCodec}</p>
+ * <p>Implements {@link BaseHashMapCodec} rather than {@link com.mojang.serialization.codecs.BaseMapCodec}</p>
+ */
 public record UnboundedHashMapCodec<K, V>(
     Codec<K> keyCodec,
     Codec<V> elementCodec

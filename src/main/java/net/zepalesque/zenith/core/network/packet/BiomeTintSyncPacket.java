@@ -13,7 +13,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
-import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 
 import javax.annotation.Nullable;
 import java.util.Map;

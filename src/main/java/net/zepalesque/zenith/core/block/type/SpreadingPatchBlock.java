@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.block.type;
+package net.zepalesque.zenith.core.block.type;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -26,7 +26,7 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.core.registry.ZenithAdvancementTriggers;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
-import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.core.registry.ConditionElements;
 import net.zepalesque.zenith.core.config.ZConfig;
@@ -49,12 +49,12 @@ import java.util.concurrent.CompletableFuture;
 
 // TODO: More documentation
 @Mod(Zenith.MODID)
-public class Zenith {
+public record Zenith(ModContainer mod, IEventBus bus, Dist dist) {
     public static final String MODID = "zenith";
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Zenith(ModContainer mod, IEventBus bus, Dist dist) {
+    public Zenith {
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerPackets);

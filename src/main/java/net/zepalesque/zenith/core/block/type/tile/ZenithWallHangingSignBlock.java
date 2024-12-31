@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.block.type.tile;
+package net.zepalesque.zenith.core.block.type.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.WallHangingSignBlock;

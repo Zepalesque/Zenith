@@ -11,7 +11,8 @@ import java.util.function.Function;
 
 /**
  * A unified condition that can be used in a variety of datapack registries, to enable or disable certain things based on different conditions.
- * @param <T> The condition's class. For instance, an ExampleCondition should extend {@code Condition<ExampleCondition>}
+ * @param <T> <p>The type of the subclass condition.</p>
+ *            <p>For instance, an {@code ExampleCondition} should extend {@code Condition<ExampleCondition>}</p>
  */
 public interface Condition<T extends Condition<T>> {
 

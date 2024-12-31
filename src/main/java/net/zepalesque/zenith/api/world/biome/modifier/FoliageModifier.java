@@ -8,7 +8,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.api.serialization.codec.CodecUtil;
+import net.zepalesque.zenith.api.serialization.codec.MoreCodecs;
 
 import java.util.Map;
 import java.util.Optional;
@@ -17,8 +17,8 @@ public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Hol
 
     public static final MapCodec<FoliageModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultFoliageSettings.CODEC.optionalFieldOf("default_colors").forGetter(FoliageModifier::settings),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("grass_map").forGetter(FoliageModifier::grassMap),
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("foliage_map").forGetter(FoliageModifier::foliageMap)).apply(builder, FoliageModifier::new));
 
 
     @Override

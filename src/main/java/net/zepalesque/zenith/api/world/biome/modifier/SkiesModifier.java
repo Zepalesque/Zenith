@@ -8,7 +8,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.api.serialization.codec.CodecUtil;
+import net.zepalesque.zenith.api.serialization.codec.MoreCodecs;
 
 import java.util.Map;
 import java.util.Optional;
@@ -17,8 +17,8 @@ public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Bi
 
     public static final MapCodec<SkiesModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             DefaultSkySettings.CODEC.optionalFieldOf("default_colors").forGetter(SkiesModifier::settings),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("sky_map").forGetter(SkiesModifier::skyMap),
-            CodecUtil.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(SkiesModifier::fogMap)).apply(builder, SkiesModifier::new));
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("sky_map").forGetter(SkiesModifier::skyMap),
+            MoreCodecs.BIOME_COLOR_MAP.fieldOf("fog_map").forGetter(SkiesModifier::fogMap)).apply(builder, SkiesModifier::new));
 
 
     @Override

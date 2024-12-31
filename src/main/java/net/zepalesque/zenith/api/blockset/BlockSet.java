@@ -52,13 +52,13 @@ public interface BlockSet {
     void recipeData(RecipeProvider data, RecipeOutput output);
 
     /**
-     * Generate block tag data for this BlockSet
+     * Generate block components data for this BlockSet
      * @param data the {@link BlockTagsProvider} used
      */
     void blockTagData(BlockTagsProvider data);
 
     /**
-     * Generate item tag data for this BlockSet
+     * Generate item components data for this BlockSet
      * @param data the {@link ItemTagsProvider} used
      */
     void itemTagData(ItemTagsProvider data);

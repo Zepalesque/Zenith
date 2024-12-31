@@ -11,34 +11,25 @@ import net.zepalesque.zenith.api.serialization.config.ConfigSerializer;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public class ConfigCondition implements Condition<ConfigCondition> {
+public record ConfigCondition(@Nullable String serializerId, @Nullable ConfigValue<Boolean> config) implements Condition<ConfigCondition> {
 
     private static final HashMap<String, ConfigSerializer> SERIALIZERS = new HashMap<>();
 
     public static MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec((condition) ->
             condition.group(
-                            Codec.STRING.fieldOf("serializer").forGetter((config) -> config.serializerId),
-                            Codec.STRING.fieldOf("config_path").forGetter((config) -> config.serializer == null || config.config == null ? "" : config.serializer.serialize(config.config))
+                            Codec.STRING.fieldOf("serializer").forGetter(ConfigCondition::serializerId),
+                            Codec.STRING.fieldOf("config_path").forGetter(ConfigCondition::serializePath)
                     )
                     .apply(condition, (serializerId, configPath) -> {
                         @Nullable ConfigSerializer serializer = SERIALIZERS.get(serializerId);
                         return new ConfigCondition(serializerId, serializer == null ? null : serializer.deserialize(configPath));
                     }));
 
-    @Nullable
-    protected final ConfigSerializer serializer;
-    @Nullable
-    protected final ConfigValue<Boolean> config;
-    @Nullable
-    protected final String serializerId;
-
-    public ConfigCondition(@Nullable String serializerId, @Nullable ConfigValue<Boolean> config) {
+    // Record constructors are cool :eyes:
+    public ConfigCondition {
         if (!SERIALIZERS.containsKey(serializerId)) {
             throw new UnsupportedOperationException("Attempted to create ConfigCondition with unregistered serializer!");
         }
-        this.serializerId = serializerId;
-        this.serializer = SERIALIZERS.get(serializerId);
-        this.config = config;
     }
 
     @Override
@@ -58,5 +49,10 @@ public class ConfigCondition implements Condition<ConfigCondition> {
         }
         SERIALIZERS.putIfAbsent(id, serializer);
         return true;
+    }
+
+    private String serializePath() {
+        if (!SERIALIZERS.containsKey(this.serializerId()) || SERIALIZERS.get(this.serializerId()) == null) return "";
+        else return SERIALIZERS.get(this.serializerId()).serialize(this.config());
     }
 }

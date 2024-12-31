@@ -15,11 +15,12 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.zepalesque.zenith.api.advancement.predicate.RecipeTypePredicate;
+import net.zepalesque.zenith.api.recipe.recipes.StackingRecipe;
 
 import java.util.Optional;
 
 /**
- * Criterion trigger used for checking an item that has been changed via a stacking recipe.
+ * Criterion trigger used for checking an item that has been changed via a {@link StackingRecipe}
  */
 public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipeTrigger.Instance> {
 

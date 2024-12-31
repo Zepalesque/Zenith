@@ -63,7 +63,7 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
     public void toNetwork(RegistryFriendlyByteBuf buffer, T recipe) {
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.getIngredient());
         buffer.writeById(BuiltInRegistries.ITEM.asHolderIdMap()::getId, recipe.getResult().item());
-        buffer.writeOptional(recipe.getResult().tag(), (buf, tag) -> DataComponentPatch.STREAM_CODEC.encode((RegistryFriendlyByteBuf) buf, tag));
+        buffer.writeOptional(recipe.getResult().components(), (buf, tag) -> DataComponentPatch.STREAM_CODEC.encode((RegistryFriendlyByteBuf) buf, tag));
         buffer.writeOptional(recipe.getAdditionalData(), (buf, tag) -> buf.writeNbt(tag));
         buffer.writeOptional(recipe.getSound(), (buf, holder) -> SoundEvent.STREAM_CODEC.encode((RegistryFriendlyByteBuf)buf, holder));
     }

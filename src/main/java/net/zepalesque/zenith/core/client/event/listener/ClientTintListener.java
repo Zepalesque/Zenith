@@ -6,7 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
-import net.zepalesque.zenith.api.biometint.BiomeTints;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 
 @EventBusSubscriber(modid = Zenith.MODID, value = Dist.CLIENT)
 public class ClientTintListener {

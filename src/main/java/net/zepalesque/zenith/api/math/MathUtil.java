@@ -6,8 +6,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Some helpful math functions that extend off of ones used in Java's {@link Math} class and Minecraft's {@link Mth} class.
+ */
 public class MathUtil {
-
 
     public static int clampedLerpInt(float delta, int min, int max) {
         return Mth.clamp(Mth.lerpInt(delta, min, max), min, max);

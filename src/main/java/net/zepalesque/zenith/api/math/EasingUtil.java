@@ -2,18 +2,19 @@ package net.zepalesque.zenith.api.math;
 
 
 import net.minecraft.util.Mth;
+import net.minecraft.client.animation.AnimationChannel;
 
 /**
- *  Ported to Java from C#, based on <a href="https://gist.github.com/Fonserbc/3d31a25e87fdaa541ddf">...</a>
+ *  <p>Ported to Java from C#, based on <a href="https://gist.github.com/Fonserbc/3d31a25e87fdaa541ddf">...</a></p>
+ *  <p><b>TODO:</b> Relevant {@link AnimationChannel.Interpolation} types</p>
  */
 public class EasingUtil {
 
-    public static float Linear (float k) {
+    public static float linear(float k) {
         return k;
     }
 
-    public static class Quadratic
-    {
+    public static class Quadratic {
         public static float in (float k) {
             return k*k;
         }
@@ -32,8 +33,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Cubic
-    {
+    public static class Cubic {
         public static float in (float k) {
             return k*k*k;
         }
@@ -48,8 +48,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Quartic
-    {
+    public static class Quartic {
         public static float in (float k) {
             return k*k*k*k;
         }
@@ -64,8 +63,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Quintic
-    {
+    public static class Quintic {
         public static float in (float k) {
             return k*k*k*k*k;
         }
@@ -80,8 +78,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Sinusoidal
-    {
+    public static class Sinusoidal {
         public static float in (float k) {
             return 1f - Mth.cos((float) (k*Math.PI/2f));
         }
@@ -95,8 +92,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Exponential
-    {
+    public static class Exponential {
         public static float in (float k) {
             return k == 0f? 0f : (float) Math.pow(1024f, k - 1f);
         }
@@ -113,8 +109,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Circular
-    {
+    public static class Circular {
         public static float in (float k) {
             return (float) (1f - Math.sqrt(1f - k*k));
         }
@@ -129,8 +124,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Elastic
-    {
+    public static class Elastic {
         public static float in (float k) {
             if (k == 0) return 0;
             if (k == 1) return 1;
@@ -149,8 +143,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Back
-    {
+    public static class Back {
         static float s = 1.70158f;
         static float s2 = 2.5949095f;
 
@@ -168,8 +161,7 @@ public class EasingUtil {
         }
     }
 
-    public static class Bounce
-    {
+    public static class Bounce {
         public static float in (float k) {
             return 1f - out(1f - k);
         }

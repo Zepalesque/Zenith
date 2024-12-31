@@ -1,7 +1,7 @@
-package net.zepalesque.zenith.api.block.type.tile;
+package net.zepalesque.zenith.core.block.type.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.CeilingHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -9,11 +9,11 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.function.Supplier;
 
-public class ZenithCeilingHangingSignBlock extends CeilingHangingSignBlock {
+public class ZenithWallSignBlock extends WallSignBlock {
 
     private final Supplier<BlockEntityType<?>> entity;
 
-    public ZenithCeilingHangingSignBlock(WoodType woodType, Supplier<BlockEntityType<?>> entity, Properties properties) {
+    public ZenithWallSignBlock(WoodType woodType, Supplier<BlockEntityType<?>> entity, Properties properties) {
         super(woodType, properties);
         this.entity = entity;
     }

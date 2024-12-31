@@ -7,6 +7,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.core.Zenith;
+import net.zepalesque.zenith.core.registry.BiomeTints;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -10,20 +10,19 @@ import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Wrapper class for {@link SoundInstance}, with certain parameters replaced with their defaults.<br>
- * Intended to be used with {@link PlaySoundEvent} -- you should set the new sound instance via {@link PlaySoundEvent#setSound(SoundInstance)}, wrapping the original instance.
- * <br>
+ * <p>Wrapper class for {@link SoundInstance}, with certain parameters replaced with their defaults.</p>
+ * <p>Intended to be used with {@link PlaySoundEvent} -- you should set the new sound instance via {@link PlaySoundEvent#setSound(SoundInstance)}, wrapping the original instance.</p>
  * @param inner The sound instance you wish to modify
  * @param flags The flags for this instance, represented as an integer.
- * <br><br>
- * FLAGS (Add each number for the flags you want to override with the default value of)<br>
- * 1: getSource - default: {@link SoundSource#MASTER}<br>
- * 2: isLooping - default: false<br>
- * 4: isRelative - default: false<br>
- * 8: getDelay - default: 0<br>
- * 16: getVolume - default: 10.0F<br>
- * 32: getPitch - default: 1.0F<br>
- * 64: getAttenuation - default: {@link Attenuation#LINEAR}
+ * <p></p>
+ * <p>FLAGS (Add each number for the flags you want to override with the default value of):</p>
+ * <p>1: getSource - default: {@link SoundSource#MASTER}</p>
+ * <p>2: isLooping - default: false</p>
+ * <p>4: isRelative - default: false</p>
+ * <p>8: getDelay - default: 0</p>
+ * <p>16: getVolume - default: 10.0F</p>
+ * <p>32: getPitch - default: 1.0F</p>
+ * <p>64: getAttenuation - default: {@link Attenuation#LINEAR}</p>
  */
 public record WrappedDefaultsSoundInstance<S extends SoundInstance>(S inner, byte flags) implements SoundInstance {
 
@@ -33,7 +32,7 @@ public record WrappedDefaultsSoundInstance<S extends SoundInstance>(S inner, byt
         return new WrappedDefaultsSoundInstance<>(inner, (byte) flags);
     }
 
-    protected boolean getFlag(int index) {
+    private boolean getFlag(int index) {
         return (flags & powers[index]) != 0;
     }
 
