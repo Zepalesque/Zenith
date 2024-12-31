@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.ItemStackedOnOtherEvent;
+import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
 import net.zepalesque.zenith.core.registry.ZenithAdvancementTriggers;
 import net.zepalesque.zenith.api.recipe.recipes.AbstractStackingRecipe;
 
@@ -18,12 +19,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
+/**
+ * Helps with implementing {@link StackingRecipe StackingRecipe} mechanics.
+ *
+ * <p>Example implementation from <a href="https://github.com/Zepalesque/The-Aether-Redux">The Aether: Redux</a>:</p>
+ *
+ * <pre><code>
+ * <literal>@SubscribeEvent</literal>
+ * public static void onStackItem(ItemStackedOnOtherEvent event) {
+ *     if (event.getClickAction() == ClickAction.SECONDARY &&
+ *             StackingRecipeHelper.stack(event, stack -> stack.is(AetherItems.AMBROSIUM_SHARD), ReduxRecipes.INFUSION.get())) {
+ *         event.setCanceled(true);
+ *     }
+ * }
+ * </code></pre>
+ * NOTE: Future versions of Zenith may automate this process for you.
+ */
 public class StackingRecipeHelper {
-
     private static final Map<RecipeType<?>, Holder<RecipeType<?>>> DIRECT_HOLDERS = new HashMap<>();
 
-    // Additional behavior such as ClickAction types should be done in the event listener/hook
-    // The return value of this should be used to cancel the event. False means do not cancel, true means DO cancel
+    /**
+     * <p>Replaces an item via a stacking recipe, if applicable.</p>
+     * <p>Additional behavior such as ClickAction types should be done in the event listener/hook</p>
+     *
+     * @param event            The relevant {@link ItemStackedOnOtherEvent}
+     * @param carriedPredicate A predicate determining whether the held item is valid for this recipe type.
+     * @param type             The relevant {@link RecipeType}.
+     * @return Whether the associated {@link ItemStackedOnOtherEvent} should be canceled.
+     * <p>Do NOT use {@link net.neoforged.bus.api.ICancellableEvent#setCanceled(boolean) ICancellableEvent#setCanceled(boolean)}. Use an {@code if} check, and cancel the event if it passes.</p>
+     */
     public static <R extends AbstractStackingRecipe> boolean stack(ItemStackedOnOtherEvent event, Predicate<ItemStack> carriedPredicate, RecipeType<R> type) {
         // These seem to be inverted for whatever reason?
         ItemStack carried = event.getStackedOnItem();
@@ -70,6 +94,4 @@ public class StackingRecipeHelper {
         }
         return false;
     }
-
-
 }

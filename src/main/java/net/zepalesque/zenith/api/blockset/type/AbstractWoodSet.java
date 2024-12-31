@@ -16,10 +16,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zepalesque.zenith.api.blockset.BlockSet;
-import net.zepalesque.zenith.api.entity.misc.ZenithBoat;
-import net.zepalesque.zenith.api.entity.misc.ZenithChestBoat;
-import net.zepalesque.zenith.api.tile.ZenithHangingSignBlockEntity;
-import net.zepalesque.zenith.api.tile.ZenithSignBlockEntity;
+import net.zepalesque.zenith.core.entity.misc.ZenithBoat;
+import net.zepalesque.zenith.core.entity.misc.ZenithChestBoat;
+import net.zepalesque.zenith.core.tile.ZenithHangingSignBlockEntity;
+import net.zepalesque.zenith.core.tile.ZenithSignBlockEntity;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 /**
  * Should implement methods by having the first of each (with the parameters) used as a construction method and the second (without parameters) as a getter function
  */
-public abstract class   AbstractWoodSet implements BlockSet {
+public abstract class AbstractWoodSet implements BlockSet {
 
     // Blocks
 

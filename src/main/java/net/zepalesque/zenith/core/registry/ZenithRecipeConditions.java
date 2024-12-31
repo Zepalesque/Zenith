@@ -1,10 +1,11 @@
-package net.zepalesque.zenith.api.recipe.condition;
+package net.zepalesque.zenith.core.registry;
 
 import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.zepalesque.zenith.api.recipe.condition.ConditionRecipeModule;
 import net.zepalesque.zenith.core.Zenith;
 
 public class ZenithRecipeConditions {

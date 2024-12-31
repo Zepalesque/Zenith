@@ -11,6 +11,9 @@ import net.minecraft.world.level.biome.Biome;
 
 import java.util.Map;
 
+/**
+ * Additional {@link Codec} types that may be of use.
+ */
 public class MoreCodecs {
     public static final Codec<Map<Holder<Biome>, Integer>> BIOME_COLOR_MAP = ExtraCodecs.strictUnboundedMap(Biome.CODEC, Codec.INT);
     public static final Codec<HolderSet<SoundEvent>> SOUND_EVENT_SET = RegistryCodecs.homogeneousList(Registries.SOUND_EVENT, SoundEvent.DIRECT_CODEC);

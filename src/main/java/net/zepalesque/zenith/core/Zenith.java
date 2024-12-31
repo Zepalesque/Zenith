@@ -35,7 +35,7 @@ import net.zepalesque.zenith.core.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.core.data.generator.ZenithRegistrySets;
 import net.zepalesque.zenith.core.registry.ZenithLootConditions;
 import net.zepalesque.zenith.core.network.packet.BiomeTintSyncPacket;
-import net.zepalesque.zenith.api.recipe.condition.ZenithRecipeConditions;
+import net.zepalesque.zenith.core.registry.ZenithRecipeConditions;
 import net.zepalesque.zenith.core.registry.ZenithBiomeModifiers;
 import net.zepalesque.zenith.core.registry.ZenithDensityFunctions;
 import net.zepalesque.zenith.core.registry.ZenithFeatures;

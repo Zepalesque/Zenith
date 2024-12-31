@@ -10,19 +10,20 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
 import net.zepalesque.zenith.api.item.CustomStackingBehavior;
+import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractStackingRecipe implements StackingRecipe {
 
-    protected final RecipeType<?> type;
+    protected final RecipeType<? extends AbstractStackingRecipe> type;
     protected final Ingredient ingredient;
     protected final ItemStackConstructor result;
     protected final Optional<CompoundTag> additional;
     protected final Optional<Holder<SoundEvent>> sound;
 
-    public AbstractStackingRecipe(RecipeType<?> type, Ingredient ingredient, ItemStackConstructor result, Optional<CompoundTag> additional, Optional<Holder<SoundEvent>> sound) {
+    public AbstractStackingRecipe(RecipeType<? extends AbstractStackingRecipe> type, Ingredient ingredient, ItemStackConstructor result, Optional<CompoundTag> additional, Optional<Holder<SoundEvent>> sound) {
         this.type = type;
         this.ingredient = ingredient;
         this.result = result;
@@ -49,13 +50,13 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
 
         resultStack.setCount(originalStack.getCount());
         if (resultStack.getItem() instanceof CustomStackingBehavior custom) {
-            resultStack = custom.transformStack(this.ingredient, resultStack, this.type, this.additional);
+            resultStack = custom.transformStack(this.ingredient, resultStack, this.type, this.additional.orElse(null));
         }
         return resultStack;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends AbstractStackingRecipe> getType() {
         return this.type;
     }
 

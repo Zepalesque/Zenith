@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.recipe.recipes;
+package net.zepalesque.zenith.core.recipe.recipes;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -7,7 +7,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
-import net.zepalesque.zenith.api.recipe.input.EmptyRecipeInput;
+import net.zepalesque.zenith.core.recipe.input.EmptyRecipeInput;
 
 /**
  * Overrides anything container-related or item-related because these in-world recipes have no container. Instead, custom behavior is implemented by recipes that extend this.

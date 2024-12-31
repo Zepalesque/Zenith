@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.recipe.input;
+package net.zepalesque.zenith.core.recipe.input;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;

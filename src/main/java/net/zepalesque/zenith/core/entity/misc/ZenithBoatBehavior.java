@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.entity.misc;
+package net.zepalesque.zenith.core.entity.misc;
 
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.vehicle.Boat;

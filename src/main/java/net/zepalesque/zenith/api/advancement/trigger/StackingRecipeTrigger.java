@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.zepalesque.zenith.api.function.type.RecipeTypePredicate;
-import net.zepalesque.zenith.api.recipe.recipes.StackingRecipe;
+import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
 
 import java.util.Optional;
 
