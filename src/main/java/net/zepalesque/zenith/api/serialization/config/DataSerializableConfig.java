@@ -18,6 +18,9 @@ public class DataSerializableConfig {
         this.id = id;
     }
 
+    /**
+     * Registers a {@link ConfigSerializer} for this config.
+     */
     public void registerSerializer() {
         ConfigCondition.registerSerializer(this.serializerID(), new ConfigSerializer(this::serialize, this::deserialize));
     }
