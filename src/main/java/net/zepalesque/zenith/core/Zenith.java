@@ -55,7 +55,6 @@ public record Zenith(ModContainer mod, IEventBus bus, Dist dist) {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Zenith {
-
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerPackets);
         bus.addListener(this::registerDataMaps);
