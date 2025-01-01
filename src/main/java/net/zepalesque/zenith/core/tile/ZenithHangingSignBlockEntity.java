@@ -4,17 +4,31 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.zepalesque.zenith.api.blockset.type.AbstractWoodSet;
 
 import java.util.function.Supplier;
 
 public class ZenithHangingSignBlockEntity extends HangingSignBlockEntity {
-    private final Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> type;
-    public ZenithHangingSignBlockEntity(BlockPos pos, BlockState state, Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> type) {
+
+    protected final AbstractWoodSet woodset;
+
+    protected <T extends AbstractWoodSet> ZenithHangingSignBlockEntity(BlockPos pos, BlockState state, T woodset) {
         super(pos, state);
-        this.type = type;
+        this.woodset = woodset;
     }
 
+        public <T extends AbstractWoodSet> ZenithHangingSignBlockEntity create(BlockPos pos, BlockState state, T set) {
+
+        return new ZenithHangingSignBlockEntity(pos, state, set) {
+            @Override
+            public BlockEntityType<? extends ZenithHangingSignBlockEntity> getType() {
+                return this.woodset == null ? set.hangingSignEntity().get() : this.woodset.hangingSignEntity().get();
+            }
+        };
+    }
+
+    @Override
     public BlockEntityType<? extends ZenithHangingSignBlockEntity> getType() {
-        return this.type.get();
+        return this.woodset.hangingSignEntity().get();
     }
 }
