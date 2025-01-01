@@ -9,25 +9,25 @@ import net.zepalesque.zenith.api.blockset.type.AbstractWoodSet;
 import java.util.function.Supplier;
 
 public class ZenithHangingSignBlockEntity extends HangingSignBlockEntity {
-    protected final AbstractWoodSet woodset;
+    protected final Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> typeSupplier;
 
-    protected <T extends AbstractWoodSet> ZenithHangingSignBlockEntity(BlockPos pos, BlockState state, T woodset) {
+    protected ZenithHangingSignBlockEntity(BlockPos pos, BlockState state, Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> typeSupplier) {
         super(pos, state);
-        this.woodset = woodset;
+        this.typeSupplier = typeSupplier;
     }
 
     // Fix to get around crashing caused by the validateBlockState method
-    public static <T extends AbstractWoodSet> ZenithHangingSignBlockEntity create(BlockPos pos, BlockState state, T set) {
+    public static ZenithHangingSignBlockEntity create(BlockPos pos, BlockState state, Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> set) {
         return new ZenithHangingSignBlockEntity(pos, state, set) {
             @Override
             public BlockEntityType<? extends ZenithHangingSignBlockEntity> getType() {
-                return this.woodset == null ? set.hangingSignEntity().get() : this.woodset.hangingSignEntity().get();
+                return this.typeSupplier == null ? set.get() : this.typeSupplier.get();
             }
         };
     }
 
     @Override
     public BlockEntityType<? extends ZenithHangingSignBlockEntity> getType() {
-        return this.woodset.hangingSignEntity().get();
+        return this.typeSupplier.get();
     }
 }
