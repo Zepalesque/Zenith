@@ -24,6 +24,8 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+import net.zepalesque.zenith.api.extendablestate.ExtendableStateList;
+import net.zepalesque.zenith.core.registry.StateLists;
 import net.zepalesque.zenith.core.registry.ZenithAdvancementTriggers;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
 import net.zepalesque.zenith.core.registry.BiomeTints;
@@ -60,7 +62,7 @@ public class Zenith {
         bus.addListener(this::registerDataMaps);
         bus.addListener(this::registerRegistries);
         bus.addListener(this::dataSetup);
-        bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC));
+        bus.addListener(this::datapackRegistries);
 
         DeferredRegister<?>[] registers = {
                 ConditionElements.ELEMENTS,
@@ -96,6 +98,11 @@ public class Zenith {
         registrar.playToClient(BiomeTintSyncPacket.TYPE, BiomeTintSyncPacket.STREAM_CODEC, BiomeTintSyncPacket::execute);
     }
 
+    private void datapackRegistries(DataPackRegistryEvent.NewRegistry event) {
+        event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC);
+        event.dataPackRegistry(Keys.EXTENDABLE_STATE_LIST_ENTRY, ExtendableStateList.Entry.CODEC);
+    }
+
     private void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper fileHelper = event.getExistingFileHelper();
@@ -117,6 +124,7 @@ public class Zenith {
     private void registerRegistries(NewRegistryEvent event) {
         event.register(ConditionElements.ELEMENT_REGISTRY);
         event.register(BiomeTints.TINT_REGISTRY);
+        event.register(StateLists.STATE_LIST_REGISTRY);
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -138,6 +146,8 @@ public class Zenith {
         public static final ResourceKey<Registry<MapCodec<? extends Condition<?>>>> CONDITION_ELEMENT = ResourceKey.createRegistryKey(Zenith.loc("condition_element"));
         public static final ResourceKey<Registry<Condition<?>>> CONDITION = ResourceKey.createRegistryKey(Zenith.loc("condition"));
         public static final ResourceKey<Registry<BiomeTint>> BIOME_TINT = ResourceKey.createRegistryKey(Zenith.loc("biome_tint"));
+        public static final ResourceKey<Registry<ExtendableStateList>> EXTENDABLE_STATE_LIST = ResourceKey.createRegistryKey(Zenith.loc("extendable_state_list"));
+        public static final ResourceKey<Registry<ExtendableStateList.Entry>> EXTENDABLE_STATE_LIST_ENTRY = ResourceKey.createRegistryKey(Zenith.loc("state_list_entry"));
     }
 
 
