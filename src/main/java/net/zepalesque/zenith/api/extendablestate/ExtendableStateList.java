@@ -51,7 +51,7 @@ public class ExtendableStateList {
         return this.entries.get(index).calculate(random, level, pos);
     }
 
-    public record Entry(ExtendableStateList list, Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>> byBiome, SimpleWeightedRandomList<BlockState> fallback) {
+    public record Entry(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
 
         private static boolean canCreate = false;
 
@@ -60,7 +60,7 @@ public class ExtendableStateList {
             if (!canCreate) throw new IllegalStateException("Use ExtendableStateList$Entry#create please!");
         }
 
-        public static Entry create(ExtendableStateList list, Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>> byBiome, SimpleWeightedRandomList<BlockState> fallback) {
+        public static Entry create(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
             canCreate = true;
             Entry e = new Entry(list, byBiome, fallback);
             list.entries.add(e);
@@ -70,8 +70,8 @@ public class ExtendableStateList {
 
         public static Codec<Entry> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 StateLists.STATE_LIST_REGISTRY.byNameCodec().fieldOf("parent_state_list").forGetter(Entry::list),
-                Codec.unboundedMap(ResourceKey.codec(Registries.BIOME), SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC)).fieldOf("by_biome").forGetter(Entry::byBiome),
-                SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC).fieldOf("fallback").forGetter(Entry::fallback)
+                Codec.unboundedMap(ResourceKey.codec(Registries.BIOME), SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC)).optionalFieldOf("by_biome").forGetter(Entry::byBiome),
+                SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC).optionalFieldOf("fallback").forGetter(Entry::fallback)
         ).apply(builder, Entry::create));
 
 
@@ -80,11 +80,11 @@ public class ExtendableStateList {
             Optional<ResourceKey<Biome>> optional = biome.unwrapKey();
             if (optional.isPresent()) {
                 ResourceKey<Biome> key = optional.get();
-                if (this.byBiome.containsKey(key)) {
-                    return this.byBiome.get(key).getRandomValue(random).orElseThrow(IllegalStateException::new);
+                if (this.byBiome.isPresent() && this.byBiome.get().containsKey(key)) {
+                    return this.byBiome.get().get(key).getRandomValue(random).orElseThrow(IllegalStateException::new);
                 }
             }
-            return fallback.getRandomValue(random).orElseThrow(IllegalStateException::new);
+            return this.fallback.isEmpty() ? Blocks.AIR.defaultBlockState() : this.fallback.get().getRandomValue(random).orElseThrow(IllegalStateException::new);
         }
 
     }
