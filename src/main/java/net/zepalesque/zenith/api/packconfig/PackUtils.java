@@ -24,7 +24,7 @@ public class PackUtils {
 
     public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required, boolean hidden, Function<Path, Pack.ResourcesSupplier> packBuilder) {
         PackLocationInfo loc = new PackLocationInfo(id, Component.translatable("pack." + modid + "." + id + ".title"), PackSource.BUILT_IN, Optional.empty());
-        Path resourcePath = ModList.get().getModFileById(modid).getFile().findResource("packs/" + path);
+        Path resourcePath = ModList.get().getModFileById(modid).getFile().findResource("packs/" + modid + "/" + path);
         PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack." + modid + "." + id + ".description"),
                 SharedConstants.getCurrentVersion().getPackVersion(event.getPackType()));
         Pack.Metadata meta = new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), hidden);
