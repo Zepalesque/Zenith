@@ -22,13 +22,12 @@ import java.util.function.Function;
 
 public class PackUtils {
 
-    public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required, Function<Path, Pack.ResourcesSupplier> packBuilder) {
+    public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required, boolean hidden, Function<Path, Pack.ResourcesSupplier> packBuilder) {
         PackLocationInfo loc = new PackLocationInfo(id, Component.translatable("pack." + modid + "." + id + ".title"), PackSource.BUILT_IN, Optional.empty());
-        String folder = (event.getPackType() == PackType.SERVER_DATA ? "data/" : "resource/");
-        Path resourcePath = ModList.get().getModFileById(modid).getFile().findResource("packs/" + folder + path);
+        Path resourcePath = ModList.get().getModFileById(modid).getFile().findResource("packs/" + path);
         PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack." + modid + "." + id + ".description"),
                 SharedConstants.getCurrentVersion().getPackVersion(event.getPackType()));
-        Pack.Metadata meta = new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true);
+        Pack.Metadata meta = new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), hidden);
         Pack.ResourcesSupplier resources = packBuilder.apply(resourcePath);
         event.addRepositorySource((source) ->
                 source.accept(new Pack(
@@ -40,12 +39,12 @@ public class PackUtils {
 
     }
 
-    public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required) {
-        setupPack(event, modid, path, id, required, PathPackResources.PathResourcesSupplier::new);
+    public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required, boolean hidden) {
+        setupPack(event, modid, path, id, required, hidden, PathPackResources.PathResourcesSupplier::new);
     }
 
-    public static void setupPack(AddPackFindersEvent event, ResourceLocation location, String folder, boolean required, Function<Path, Pack.ResourcesSupplier> packBuilder) {
+    public static void setupPack(AddPackFindersEvent event, ResourceLocation location, String folder, boolean required, boolean hidden, Function<Path, Pack.ResourcesSupplier> packBuilder) {
         String path = location.getPath();
-        setupPack(event, location.getNamespace(), folder + path, path, required, packBuilder);
+        setupPack(event, location.getNamespace(), folder + path, path, required, hidden, packBuilder);
     }
 }

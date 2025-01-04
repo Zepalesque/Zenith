@@ -25,15 +25,21 @@ public class PackConfig {
     private final PackType type;
     private final HashMap<Supplier<Boolean>, PackResources> resources = new HashMap<>();
     private final String folder;
+    private final boolean hideInMenu;
     private boolean locked = false;
 
-    public PackConfig(ResourceLocation id, PackType type) {
+    public PackConfig(ResourceLocation id, PackType type, boolean hideInMenu) {
         this.id = id;
         this.type = type;
         this.folder = switch (type) {
             case SERVER_DATA -> "data/";
             case CLIENT_RESOURCES -> "resource/";
         };
+        this.hideInMenu = hideInMenu;
+    }
+
+    public PackConfig(ResourceLocation id, PackType type) {
+        this(id, type, true);
     }
 
     public ConfigAssembledPackResources.AssembledResourcesSupplier generate(Path path) {
@@ -43,7 +49,7 @@ public class PackConfig {
     }
 
     public PathPackResources createPack(String path, String id) {
-        Path resource = ModList.get().getModFileById(this.id.getNamespace()).getFile().findResource("packs/" + path + id);
+        Path resource = ModList.get().getModFileById(this.id.getNamespace()).getFile().findResource("packs/" + this.folder + path + id);
         PackLocationInfo loc = new PackLocationInfo(id, Component.empty(), PackSource.BUILT_IN, Optional.empty());
         return new PathPackResources(loc, resource);
     }
@@ -51,9 +57,9 @@ public class PackConfig {
     public <B, T extends ModConfigSpec.ConfigValue<B>> T register(T config, String path, String id, Predicate<B> predicate) {
         if (!locked) {
             resources.putIfAbsent(() -> predicate.test(config.get()), createPack(path, id));
-            Zenith.LOGGER.info("Registered config {}{} for pack {}...", path, id, this.id);
+            Zenith.LOGGER.info("Registered config {}{}{} for pack {}...", this.folder, path, id, this.id);
         } else {
-            Zenith.LOGGER.warn("Attempted to register pack config for pack {}{} after locking was already complete!", path, id);
+            Zenith.LOGGER.warn("Attempted to register config {}{}{} for pack {} after locking was already complete!", this.folder, path, id, this.id);
         }
         return config;
     }
@@ -81,7 +87,7 @@ public class PackConfig {
 
     public void setup(AddPackFindersEvent event) {
         if (event.getPackType() == this.type) {
-            PackUtils.setupPack(event, this.id, this.folder, true, this::generate);
+            PackUtils.setupPack(event, this.id, this.folder, true, this.hideInMenu, this::generate);
         }
     }
 }
