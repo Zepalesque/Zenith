@@ -49,8 +49,9 @@ public class PackConfig {
     }
 
     public PathPackResources createPack(String path, String id) {
-        Path resource = ModList.get().getModFileById(this.id.getNamespace()).getFile().findResource("packs/" + this.id.getNamespace() + "/" + this.folder + path + id);
-        PackLocationInfo loc = new PackLocationInfo(id, Component.empty(), PackSource.BUILT_IN, Optional.empty());
+        String namespace = this.id.getNamespace() + "/";
+        Path resource = ModList.get().getModFileById(this.id.getNamespace()).getFile().findResource("packs/" + namespace + this.folder + path + id);
+        PackLocationInfo loc = new PackLocationInfo("mod/" + namespace + this.id.getPath(), Component.empty(), PackSource.BUILT_IN, Optional.empty());
         return new PathPackResources(loc, resource);
     }
 
