@@ -58,12 +58,24 @@ public class PackConfig {
         return config;
     }
 
+    public <B, T extends ModConfigSpec.ConfigValue<B>> T register(T config, String id, Predicate<B> predicate) {
+        return register(config, "", id, predicate);
+    }
+
     public <T extends ModConfigSpec.ConfigValue<Boolean>> T register(T config, String path, String id, boolean predicate) {
         return register(config, path, id, bool -> bool == predicate);
     }
 
+    public <T extends ModConfigSpec.ConfigValue<Boolean>> T register(T config, String id, boolean predicate) {
+        return register(config, "", id, predicate);
+    }
+
     public <T extends ModConfigSpec.ConfigValue<Boolean>> T register(T config, String path, String id) {
         return register(config, path, id, true);
+    }
+
+    public <T extends ModConfigSpec.ConfigValue<Boolean>> T register(T config, String id) {
+        return register(config, "", id);
     }
 
 
