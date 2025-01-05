@@ -33,7 +33,7 @@ public class ExtendableStateList {
     }
 
     public BlockState calculate(RandomSource random, WorldGenLevel level, BlockPos pos) {
-        if (this.totalWeight == 0) return Blocks.AIR.defaultBlockState();
+        if (this.totalWeight <= 0) return Blocks.AIR.defaultBlockState();
 
         int i = random.nextInt(totalWeight);
         if (i < this.weightForDefaults) return calculateDefaults(random, level, pos);
@@ -46,9 +46,12 @@ public class ExtendableStateList {
     }
 
     private BlockState calculateOther(RandomSource random, WorldGenLevel level, BlockPos pos) {
-        int length = this.entries.size();
-        int index = random.nextInt(length);
-        return this.entries.get(index).calculate(random, level, pos);
+        if (!this.entries.isEmpty()) {
+            int length = this.entries.size();
+            int index = random.nextInt(length);
+            return this.entries.get(index).calculate(random, level, pos);
+        }
+        return Blocks.AIR.defaultBlockState()
     }
 
     public record Entry(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
