@@ -32,6 +32,7 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
         super(p_66259_);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean place(FeaturePlaceContext<Config> context) {
         BlockPos blockpos = context.origin();
         WorldGenLevel worldgenlevel = context.level();
