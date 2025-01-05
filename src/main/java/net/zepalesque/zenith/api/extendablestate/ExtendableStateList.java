@@ -51,7 +51,7 @@ public class ExtendableStateList {
             int index = random.nextInt(length);
             return this.entries.get(index).calculate(random, level, pos);
         }
-        return Blocks.AIR.defaultBlockState()
+        return Blocks.AIR.defaultBlockState();
     }
 
     public record Entry(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
