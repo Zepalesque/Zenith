@@ -128,7 +128,6 @@ public abstract class AbstractWoodSet implements BlockSet {
         return () -> Items.STICK;
     }
 
-
     // Tool conversions
 
     public abstract void setupStrippables(Map<Block, Block> strippingMap);

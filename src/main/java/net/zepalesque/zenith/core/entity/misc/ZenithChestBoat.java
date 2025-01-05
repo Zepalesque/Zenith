@@ -8,6 +8,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.zepalesque.zenith.api.blockset.type.AbstractWoodSet;
+import net.zepalesque.zenith.core.Zenith;
 
 import javax.annotation.Nonnull;
 
@@ -49,5 +50,14 @@ public class ZenithChestBoat extends ChestBoat implements ZenithBoatBehavior {
     @Override
     public Item getBoat() {
         return this.set == null ? Items.AIR : this.set.chestBoatItem().get();
+    }
+
+    public ZenithChestBoat withSet(AbstractWoodSet set) {
+        if (this.set == null) {
+            this.set = set;
+        } else {
+            Zenith.LOGGER.warn("Tried to set AbstractWoodSet of ZenithChestBoat to {}, when it already was a part of set {}! Ignoring...", set.getID(), this.set.getID());
+        }
+        return this;
     }
 }

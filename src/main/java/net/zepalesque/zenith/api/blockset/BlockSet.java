@@ -99,4 +99,6 @@ public interface BlockSet {
     enum TabAdditionPhase {
         BEFORE, AFTER
     }
+
+    String getID();
 }
