@@ -12,10 +12,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.LoadingModList;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -141,6 +143,18 @@ public class Zenith {
 
     public static ResourceLocation loc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    }
+
+    public static boolean loaded(String modid) {
+        return ModList.get().isLoaded(modid);
+    }
+
+    public static boolean loaded(String modid, boolean isEarly) {
+        return isEarly ? modFileExists(modid) : loaded(modid);
+    }
+
+    public static boolean modFileExists(String modid) {
+        return LoadingModList.get().getModFileById(modid) != null;
     }
 
     public static class Keys {
