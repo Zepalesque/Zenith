@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.itemstack;
+package net.zepalesque.zenith.api.item.stack;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;

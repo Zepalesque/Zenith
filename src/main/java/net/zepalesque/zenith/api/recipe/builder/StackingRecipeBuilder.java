@@ -10,7 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
+import net.zepalesque.zenith.api.item.stack.ItemStackConstructor;
 import net.zepalesque.zenith.api.recipe.recipes.AbstractStackingRecipe;
 
 import javax.annotation.Nullable;

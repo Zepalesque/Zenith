@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.zepalesque.zenith.api.itemstack.ItemStackConstructor;
+import net.zepalesque.zenith.api.item.stack.ItemStackConstructor;
 import net.zepalesque.zenith.api.recipe.recipes.AbstractStackingRecipe;
 import org.jetbrains.annotations.NotNull;
 

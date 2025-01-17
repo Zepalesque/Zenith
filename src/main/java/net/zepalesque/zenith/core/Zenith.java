@@ -35,6 +35,7 @@ import net.zepalesque.zenith.core.config.ZConfig;
 import net.zepalesque.zenith.core.config.ZConfigHandler;
 import net.zepalesque.zenith.core.data.generator.ZenithDataMapGen;
 import net.zepalesque.zenith.core.data.generator.ZenithRegistrySets;
+import net.zepalesque.zenith.core.registry.ZenithBlockPredicates;
 import net.zepalesque.zenith.core.registry.ZenithLootConditions;
 import net.zepalesque.zenith.core.network.packet.BiomeTintSyncPacket;
 import net.zepalesque.zenith.core.registry.ZenithRecipeConditions;
@@ -76,7 +77,8 @@ public class Zenith {
                 ZenithStructureModifiers.CODECS,
                 ZenithDensityFunctions.FUNCTIONS,
                 ZenithAdvancementTriggers.TRIGGERS,
-                ZenithTrunkPlacers.TRUNK_PLACERS
+                ZenithTrunkPlacers.TRUNK_PLACERS,
+                ZenithBlockPredicates.PREDICATES
         };
 
         for (DeferredRegister<?> register : registers) {
