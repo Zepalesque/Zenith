@@ -24,6 +24,7 @@ public record ItemStackConstructor(Holder<Item> item, Optional<DataComponentPatc
 
     /**
      * Generate an {@link ItemStack} for this constructor.
+     * @param count The item count for the stack to be given.
      * @return The constructed {@link ItemStack}.
      */
     public ItemStack createStack(int count) {
