@@ -26,8 +26,8 @@ public record ItemStackConstructor(Holder<Item> item, Optional<DataComponentPatc
      * Generate an {@link ItemStack} for this constructor.
      * @return The constructed {@link ItemStack}.
      */
-    public ItemStack createStack() {
+    public ItemStack createStack(int count) {
         Preconditions.checkState(this.item().isBound(), "Tried to create stack for unbound holder!");
-        return this.components().isPresent() ? new ItemStack(this.item(), 1, this.components().get()) : new ItemStack(this.item(), 1);
+        return this.components().isPresent() ? new ItemStack(this.item(), count, this.components().get()) : new ItemStack(this.item(), 1);
     }
 }
