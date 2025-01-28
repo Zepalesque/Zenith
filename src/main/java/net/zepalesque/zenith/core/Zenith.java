@@ -45,6 +45,7 @@ import net.zepalesque.zenith.core.registry.ZenithBiomeModifiers;
 import net.zepalesque.zenith.core.registry.ZenithDensityFunctions;
 import net.zepalesque.zenith.core.registry.ZenithFeatures;
 import net.zepalesque.zenith.core.registry.ZenithPlacementModifiers;
+import net.zepalesque.zenith.core.registry.ZenithRecipes;
 import net.zepalesque.zenith.core.registry.ZenithStateProviders;
 import net.zepalesque.zenith.core.registry.ZenithStructureModifiers;
 import net.zepalesque.zenith.core.registry.ZenithTrunkPlacers;
@@ -80,7 +81,9 @@ public class Zenith {
                 ZenithDensityFunctions.FUNCTIONS,
                 ZenithAdvancementTriggers.TRIGGERS,
                 ZenithTrunkPlacers.TRUNK_PLACERS,
-                ZenithBlockPredicates.PREDICATES
+                ZenithBlockPredicates.PREDICATES,
+                ZenithRecipes.TYPES,
+                ZenithRecipes.Serial.SERIALIZERS
         };
 
         for (DeferredRegister<?> register : registers) {

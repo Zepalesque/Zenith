@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class IntProviderTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<IntProviderTrunkPlacer> CODEC = IntProvider.CODEC.fieldOf("height").xmap(IntProviderTrunkPlacer::new, placer -> placer.height).stable();
+    public static final MapCodec<IntProviderTrunkPlacer> CODEC = IntProvider.NON_NEGATIVE_CODEC.fieldOf("height").xmap(IntProviderTrunkPlacer::new, placer -> placer.height).stable();
 
     protected final IntProvider height;
     public IntProviderTrunkPlacer(IntProvider height) {

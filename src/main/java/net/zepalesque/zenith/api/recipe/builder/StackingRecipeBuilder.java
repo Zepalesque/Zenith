@@ -62,6 +62,7 @@ public class StackingRecipeBuilder implements RecipeBuilder {
         return Items.AIR;
     }
 
+    // TODO: Find a way to make these recipes viewable w/o JEI or a similar mod
     @Override
     public RecipeBuilder unlockedBy(String criterionName, Criterion<?> criterionTrigger) {
         return this;
