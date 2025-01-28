@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.ChunkAccessAccessor;
 
 import java.util.Optional;
@@ -42,26 +43,26 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
             return false;
         } else {
             blockpos = blockpos.below(4);
-            boolean[] aboolean = new boolean[2048];
-            int i = random.nextInt(4) + 4;
+            boolean[] shouldPlace = new boolean[2048];
+            int tries = random.nextInt(4) + 4;
 
-            for(int j = 0; j < i; ++j) {
-                double d0 = random.nextDouble() * 6.0 + 3.0;
-                double d1 = random.nextDouble() * 4.0 + 2.0;
-                double d2 = random.nextDouble() * 6.0 + 3.0;
-                double d3 = random.nextDouble() * (16.0 - d0 - 2.0) + 1.0 + d0 / 2.0;
-                double d4 = random.nextDouble() * (8.0 - d1 - 4.0) + 2.0 + d1 / 2.0;
-                double d5 = random.nextDouble() * (16.0 - d2 - 2.0) + 1.0 + d2 / 2.0;
+            for(int i = 0; i < tries; ++i) {
+                double xDiv = random.nextDouble() * 6.0 + 3.0;
+                double yDiv = random.nextDouble() * 4.0 + 2.0;
+                double zDiv = random.nextDouble() * 6.0 + 3.0;
+                double xReduce = random.nextDouble() * (16.0 - xDiv - 2.0) + 1.0 + xDiv / 2.0;
+                double yReduce = random.nextDouble() * (8.0 - yDiv - 4.0) + 2.0 + yDiv / 2.0;
+                double zReduce = random.nextDouble() * (16.0 - zDiv - 2.0) + 1.0 + zDiv / 2.0;
 
-                for(int l = 1; l < 15; ++l) {
-                    for(int i1 = 1; i1 < 15; ++i1) {
-                        for(int j1 = 1; j1 < 7; ++j1) {
-                            double d6 = ((double)l - d3) / (d0 / 2.0);
-                            double d7 = ((double)j1 - d4) / (d1 / 2.0);
-                            double d8 = ((double)i1 - d5) / (d2 / 2.0);
-                            double d9 = d6 * d6 + d7 * d7 + d8 * d8;
-                            if (d9 < 1.0) {
-                                aboolean[(l * 16 + i1) * 8 + j1] = true;
+                for(int xTest = 1; xTest < 15; ++xTest) {
+                    for(int zTest = 1; zTest < 15; ++zTest) {
+                        for(int yTest = 1; yTest < 7; ++yTest) {
+                            double xBounded = ((double)xTest - xReduce) / (xDiv / 2.0);
+                            double ySize = ((double)yTest - yReduce) / (yDiv / 2.0);
+                            double zSize = ((double)zTest - zReduce) / (zDiv / 2.0);
+                            double sizeSquare = xBounded * xBounded + ySize * ySize + zSize * zSize;
+                            if (sizeSquare < 1.0) {
+                                shouldPlace[packPos(xTest, yTest, zTest)] = true;
                             }
                         }
                     }
@@ -70,20 +71,20 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
 
             BlockState blockstate1 = config.fluid().getState(random, blockpos);
 
-            int i2;
-            int k1;
-            int j3;
-            for(k1 = 0; k1 < 16; ++k1) {
-                for(i2 = 0; i2 < 16; ++i2) {
-                    for(j3 = 0; j3 < 8; ++j3) {
-                        boolean flag = !aboolean[(k1 * 16 + i2) * 8 + j3] && (k1 < 15 && aboolean[((k1 + 1) * 16 + i2) * 8 + j3] || k1 > 0 && aboolean[((k1 - 1) * 16 + i2) * 8 + j3] || i2 < 15 && aboolean[(k1 * 16 + i2 + 1) * 8 + j3] || i2 > 0 && aboolean[(k1 * 16 + (i2 - 1)) * 8 + j3] || j3 < 7 && aboolean[(k1 * 16 + i2) * 8 + j3 + 1] || j3 > 0 && aboolean[(k1 * 16 + i2) * 8 + (j3 - 1)]);
+            int x;
+            int y;
+            int z;
+            for(x = 0; x < 16; ++x) {
+                for(z = 0; z < 16; ++z) {
+                    for(y = 0; y < 8; ++y) {
+                        boolean flag = !shouldPlace[packPos(x, y, z)] && (x < 15 && shouldPlace[packPos(x + 1, y, z)] || x > 0 && shouldPlace[packPos(x - 1, y, z)] || z < 15 && shouldPlace[packPos(x, y, z + 1)] || z > 0 && shouldPlace[packPos(x, y, z - 1)] || y < 7 && shouldPlace[packPos(x, y + 1, z)] || y > 0 && shouldPlace[packPos(x, y - 1, z)]);
                         if (flag) {
-                            BlockState testState = worldgenlevel.getBlockState(blockpos.offset(k1, j3, i2));
-                            if (j3 >= 4 && testState.liquid()) {
+                            BlockState testState = worldgenlevel.getBlockState(blockpos.offset(x, y, z));
+                            if (y >= 4 && testState.liquid()) {
                                 return false;
                             }
 
-                            if (j3 < 4 && !testState.isSolid() && worldgenlevel.getBlockState(blockpos.offset(k1, j3, i2)) != blockstate1) {
+                            if (y < 4 && !testState.isSolid() && worldgenlevel.getBlockState(blockpos.offset(x, y, z)) != blockstate1) {
                                 return false;
                             }
                         }
@@ -91,14 +92,26 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                 }
             }
 
-            BlockPos blockpos2;
-            for(k1 = 0; k1 < 16; ++k1) {
-                for(i2 = 0; i2 < 16; ++i2) {
-                    for(j3 = 0; j3 < 8; ++j3) {
-                        if (aboolean[(k1 * 16 + i2) * 8 + j3]) {
-                            blockpos2 = blockpos.offset(k1, j3, i2);
+            boolean doFloor = config.floor().isPresent();
+
+            BlockPos blockpos2, flootPos;
+            for(x = 0; x < 16; ++x) {
+                for(z = 0; z < 16; ++z) {
+                    boolean doneFloorThisRow = false;
+                    for(y = 0; y < 8; ++y) {
+                        if (shouldPlace[packPos(x, y, z)]) {
+                            blockpos2 = blockpos.offset(x, y, z);
                             if (this.canReplaceBlock(worldgenlevel.getBlockState(blockpos2))) {
-                                boolean flag1 = j3 >= 4;
+
+                                if (doFloor && !doneFloorThisRow) {
+                                    flootPos = blockpos2.below();
+                                    if (this.canReplaceBlock(worldgenlevel.getBlockState(flootPos))) {
+                                        worldgenlevel.setBlock(flootPos, config.floor().get().getState(worldgenlevel, random, blockpos), 2);
+                                    }
+                                    doneFloorThisRow = true;
+                                }
+
+                                boolean flag1 = y >= 4;
                                 worldgenlevel.setBlock(blockpos2, flag1 ? AIR : blockstate1, 2);
                                 if (flag1) {
                                     worldgenlevel.scheduleTick(blockpos2, AIR.getBlock(), 0);
@@ -110,12 +123,12 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                 }
             }
 
-                for(i2 = 0; i2 < 16; ++i2) {
-                    for(j3 = 0; j3 < 16; ++j3) {
+                for(z = 0; z < 16; ++z) {
+                    for(y = 0; y < 16; ++y) {
                         for(int j4 = 4; j4 < 8; ++j4) {
-                            if (aboolean[(i2 * 16 + j3) * 8 + j4]) {
-                                BlockPos blockpos3 = blockpos.offset(i2, j4 - 1, j3);
-                                if (isDirt(worldgenlevel.getBlockState(blockpos3)) && worldgenlevel.getBrightness(LightLayer.SKY, blockpos.offset(i2, j4, j3)) > 0) {
+                            if (shouldPlace[packPos(z, j4, y)]) {
+                                BlockPos blockpos3 = blockpos.offset(z, j4 - 1, y);
+                                if (isDirt(worldgenlevel.getBlockState(blockpos3)) && worldgenlevel.getBrightness(LightLayer.SKY, blockpos.offset(z, j4, y)) > 0) {
                                     if (context.level().getChunkSource() instanceof ServerChunkCache serverChunkCache) {
                                         if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
                                             NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
@@ -136,9 +149,9 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                 }
 
             if (blockstate1.getFluidState().is(FluidTags.WATER)) {
-                for(i2 = 0; i2 < 16; ++i2) {
-                    for(j3 = 0; j3 < 16; ++j3) {
-                        blockpos2 = blockpos.offset(i2, 4, j3);
+                for(x = 0; x < 16; ++x) {
+                    for(z = 0; z < 16; ++z) {
+                        blockpos2 = blockpos.offset(x, 4, z);
                         if (worldgenlevel.getBiome(blockpos2).value().shouldFreeze(worldgenlevel, blockpos2, false) && this.canReplaceBlock(worldgenlevel.getBlockState(blockpos2))) {
                             worldgenlevel.setBlock(blockpos2, Blocks.ICE.defaultBlockState(), 2);
                         }
@@ -150,15 +163,23 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
         }
     }
 
-    private boolean canReplaceBlock(BlockState p_190952_) {
-        return !p_190952_.is(BlockTags.FEATURES_CANNOT_REPLACE);
+    // TODO: look into the specific way this works
+    private static int packPos(int x, int y, int z) {
+        return (x * 16 + z) * 8 + y;
+    }
+
+    private boolean canReplaceBlock(BlockState state) {
+        return !state.is(BlockTags.FEATURES_CANNOT_REPLACE);
     }
 
     static {
         AIR = Blocks.CAVE_AIR.defaultBlockState();
     }
 
-    public static record Config(BlockStateProvider fluid) implements FeatureConfiguration {
-        public static final Codec<Config> CODEC = RecordCodecBuilder.create((p_190962_) -> p_190962_.group(BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid)).apply(p_190962_, Config::new));
+    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
+        public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+                BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor").forGetter(Config::floor)
+        ).apply(builder, Config::new));
     }
 }
