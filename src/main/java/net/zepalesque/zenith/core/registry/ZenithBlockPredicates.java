@@ -5,6 +5,7 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicateType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zepalesque.zenith.api.block.predicate.InBiomePredicate;
+import net.zepalesque.zenith.api.block.predicate.NoisePredicate;
 import net.zepalesque.zenith.core.Zenith;
 
 public class ZenithBlockPredicates {
@@ -13,4 +14,6 @@ public class ZenithBlockPredicates {
 
     public static final DeferredHolder<BlockPredicateType<?>, BlockPredicateType<InBiomePredicate>> IN_BIOME =
             PREDICATES.register("in_biome", () -> () -> InBiomePredicate.CODEC);
+    public static final DeferredHolder<BlockPredicateType<?>, BlockPredicateType<NoisePredicate>> PERLIN_NOISE =
+            PREDICATES.register("perlin_noise", () -> () -> NoisePredicate.CODEC);
 }

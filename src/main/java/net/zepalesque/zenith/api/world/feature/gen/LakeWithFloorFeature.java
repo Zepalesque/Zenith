@@ -19,17 +19,20 @@ import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.ChunkAccessAccessor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
-public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Config> {
-    private static final BlockState AIR;
+public class LakeWithFloorFeature extends Feature<LakeWithFloorFeature.Config> {
+    private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public SurfaceRuleLakeFeature(Codec<Config> p_66259_) {
+    public LakeWithFloorFeature(Codec<Config> p_66259_) {
         super(p_66259_);
     }
 
@@ -92,25 +95,14 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                 }
             }
 
-            boolean doFloor = config.floor().isPresent();
 
-            BlockPos blockpos2, flootPos;
+            BlockPos blockpos2;
             for(x = 0; x < 16; ++x) {
                 for(z = 0; z < 16; ++z) {
-                    boolean doneFloorThisRow = false;
                     for(y = 0; y < 8; ++y) {
                         if (shouldPlace[packPos(x, y, z)]) {
                             blockpos2 = blockpos.offset(x, y, z);
                             if (this.canReplaceBlock(worldgenlevel.getBlockState(blockpos2))) {
-
-                                if (doFloor && !doneFloorThisRow) {
-                                    flootPos = blockpos2.below();
-                                    if (this.canReplaceBlock(worldgenlevel.getBlockState(flootPos))) {
-                                        worldgenlevel.setBlock(flootPos, config.floor().get().getState(worldgenlevel, random, blockpos), 2);
-                                    }
-                                    doneFloorThisRow = true;
-                                }
-
                                 boolean flag1 = y >= 4;
                                 worldgenlevel.setBlock(blockpos2, flag1 ? AIR : blockstate1, 2);
                                 if (flag1) {
@@ -123,23 +115,29 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                 }
             }
 
-                for(z = 0; z < 16; ++z) {
-                    for(y = 0; y < 16; ++y) {
-                        for(int j4 = 4; j4 < 8; ++j4) {
-                            if (shouldPlace[packPos(z, j4, y)]) {
-                                BlockPos blockpos3 = blockpos.offset(z, j4 - 1, y);
-                                if (isDirt(worldgenlevel.getBlockState(blockpos3)) && worldgenlevel.getBrightness(LightLayer.SKY, blockpos.offset(z, j4, y)) > 0) {
-                                    if (context.level().getChunkSource() instanceof ServerChunkCache serverChunkCache) {
-                                        if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
-                                            NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
-                                            SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
-                                            ChunkAccess chunkAccess = context.level().getChunk(blockpos3);
-                                            NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).getNoiseChunk();
-                                            if (noisechunk != null) {
-                                                CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, context.level().registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
-                                                Optional<BlockState> state = carvingcontext.topMaterial(context.level().getBiomeManager()::getBiome, chunkAccess, blockpos3, false);
-                                                state.ifPresent(blockState -> worldgenlevel.setBlock(blockpos3, blockState, 2));
-                                            }
+            /*Map<SurfaceRules.RuleSource, SurfaceRules.RuleSource> ruleMap = new HashMap<>();
+
+            for(z = 0; z < 16; ++z) {
+                for(y = 0; y < 16; ++y) {
+                    for(int j4 = 4; j4 < 8; ++j4) {
+                        if (shouldPlace[packPos(z, j4, y)]) {
+                            BlockPos blockpos3 = blockpos.offset(z, j4 - 1, y);
+                            if (isDirt(worldgenlevel.getBlockState(blockpos3)) && worldgenlevel.getBrightness(LightLayer.SKY, blockpos.offset(z, j4, y)) > 0) {
+                                if (context.level().getChunkSource() instanceof ServerChunkCache serverChunkCache) {
+                                    if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
+                                        NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
+                                        SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
+
+                                        if (config.floor().isPresent()) {
+                                            surfaceRule = ruleMap.computeIfAbsent(surfaceRule, rule -> SurfaceRules.sequence(config.floor().get(), rule));
+                                        }
+
+                                        ChunkAccess chunkAccess = context.level().getChunk(blockpos3);
+                                        NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).getNoiseChunk();
+                                        if (noisechunk != null) {
+                                            CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, context.level().registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
+                                            Optional<BlockState> state = carvingcontext.topMaterial(context.level().getBiomeManager()::getBiome, chunkAccess, blockpos3, false);
+                                            state.ifPresent(blockState -> worldgenlevel.setBlock(blockpos3, blockState, 2));
                                         }
                                     }
                                 }
@@ -147,6 +145,28 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
                         }
                     }
                 }
+            }*/
+
+            if (config.floor().isPresent()) {
+                for (x = 0; x < 16; ++x) {
+                    for (z = 0; z < 16; ++z) {
+                        for (int y1 = 0; y1 < 8; ++y1) {
+                            boolean flag2 = !shouldPlace[packPos(x, y1, z)] && (x < 15 && shouldPlace[packPos(x + 1, y1, z)] || x > 0 && shouldPlace[packPos(x - 1, y1, z)] || z < 15 && shouldPlace[packPos(x, y1, z + 1)] || z > 0 && shouldPlace[packPos(x, y1, z - 1)] || y1 < 7 && shouldPlace[packPos(x, y1 + 1, z)] || y1 > 0 && shouldPlace[packPos(x, y1 - 1, z)]);
+                            if (flag2 && (y1 < 4 || random.nextInt(2) != 0)) {
+                                BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(x, y1, z));
+                                if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
+                                    BlockPos blockpos3 = blockpos.offset(x, y1, z);
+                                    BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
+                                    if (!blockstate2.isAir()) {
+                                        worldgenlevel.setBlock(blockpos3, blockstate2, 2);
+                                        this.markAboveForPostProcessing(worldgenlevel, blockpos3);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             if (blockstate1.getFluidState().is(FluidTags.WATER)) {
                 for(x = 0; x < 16; ++x) {
@@ -172,14 +192,11 @@ public class SurfaceRuleLakeFeature extends Feature<SurfaceRuleLakeFeature.Confi
         return !state.is(BlockTags.FEATURES_CANNOT_REPLACE);
     }
 
-    static {
-        AIR = Blocks.CAVE_AIR.defaultBlockState();
-    }
 
     public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
-                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor").forGetter(Config::floor)
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor)
         ).apply(builder, Config::new));
     }
 }

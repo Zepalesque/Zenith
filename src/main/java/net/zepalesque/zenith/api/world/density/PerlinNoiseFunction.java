@@ -2,13 +2,14 @@ package net.zepalesque.zenith.api.world.density;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
+import net.zepalesque.zenith.api.noise.SeededPerlinNoiseHolder;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,14 +18,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public class PerlinNoiseFunction implements DensityFunction {
+public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHolder<PerlinNoiseFunction> {
 
     public static final KeyDispatchDataCodec<PerlinNoiseFunction> CODEC = KeyDispatchDataCodec.of(RecordCodecBuilder.mapCodec(
             p_208798_ -> p_208798_.group(
-                            NormalNoise.NoiseParameters.DIRECT_CODEC.fieldOf("noise").forGetter((func) -> func.params),
+                            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter((func) -> func.params),
                             Codec.DOUBLE.fieldOf("xz_scale").forGetter((func) -> func.xzScale),
                             Codec.DOUBLE.fieldOf("y_scale").forGetter((func) -> func.yScale),
-                            Codec.LONG.fieldOf("seed").forGetter((func) -> func.seed)
+                            Codec.LONG.fieldOf("seed_offset").forGetter((func) -> func.seedOffset)
                     )
                     .apply(p_208798_, PerlinNoiseFunction::new)));
 
@@ -33,25 +34,25 @@ public class PerlinNoiseFunction implements DensityFunction {
     private static final Map<Long, PerlinNoiseVisitor> VISITORS = new HashMap<>();
     // This is used before the seed is initialized, for methods such as DensityFunction#maxValue
     private final PerlinNoise fakeNoise;
-    public final NormalNoise.NoiseParameters params;
-    private final long seed;
+    public final Holder<NormalNoise.NoiseParameters> params;
+    private final long seedOffset;
     private final double xzScale;
     private final double yScale;
 
-    public PerlinNoiseFunction(NormalNoise.NoiseParameters params, double xzScale, double yScale, long seed) {
-        this.seed = seed;
+    public PerlinNoiseFunction(Holder<NormalNoise.NoiseParameters> params, double xzScale, double yScale, long seedOffset) {
+        this.seedOffset = seedOffset;
         this.params = params;
         this.xzScale = xzScale;
         this.yScale = yScale;
-        this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seed), params.firstOctave(), params.amplitudes());
+        this.ensureParamsBound();
+        this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seedOffset), params.value().firstOctave(), params.value().amplitudes());
     }
 
     public double compute(FunctionContext context) {
-        if (this.noise == null) {
+        if (!this.initialized()) {
             throw new NullPointerException("PerlinNoiseFunction has not been initialized yet! Please initialize by running mapAll on this function or a parent function with a PerlinNoiseVisitor!");
         } else {
-            return this.noise
-                    .getValue((double)context.blockX() * this.xzScale, (double)context.blockY() * this.yScale, (double)context.blockZ() * this.xzScale);
+            return this.compute((double)context.blockX() * this.xzScale, (double)context.blockY() * this.yScale, (double)context.blockZ() * this.xzScale);
         }
     }
 
@@ -80,29 +81,46 @@ public class PerlinNoiseFunction implements DensityFunction {
         }
     }
 
-    public PerlinNoiseFunction initialize(Function<Long, RandomSource> rand) {
-        this.noise = PerlinNoise.create(rand.apply(this.seed), this.params.firstOctave(), this.params.amplitudes());
-        return this;
-    }
-
-    public static PerlinNoiseVisitor createOrGetVisitor(long seed) {
-        return VISITORS.computeIfAbsent(seed, l -> new PerlinNoiseVisitor(noise -> {
+    public static PerlinNoiseVisitor createOrGetVisitor(long worldSeed) {
+        return VISITORS.computeIfAbsent(worldSeed, seed -> new PerlinNoiseVisitor(noise -> {
             if (noise.initialized()) {
                 return noise;
             } else {
-                return noise.initialize(offset -> new XoroshiroRandomSource(l + offset));
+                return noise.initialize(seed);
             }
         }));
     }
 
-    public boolean initialized() {
-        return this.noise != null;
+    @Override
+    public Holder<NormalNoise.NoiseParameters> params() {
+        return this.params;
+    }
+
+    @Override
+    public long seedOffset() {
+        return this.seedOffset;
+    }
+
+    @Override
+    public PerlinNoiseFunction initialize(PerlinNoise noise) {
+        if (!this.initialized()) {
+            this.noise = noise;
+        }
+        return this;
+    }
+
+    @Override
+    @Nullable
+    public PerlinNoise noise() {
+        return this.noise;
     }
 
     @Override
     public KeyDispatchDataCodec<? extends DensityFunction> codec() {
         return CODEC;
     }
+
+
 
     public record PerlinNoiseVisitor(UnaryOperator<PerlinNoiseFunction> operator) implements DensityFunction.Visitor {
         @Override
