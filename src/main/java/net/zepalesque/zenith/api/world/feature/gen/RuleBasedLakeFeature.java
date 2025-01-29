@@ -3,36 +3,24 @@ package net.zepalesque.zenith.api.world.feature.gen;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.NoiseChunk;
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
-import net.zepalesque.zenith.mixin.mixins.common.accessor.ChunkAccessAccessor;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-public class LakeWithFloorFeature extends Feature<LakeWithFloorFeature.Config> {
+public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public LakeWithFloorFeature(Codec<Config> p_66259_) {
+    public RuleBasedLakeFeature(Codec<Config> p_66259_) {
         super(p_66259_);
     }
 
