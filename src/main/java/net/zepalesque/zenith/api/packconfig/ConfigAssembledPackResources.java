@@ -84,12 +84,11 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
         } else if (type == PackType.SERVER_DATA) {
             if (location.getPath().matches("data_maps/.+\\.json")) return handleDataMaps(location);
             else if (location.getPath().matches("tags/.+\\.json")) return handleTags(location);
-        } else {
-            for (PackResources pack : this.getCandidatePacks(type, location)) {
-                IoSupplier<InputStream> ioSupplier = pack.getResource(type, location);
-                if (ioSupplier != null) {
-                    return ioSupplier;
-                }
+        }
+        for (PackResources pack : this.getCandidatePacks(type, location)) {
+            IoSupplier<InputStream> ioSupplier = pack.getResource(type, location);
+            if (ioSupplier != null) {
+                return ioSupplier;
             }
         }
         return null;
