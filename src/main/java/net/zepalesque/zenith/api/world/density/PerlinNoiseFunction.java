@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.zepalesque.zenith.api.noise.SeededPerlinNoiseHolder;
+import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +45,12 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
         this.params = params;
         this.xzScale = xzScale;
         this.yScale = yScale;
-        this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seedOffset), params.value().firstOctave(), params.value().amplitudes());
+        // Don't get holder value when in datagen, use placeholder noise in that case
+        if (params.isBound()) this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seedOffset), params.value().firstOctave(), params.value().amplitudes());
+        else {
+            this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seedOffset), 1, 1D);
+            Zenith.LOGGER.debug("PerlinNoiseFunction could not initialize fake noise with given noise parameters! Hopefully this means we are in datagen...");
+        }
     }
 
     public double compute(FunctionContext context) {
