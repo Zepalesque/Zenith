@@ -13,7 +13,7 @@
 
 <br>
 
-**Current Features:**
+#### Current Features:
 
 - System for easy condition-based datapack logic (such as only enabling a certain worldgen feature with a specified config, or disabling recipes for a certain item when a specified mod is installed)
 - System for automation of creating synchronized block tints based on the biome, by using data maps
@@ -27,6 +27,14 @@
 - A few useful world generation classes
 
 <br>
+
+#### Using Zenith in your own mods:
+
+> [!CAUTION]
+> Zenith is unfinished, and not fully documented.
+> Use the library for your own things with the knowledge that *you may need to reverse-engineer some systems and/or look at examples.*
+> See [The Aether: Redux](https://github.com/Zepalesque/The-Aether-Redux) and [The Aether: Unity](https://github.com/Zepalesque/The-Aether-Unity) for such examples. 
+
 
 To use this library in your workspace, you will have a few steps to do. 
 First of all, enable the GitHub Packages plugin by adding this to your `settings.gradle` file (or insert it in the existing code block if one exists):
@@ -81,8 +89,9 @@ jarJar fg.deobf("net.zepalesque.zenith:zenith:${project.zenith_version}") {
 ```
 </details>
 
+<br>
 
-### License
+#### License information:
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
 [![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://github.com/Zepalesque/Zenith/blob/1.21.1/LICENSE.txt)
 
