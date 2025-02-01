@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public final class ZenithMixinPlugin implements IMixinConfigPlugin {
 
     Map<String, Supplier<Boolean>> OVERRIDES = ImmutableMap.<String, Supplier<Boolean>>builder()
-            .put("net.zepalesque.zenith.mixin.mixins.common.SharedSuggestionProviderMixin", () -> CompatHelper.exists("suggestionproviderfix"))
+            .put("net.zepalesque.zenith.mixin.mixins.common.SharedSuggestionProviderMixin", () -> !CompatHelper.exists("suggestionproviderfix"))
             .build();
 
     @Override
