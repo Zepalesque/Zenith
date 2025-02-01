@@ -31,7 +31,7 @@
 #### Using Zenith in your own mods:
 
 > [!WARNING]
-> At the moment, Zeniht is unfinished and not fully documented.<br>
+> At the moment, Zenith is unfinished and not fully documented.<br>
 > Use the library for your own things with the knowledge that *you may need to look at code examples of some usages and/or reverse-engineer some systems.*<br>
 > See [The Aether: Redux](https://github.com/Zepalesque/The-Aether-Redux) and [The Aether: Unity](https://github.com/Zepalesque/The-Aether-Unity) for such examples. 
 
