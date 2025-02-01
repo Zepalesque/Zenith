@@ -1,7 +1,7 @@
 package net.zepalesque.zenith.mixin;
 
 import com.google.common.collect.ImmutableMap;
-import net.neoforged.fml.loading.LoadingModList;
+import net.zepalesque.zenith.util.CompatHelper;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public final class ZenithMixinPlugin implements IMixinConfigPlugin {
 
     Map<String, Supplier<Boolean>> OVERRIDES = ImmutableMap.<String, Supplier<Boolean>>builder()
-            .put("net.zepalesque.zenith.mixin.mixins.common.SharedSuggestionProviderMixin", () -> LoadingModList.get().getModFileById("suggestionproviderfix") == null)
+            .put("net.zepalesque.zenith.mixin.mixins.common.SharedSuggestionProviderMixin", () -> CompatHelper.exists("suggestionproviderfix"))
             .build();
 
     @Override
