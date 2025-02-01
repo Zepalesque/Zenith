@@ -15,12 +15,17 @@ import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.core.registry.ZenithBlockPredicates;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class NoisePredicate implements BlockPredicate, SeededPerlinNoiseHolder<NoisePredicate> {
 
     public static MapCodec<NoisePredicate> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(predicate -> predicate.params),
             Codec.LONG.fieldOf("seed_offset").forGetter(predicate -> predicate.seedOffset),
-            Codec.DOUBLE.fieldOf("min_threshold").forGetter(predicate -> predicate.minThreshold),
+            Codec.DOUBLE.optionalFieldOf("min_threshold").xmap(
+                    optional -> optional.orElse(Double.MAX_VALUE),
+                    d -> d == Double.MAX_VALUE ? Optional.empty() : Optional.of(d)
+            ).forGetter(predicate -> predicate.minThreshold),
             Codec.DOUBLE.fieldOf("max_threshold").forGetter(predicate -> predicate.maxThreshold)
             ).apply(builder, NoisePredicate::new)
     );

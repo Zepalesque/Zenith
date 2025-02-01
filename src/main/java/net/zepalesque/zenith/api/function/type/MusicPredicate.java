@@ -6,6 +6,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.zepalesque.zenith.api.serialization.codec.MoreCodecs;
+import org.antlr.v4.runtime.misc.IntegerList;
 
 import java.util.List;
 import java.util.Optional;

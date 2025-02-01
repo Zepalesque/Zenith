@@ -147,7 +147,7 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                                     BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
                                     if (!blockstate2.isAir()) {
                                         worldgenlevel.setBlock(blockpos3, blockstate2, 2);
-                                        this.markAboveForPostProcessing(worldgenlevel, blockpos3);
+//                                        this.markAboveForPostProcessing(worldgenlevel, blockpos3);
                                     }
                                 }
                             }

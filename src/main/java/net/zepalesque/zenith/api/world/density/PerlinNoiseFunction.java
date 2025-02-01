@@ -44,7 +44,6 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
         this.params = params;
         this.xzScale = xzScale;
         this.yScale = yScale;
-        this.ensureParamsBound();
         this.fakeNoise = PerlinNoise.create(new XoroshiroRandomSource(seedOffset), params.value().firstOctave(), params.value().amplitudes());
     }
 
