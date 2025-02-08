@@ -4,7 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -148,7 +151,7 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                                 if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                     BlockPos blockpos3 = blockpos.offset(x, y1, z);
                                     BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
-                                    if (!blockstate2.isAir()) {
+                                    if (!blockstate2.isAir() && (config.skip().isEmpty()) || !blockstate2.is(config.skip().get())) {
                                         worldgenlevel.setBlock(blockpos3, blockstate2, 2);
                                     }
                                 }
@@ -183,10 +186,11 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     }
 
 
-    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
+    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor, Optional<HolderSet<Block>> skip) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
-                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor)
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor),
+                RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("skip_state").forGetter(Config::skip)
         ).apply(builder, Config::new));
     }
 }
