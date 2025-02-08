@@ -147,11 +147,9 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                                 BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(x, y1, z));
                                 if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                     BlockPos blockpos3 = blockpos.offset(x, y1, z);
-                                    if (config.floorSkipControl().isEmpty() || worldgenlevel.isStateAtPosition(blockpos3, state -> !state.is(config.floorSkipControl().get()))) {
-                                        BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
-                                        if (!blockstate2.isAir()) {
-                                            worldgenlevel.setBlock(blockpos3, blockstate2, 2);
-                                        }
+                                    BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
+                                    if (!blockstate2.isAir()) {
+                                        worldgenlevel.setBlock(blockpos3, blockstate2, 2);
                                     }
                                 }
                             }
@@ -185,11 +183,10 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     }
 
 
-    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor, Optional<Holder<Block>> floorSkipControl) implements FeatureConfiguration {
+    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
-                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor),
-                BuiltInRegistries.BLOCK.holderByNameCodec().optionalFieldOf("floor_skip_control").forGetter(Config::floorSkipControl)
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor)
         ).apply(builder, Config::new));
     }
 }
