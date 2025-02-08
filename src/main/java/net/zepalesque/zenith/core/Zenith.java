@@ -25,6 +25,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.api.extendablestate.ExtendableStateList;
+import net.zepalesque.zenith.core.block.ZenithBlocks;
 import net.zepalesque.zenith.core.registry.StateLists;
 import net.zepalesque.zenith.core.registry.ZenithAdvancementTriggers;
 import net.zepalesque.zenith.api.biometint.BiomeTint;
@@ -81,7 +82,8 @@ public class Zenith {
                 ZenithTrunkPlacers.TRUNK_PLACERS,
                 ZenithBlockPredicates.PREDICATES,
                 ZenithRecipes.TYPES,
-                ZenithRecipes.Serial.SERIALIZERS
+                ZenithRecipes.Serial.SERIALIZERS,
+                ZenithBlocks.BLOCKS
         };
 
         for (DeferredRegister<?> register : registers) {

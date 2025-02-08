@@ -1,6 +1,5 @@
 package net.zepalesque.zenith.api.recipe.serializer;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

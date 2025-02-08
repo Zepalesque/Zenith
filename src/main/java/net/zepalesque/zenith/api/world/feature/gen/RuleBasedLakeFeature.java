@@ -14,6 +14,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
+import net.zepalesque.zenith.core.block.type.VoidBlock;
 
 import java.util.Optional;
 
@@ -27,10 +28,10 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     @SuppressWarnings("deprecation")
     public boolean place(FeaturePlaceContext<Config> context) {
         BlockPos blockpos = context.origin();
-        WorldGenLevel worldgenlevel = context.level();
+        WorldGenLevel level = context.level();
         RandomSource random = context.random();
         Config config = context.config();
-        if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 4) {
+        if (blockpos.getY() <= level.getMinBuildHeight() + 4) {
             return false;
         } else {
             blockpos = blockpos.below(4);
@@ -70,12 +71,12 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                     for(y = 0; y < 8; ++y) {
                         boolean flag = !shouldPlace[packPos(x, y, z)] && (x < 15 && shouldPlace[packPos(x + 1, y, z)] || x > 0 && shouldPlace[packPos(x - 1, y, z)] || z < 15 && shouldPlace[packPos(x, y, z + 1)] || z > 0 && shouldPlace[packPos(x, y, z - 1)] || y < 7 && shouldPlace[packPos(x, y + 1, z)] || y > 0 && shouldPlace[packPos(x, y - 1, z)]);
                         if (flag) {
-                            BlockState testState = worldgenlevel.getBlockState(blockpos.offset(x, y, z));
+                            BlockState testState = level.getBlockState(blockpos.offset(x, y, z));
                             if (y >= 4 && testState.liquid()) {
                                 return false;
                             }
 
-                            if (y < 4 && !testState.isSolid() && worldgenlevel.getBlockState(blockpos.offset(x, y, z)) != blockstate1) {
+                            if (y < 4 && !testState.isSolid() && level.getBlockState(blockpos.offset(x, y, z)) != blockstate1) {
                                 return false;
                             }
                         }
@@ -90,12 +91,12 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                     for(y = 0; y < 8; ++y) {
                         if (shouldPlace[packPos(x, y, z)]) {
                             blockpos2 = blockpos.offset(x, y, z);
-                            if (this.canReplaceBlock(worldgenlevel.getBlockState(blockpos2))) {
+                            if (this.canReplaceBlock(level.getBlockState(blockpos2))) {
                                 boolean flag1 = y >= 4;
-                                worldgenlevel.setBlock(blockpos2, flag1 ? AIR : blockstate1, 2);
+                                level.setBlock(blockpos2, flag1 ? AIR : blockstate1, 2);
                                 if (flag1) {
-                                    worldgenlevel.scheduleTick(blockpos2, AIR.getBlock(), 0);
-                                    this.markAboveForPostProcessing(worldgenlevel, blockpos2);
+                                    level.scheduleTick(blockpos2, AIR.getBlock(), 0);
+                                    this.markAboveForPostProcessing(level, blockpos2);
                                 }
                             }
                         }
@@ -141,12 +142,12 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                         for (int y1 = 0; y1 < 8; ++y1) {
                             boolean flag2 = !shouldPlace[packPos(x, y1, z)] && (x < 15 && shouldPlace[packPos(x + 1, y1, z)] || x > 0 && shouldPlace[packPos(x - 1, y1, z)] || z < 15 && shouldPlace[packPos(x, y1, z + 1)] || z > 0 && shouldPlace[packPos(x, y1, z - 1)] || y1 < 7 && shouldPlace[packPos(x, y1 + 1, z)] || y1 > 0 && shouldPlace[packPos(x, y1 - 1, z)]);
                             if (flag2 && (y1 < 4 || random.nextInt(2) != 0)) {
-                                BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(x, y1, z));
+                                BlockState blockstate = level.getBlockState(blockpos.offset(x, y1, z));
                                 if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                     BlockPos blockpos3 = blockpos.offset(x, y1, z);
-                                    BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
+                                    BlockState blockstate2 = config.floor().get().getState(level, random, blockpos3);
                                     if (!blockstate2.isAir()) {
-                                        worldgenlevel.setBlock(blockpos3, blockstate2, 2);
+                                        VoidBlock.ifNotVoid(level, blockpos3, (wgl, pos) -> wgl.setBlock(pos, blockstate2, 2));
 //                                        this.markAboveForPostProcessing(worldgenlevel, blockpos3);
                                     }
                                 }
@@ -160,8 +161,8 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                 for(x = 0; x < 16; ++x) {
                     for(z = 0; z < 16; ++z) {
                         blockpos2 = blockpos.offset(x, 4, z);
-                        if (worldgenlevel.getBiome(blockpos2).value().shouldFreeze(worldgenlevel, blockpos2, false) && this.canReplaceBlock(worldgenlevel.getBlockState(blockpos2))) {
-                            worldgenlevel.setBlock(blockpos2, Blocks.ICE.defaultBlockState(), 2);
+                        if (level.getBiome(blockpos2).value().shouldFreeze(level, blockpos2, false) && this.canReplaceBlock(level.getBlockState(blockpos2))) {
+                            level.setBlock(blockpos2, Blocks.ICE.defaultBlockState(), 2);
                         }
                     }
                 }
