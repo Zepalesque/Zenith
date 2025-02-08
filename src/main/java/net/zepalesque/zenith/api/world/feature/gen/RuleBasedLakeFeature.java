@@ -3,10 +3,13 @@ package net.zepalesque.zenith.api.world.feature.gen;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -144,10 +147,11 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                                 BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(x, y1, z));
                                 if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                     BlockPos blockpos3 = blockpos.offset(x, y1, z);
-                                    BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
-                                    if (!blockstate2.isAir()) {
-                                        worldgenlevel.setBlock(blockpos3, blockstate2, 2);
-//                                        this.markAboveForPostProcessing(worldgenlevel, blockpos3);
+                                    if (config.floorSkipControl().isEmpty() || worldgenlevel.isStateAtPosition(blockpos3, state -> !state.is(config.floorSkipControl().get()))) {
+                                        BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
+                                        if (!blockstate2.isAir()) {
+                                            worldgenlevel.setBlock(blockpos3, blockstate2, 2);
+                                        }
                                     }
                                 }
                             }
@@ -181,10 +185,11 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     }
 
 
-    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
+    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor, Optional<Holder<Block>> floorSkipControl) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
-                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor)
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor),
+                BuiltInRegistries.BLOCK.holderByNameCodec().optionalFieldOf("floor_skip_control").forGetter(Config::floorSkipControl)
         ).apply(builder, Config::new));
     }
 }
