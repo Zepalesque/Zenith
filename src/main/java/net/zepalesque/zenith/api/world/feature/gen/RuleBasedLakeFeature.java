@@ -189,7 +189,7 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
-                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor),
+                RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor)
         ).apply(builder, Config::new));
     }
 }
