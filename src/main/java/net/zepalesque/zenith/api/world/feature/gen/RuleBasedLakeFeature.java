@@ -151,7 +151,7 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
                                 if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                     BlockPos blockpos3 = blockpos.offset(x, y1, z);
                                     BlockState blockstate2 = config.floor().get().getState(worldgenlevel, random, blockpos3);
-                                    if (!blockstate2.isAir() && (config.skip().isEmpty()) || !blockstate2.is(config.skip().get())) {
+                                    if (!blockstate2.isAir()) {
                                         worldgenlevel.setBlock(blockpos3, blockstate2, 2);
                                     }
                                 }
@@ -186,11 +186,10 @@ public class RuleBasedLakeFeature extends Feature<RuleBasedLakeFeature.Config> {
     }
 
 
-    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor, Optional<HolderSet<Block>> skip) implements FeatureConfiguration {
+    public record Config(BlockStateProvider fluid, Optional<RuleBasedBlockStateProvider> floor) implements FeatureConfiguration {
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("fluid").forGetter(Config::fluid),
                 RuleBasedBlockStateProvider.CODEC.optionalFieldOf("floor_block").forGetter(Config::floor),
-                RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("skip_state").forGetter(Config::skip)
         ).apply(builder, Config::new));
     }
 }
