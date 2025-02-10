@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class NoneRecipeBuilder implements RecipeBuilder {
 
-    public NoneRecipeBuilder of() {
+    public static NoneRecipeBuilder of() {
         return new NoneRecipeBuilder();
     }
 
