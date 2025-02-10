@@ -7,6 +7,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.zepalesque.zenith.core.recipe.input.EmptyRecipeInput;
+import net.zepalesque.zenith.core.registry.ZenithRecipes;
 
 public class NoneRecipe implements Recipe<EmptyRecipeInput> {
     @Override
@@ -29,11 +30,6 @@ public class NoneRecipe implements Recipe<EmptyRecipeInput> {
         return ItemStack.EMPTY;
     }
 
-
-
-
-
-
     @Override
     public boolean isSpecial() {
         return true;
@@ -41,11 +37,11 @@ public class NoneRecipe implements Recipe<EmptyRecipeInput> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return ZenithRecipes.Serializers.NONE.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return null;
+        return ZenithRecipes.NONE.get();
     }
 }

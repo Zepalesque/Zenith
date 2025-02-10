@@ -81,7 +81,7 @@ public class Zenith {
                 ZenithTrunkPlacers.TRUNK_PLACERS,
                 ZenithBlockPredicates.PREDICATES,
                 ZenithRecipes.TYPES,
-                ZenithRecipes.Serial.SERIALIZERS
+                ZenithRecipes.Serializers.SERIALIZERS
         };
 
         for (DeferredRegister<?> register : registers) {
