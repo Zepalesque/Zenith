@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.util.KeyDispatchDataCodec;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -16,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHolder<PerlinNoiseFunction> {
@@ -124,8 +122,6 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
     public KeyDispatchDataCodec<? extends DensityFunction> codec() {
         return CODEC;
     }
-
-
 
     public record PerlinNoiseVisitor(UnaryOperator<PerlinNoiseFunction> operator) implements DensityFunction.Visitor {
         @Override

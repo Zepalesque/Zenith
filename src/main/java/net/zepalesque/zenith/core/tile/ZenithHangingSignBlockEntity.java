@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.zepalesque.zenith.api.blockset.type.AbstractWoodSet;
 
 import java.util.function.Supplier;
 

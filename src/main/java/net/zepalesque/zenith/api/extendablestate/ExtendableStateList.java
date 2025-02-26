@@ -20,15 +20,14 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ExtendableStateList {
-    private final int weightForDefaults, weightForOthers, totalWeight;
+    private final int weightForDefaults;
+    private final int totalWeight;
     private final SimpleWeightedRandomList<BlockState> defaults;
     private final List<Entry> entries = new ArrayList<>();
 
     public ExtendableStateList(int weightForDefaults, int weightForOthers, SimpleWeightedRandomList<BlockState> defaults) {
         this.weightForDefaults = weightForDefaults;
-        this.weightForOthers = weightForOthers;
         this.defaults = defaults;
-
         this.totalWeight = weightForDefaults + weightForOthers;
     }
 

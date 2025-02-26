@@ -14,17 +14,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
-import net.zepalesque.zenith.api.function.type.RecipeTypePredicate;
+import net.zepalesque.zenith.util.function.type.RecipeTypePredicate;
 import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
 
 import java.util.Optional;
-
 /**
  * Criterion trigger used for checking an item that has been changed via a {@link StackingRecipe}
  */
 public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipeTrigger.Instance> {
 
-    public <R extends Recipe<?>> void trigger(ServerPlayer player, ItemStack ingredient, ItemStack result, Holder<RecipeType<?>> recipeType) {
+    public void trigger(ServerPlayer player, ItemStack ingredient, ItemStack result, Holder<RecipeType<?>> recipeType) {
         this.trigger(player, (instance) -> instance.test(ingredient, result, recipeType));
     }
 

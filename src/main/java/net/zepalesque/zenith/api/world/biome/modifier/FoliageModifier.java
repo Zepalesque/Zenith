@@ -8,7 +8,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.zepalesque.zenith.api.serialization.codec.MoreCodecs;
+import net.zepalesque.zenith.util.serialization.codec.MoreCodecs;
 
 import java.util.Map;
 import java.util.Optional;

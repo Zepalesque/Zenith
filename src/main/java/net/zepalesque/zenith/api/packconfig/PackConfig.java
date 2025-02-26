@@ -12,6 +12,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.zepalesque.zenith.core.Zenith;
+import net.zepalesque.zenith.util.packconfig.PackUtils;
 
 import java.nio.file.Path;
 import java.util.HashMap;
