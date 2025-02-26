@@ -1,7 +1,7 @@
 package net.zepalesque.zenith.util.blockset;
 
-import net.zepalesque.zenith.api.blockset.core.BlockSet;
-import net.zepalesque.zenith.api.blockset.core.CraftingMatrix;
+import net.zepalesque.zenith.api.blockset.BlockSet;
+import net.zepalesque.zenith.api.blockset.CraftingMatrix;
 
 /**
  * Some helpful {@link CraftingMatrix CraftingMatrices} for certain types of {@link BlockSet BlockSets}

@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.zepalesque.zenith.api.condition.Condition;
 
-// TODO: Truth table condition
 public class LogicConditions {
 
     public record And<E extends Condition<?>, T extends Condition<?>>(E arg1, T arg2)

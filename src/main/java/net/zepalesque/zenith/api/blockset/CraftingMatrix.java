@@ -1,9 +1,9 @@
-package net.zepalesque.zenith.api.blockset.core;
+package net.zepalesque.zenith.api.blockset;
 
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.level.ItemLike;
-import net.zepalesque.zenith.api.blockset.type.base.AbstractStoneSet;
-import net.zepalesque.zenith.api.blockset.type.base.AbstractFlowerSet;
+import net.zepalesque.zenith.api.blockset.type.AbstractFlowerSet;
+import net.zepalesque.zenith.api.blockset.type.AbstractStoneSet;
 
 import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
