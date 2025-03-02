@@ -23,9 +23,9 @@ public abstract class AbstractFlowerSet implements BlockSet {
     protected abstract DeferredBlock<?> pot(DeferredRegister.Blocks registry, String id);
     public abstract DeferredBlock<?> pot();
 
-    public abstract AbstractFlowerSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape, RecipeCategory category);
+    public abstract AbstractFlowerSet craftsInto(ItemLike block, CraftingMatrix shape, RecipeCategory category);
 
-    public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, Supplier<? extends ItemLike> result, int resultCount, RecipeCategory category);
+    public abstract AbstractFlowerSet craftsIntoShapeless(int ingredientCount, ItemLike result, int resultCount, RecipeCategory category);
 
     public abstract AbstractFlowerSet withFlowerTag(TagKey<Block> tag);
 
@@ -33,9 +33,9 @@ public abstract class AbstractFlowerSet implements BlockSet {
 
     public abstract AbstractFlowerSet withItemTag(TagKey<Item> tag);
 
-    public abstract AbstractFlowerSet tabAfter(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, TabAdditionPhase phase);
+    public abstract AbstractFlowerSet tabAfter(Supplier<CreativeModeTab> tab, ItemLike placeAfter, TabAdditionPhase phase);
 
-    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeBefore, TabAdditionPhase phase);
+    public abstract AbstractFlowerSet tabBefore(Supplier<CreativeModeTab> tab, ItemLike placeBefore, TabAdditionPhase phase);
 
     public abstract AbstractFlowerSet tabAppend(Supplier<CreativeModeTab> tab, TabAdditionPhase phase);
 

@@ -30,23 +30,23 @@ public abstract class AbstractStoneSet implements BlockSet {
 
     public abstract AbstractStoneSet craftsIntoSet(Supplier<AbstractStoneSet> set, CraftingMatrix shape);
 
-    public abstract AbstractStoneSet craftsInto(Supplier<? extends ItemLike> block, CraftingMatrix shape);
+    public abstract AbstractStoneSet craftsInto(ItemLike block, CraftingMatrix shape);
 
     public abstract AbstractStoneSet stonecutIntoSet(Supplier<AbstractStoneSet> set);
 
-    public abstract AbstractStoneSet stonecutInto(Supplier<? extends ItemLike> result, int count);
+    public abstract AbstractStoneSet stonecutInto(ItemLike result, int count);
 
     public abstract AbstractStoneSet smeltsIntoSet(Supplier<AbstractStoneSet> set, float experience);
 
-    public abstract AbstractStoneSet smeltsInto(Supplier<? extends ItemLike> result, float experience);
+    public abstract AbstractStoneSet smeltsInto(ItemLike result, float experience);
 
     public abstract AbstractStoneSet withTag(TagKey<Block> tag, boolean allBlocks);
 
     public abstract AbstractStoneSet withItemTag(TagKey<Item> tag, boolean allBlocks);
 
-    public abstract AbstractStoneSet tabAfter(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeAfter, boolean allBlocks, TabAdditionPhase phase);
+    public abstract AbstractStoneSet tabAfter(Supplier<CreativeModeTab> tab, ItemLike placeAfter, boolean allBlocks, TabAdditionPhase phase);
 
-    public abstract AbstractStoneSet tabBefore(Supplier<CreativeModeTab> tab, Supplier<? extends ItemLike> placeBefore, boolean allBlocks, TabAdditionPhase phase);
+    public abstract AbstractStoneSet tabBefore(Supplier<CreativeModeTab> tab, ItemLike placeBefore, boolean allBlocks, TabAdditionPhase phase);
 
     public abstract AbstractStoneSet tabAppend(Supplier<CreativeModeTab> tab, boolean allBlocks, TabAdditionPhase phase);
 
