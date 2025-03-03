@@ -27,9 +27,7 @@ public record ConditionalBiomeModifier(Holder<BiomeModifier> modifier, Holder<Co
             return;
         }
 
-        if (this.condition().value().test()) {
-            this.modifier.value().modify(biome, phase, builder);
-        }
+        if (this.condition().value().test()) this.modifier.value().modify(biome, phase, builder);
     }
     @Override
     public MapCodec<? extends BiomeModifier> codec() {

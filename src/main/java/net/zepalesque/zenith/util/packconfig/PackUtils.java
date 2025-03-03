@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
@@ -29,7 +28,7 @@ public class PackUtils {
                 SharedConstants.getCurrentVersion().getPackVersion(event.getPackType()));
         Pack.Metadata meta = new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), hidden);
         Pack.ResourcesSupplier resources = packBuilder.apply(resourcePath);
-        event.addRepositorySource((source) ->
+        event.addRepositorySource(source ->
                 source.accept(new Pack(
                         loc,
                         resources,

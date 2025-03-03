@@ -7,6 +7,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public interface SeededPerlinNoiseHolder<T extends SeededPerlinNoiseHolder<T>> {
@@ -16,14 +17,12 @@ public interface SeededPerlinNoiseHolder<T extends SeededPerlinNoiseHolder<T>> {
     long seedOffset();
 
     default boolean initialized() {
-        return this.noise() != null;
+        return this.noise().isPresent();
     }
 
     default double compute(double x, double y, double z) {
-        PerlinNoise noise = this.noise();
-        if (noise != null) {
-            return noise.getValue(x, y, z);
-        } else return Double.NaN;
+        Optional<PerlinNoise> noise = this.noise();
+        return noise.map(perlinNoise -> perlinNoise.getValue(x, y, z)).orElse(Double.NaN);
     }
 
     // Should set the noise if it has not yet been set
@@ -44,9 +43,7 @@ public interface SeededPerlinNoiseHolder<T extends SeededPerlinNoiseHolder<T>> {
         if (!this.params().isBound()) throw new IllegalStateException("Can't initialize perlin noise! Parameter holder is unbound!");
     }
 
-    // Will return null if this has not yet been initialized
-    @Nullable
-    PerlinNoise noise();
+    Optional<PerlinNoise> noise();
 
     @SuppressWarnings("unchecked")
     default T self() {

@@ -48,14 +48,12 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
 
     private Map<String, Map<Supplier<Boolean>, PackResources>> buildNamespaceMap(PackType type, Map<Supplier<Boolean>, PackResources> packMap) {
         Map<String, Map<Supplier<Boolean>, PackResources>> map = new HashMap<>();
-        for (Map.Entry<Supplier<Boolean>, PackResources> entry : packMap.entrySet()) {
+        for (Map.Entry<Supplier<Boolean>, PackResources> entry : packMap.entrySet())
             if (entry.getValue() != null) {
                 PackResources pack = entry.getValue();
-                for (String namespace : pack.getNamespaces(type)) {
+                for (String namespace : pack.getNamespaces(type))
                     map.computeIfAbsent(namespace, k -> new HashMap<>()).put(entry.getKey(), pack);
-                }
             }
-        }
         map.replaceAll((k, list) -> ImmutableMap.copyOf(list));
         return ImmutableMap.copyOf(map);
     }
@@ -70,35 +68,29 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
     protected Path resolve(String... paths) {
         Path path = this.source;
 
-        for (String name : paths) {
-            path = path.resolve(name);
-        }
+        for (String name : paths) path = path.resolve(name);
         return path;
     }
 
     @Nullable
     @Override
     public IoSupplier<InputStream> getResource(PackType type, ResourceLocation location) {
-        if (type == PackType.CLIENT_RESOURCES && location.getPath().matches("lang/.+\\.json")) {
+        if (type == PackType.CLIENT_RESOURCES && location.getPath().matches("lang/.+\\.json"))
             return handleTranslations(location);
-        } else if (type == PackType.SERVER_DATA) {
+        else if (type == PackType.SERVER_DATA)
             if (location.getPath().matches("data_maps/.+\\.json")) return handleDataMaps(location);
             else if (location.getPath().matches("tags/.+\\.json")) return handleTags(location);
-        }
         for (PackResources pack : this.getCandidatePacks(type, location)) {
             IoSupplier<InputStream> ioSupplier = pack.getResource(type, location);
-            if (ioSupplier != null) {
-                return ioSupplier;
-            }
+            if (ioSupplier != null) return ioSupplier;
         }
         return null;
     }
 
     @Override
     public void listResources(PackType type, String resourceNamespace, String paths, ResourceOutput resourceOutput) {
-        for (PackResources delegate : this.getAvaliablePacks()) {
+        for (PackResources delegate : this.getAvaliablePacks())
             delegate.listResources(type, resourceNamespace, paths, resourceOutput);
-        }
     }
 
     public List<PackResources> getAvaliablePacks() {
@@ -112,9 +104,7 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
 
     @Override
     public void close() {
-        for (PackResources pack : packs.values()) {
-            pack.close();
-        }
+        for (PackResources pack : packs.values()) pack.close();
     }
 
     private List<PackResources> getCandidatePacks(PackType type, ResourceLocation location) {
@@ -143,9 +133,8 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
         public PackResources openFull(PackLocationInfo location, Pack.Metadata info) {
             PackResources packresources = this.openPrimary(location);
             List<String> list = info.overlays();
-            if (list.isEmpty()) {
-                return packresources;
-            } else {
+            if (list.isEmpty()) return packresources;
+            else {
                 List<PackResources> list1 = new ArrayList<>(list.size());
 
                 for (String s : list) {
@@ -164,33 +153,27 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
 
     protected IoSupplier<InputStream> handleTags(ResourceLocation location) {
         return handleConflicts(PackType.SERVER_DATA, location, (combined, addend) -> {
-            for (String array : new String[] {"remove", "values"}) {
+            for (String array : new String[] {"remove", "values"})
                 if (addend.has(array)) {
                     JsonArray addendValues = addend.get(array).getAsJsonArray();
-                    if (combined.has(array)) {
-                        combined.add(array, new JsonArray());
-                    }
+                    if (combined.has(array)) combined.add(array, new JsonArray());
                     JsonArray combinedValues = combined.get(array).getAsJsonArray();
-
+                    
                     addendValues.asList().forEach(combinedValues::add);
                 }
-            }
         });
     }
 
     protected IoSupplier<InputStream> handleDataMaps(ResourceLocation location) {
         return handleConflicts(PackType.SERVER_DATA, location, (combined, addend) -> {
-            for (String array : new String[] {"remove", "values"}) {
+            for (String array : new String[] {"remove", "values"})
                 if (addend.has(array)) {
                     JsonObject addendValues = addend.get(array).getAsJsonObject();
-                    if (combined.has(array)) {
-                        combined.add(array, new JsonArray());
-                    }
+                    if (combined.has(array)) combined.add(array, new JsonArray());
                     JsonObject combinedValues = combined.get(array).getAsJsonObject();
-
+                    
                     addendValues.entrySet().forEach(entry -> combinedValues.add(entry.getKey(), entry.getValue()));
                 }
-            }
         });
     }
 
@@ -198,19 +181,15 @@ public class ConfigAssembledPackResources extends AbstractPackResources {
         JsonObject combined = new JsonObject();
         for (PackResources pack : getCandidatePacks(type, location)) {
             IoSupplier<InputStream> ioSupplier = pack.getResource(type, location);
-            if (ioSupplier != null) {
-                try {
-                    JsonObject jsonobject = GSON.fromJson(new InputStreamReader(ioSupplier.get(), StandardCharsets.UTF_8), JsonObject.class);
-                    combiner.accept(combined, jsonobject);
-                } catch (Exception e) {
-                    Zenith.LOGGER.error("Caught exception when trying to combine pack config resource files!", e);
-                }
+            if (ioSupplier != null) try {
+                JsonObject jsonobject = GSON.fromJson(new InputStreamReader(ioSupplier.get(), StandardCharsets.UTF_8), JsonObject.class);
+                combiner.accept(combined, jsonobject);
+            } catch (Exception e) {
+                Zenith.LOGGER.error("Caught exception when trying to combine pack config resource files!", e);
             }
         }
 
-        if (combined.entrySet().isEmpty()) {
-            return null;
-        }
+        if (combined.entrySet().isEmpty()) return null;
         String input = GSON.toJson(combined);
         return () -> new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
     }

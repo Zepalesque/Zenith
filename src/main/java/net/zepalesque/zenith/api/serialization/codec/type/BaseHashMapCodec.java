@@ -47,9 +47,7 @@ public interface BaseHashMapCodec<K, V> {
                         return r.apply2stable((u, p) -> u, DataResult.error(() -> "Duplicate entry for key: '" + entry.get().getFirst() + "'"));
                     }
                 }
-                if (entryResult.isError()) {
-                    failed.add(pair);
-                }
+                if (entryResult.isError()) failed.add(pair);
 
                 return r.apply2stable((u, p) -> u, entryResult);
             },
@@ -63,9 +61,8 @@ public interface BaseHashMapCodec<K, V> {
     }
 
     default <T> RecordBuilder<T> encode(final Map<K, V> input, final DynamicOps<T> ops, final RecordBuilder<T> prefix) {
-        for (final Map.Entry<K, V> entry : input.entrySet()) {
+        for (final Map.Entry<K, V> entry : input.entrySet())
             prefix.add(keyCodec().encodeStart(ops, entry.getKey()), elementCodec().encodeStart(ops, entry.getValue()));
-        }
         return prefix;
     }
 }

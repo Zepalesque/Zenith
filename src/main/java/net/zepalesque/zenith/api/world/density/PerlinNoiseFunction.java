@@ -11,25 +11,24 @@ import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.zepalesque.zenith.api.noise.SeededPerlinNoiseHolder;
 import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.PerlinNoiseAccessor;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHolder<PerlinNoiseFunction> {
 
     public static final KeyDispatchDataCodec<PerlinNoiseFunction> CODEC = KeyDispatchDataCodec.of(RecordCodecBuilder.mapCodec(
             p_208798_ -> p_208798_.group(
-                            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter((func) -> func.params),
-                            Codec.DOUBLE.fieldOf("xz_scale").forGetter((func) -> func.xzScale),
-                            Codec.DOUBLE.fieldOf("y_scale").forGetter((func) -> func.yScale),
-                            Codec.LONG.fieldOf("seed_offset").forGetter((func) -> func.seedOffset)
+                            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(func -> func.params),
+                            Codec.DOUBLE.fieldOf("xz_scale").forGetter(func -> func.xzScale),
+                            Codec.DOUBLE.fieldOf("y_scale").forGetter(func -> func.yScale),
+                            Codec.LONG.fieldOf("seed_offset").forGetter(func -> func.seedOffset)
                     )
                     .apply(p_208798_, PerlinNoiseFunction::new)));
 
-    @Nullable
-    public PerlinNoise noise = null;
+    public Optional<PerlinNoise> noise = Optional.empty();
     private static final Map<Long, PerlinNoiseVisitor> VISITORS = new HashMap<>();
     // This is used before the seed is initialized, for methods such as DensityFunction#maxValue
     private final PerlinNoise fakeNoise;
@@ -52,11 +51,10 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
     }
 
     public double compute(FunctionContext context) {
-        if (!this.initialized()) {
+        if (!this.initialized())
             throw new NullPointerException("PerlinNoiseFunction has not been initialized yet! Please initialize by running mapAll on this function or a parent function with a PerlinNoiseVisitor!");
-        } else {
-            return this.compute((double)context.blockX() * this.xzScale, (double)context.blockY() * this.yScale, (double)context.blockZ() * this.xzScale);
-        }
+        else
+            return this.compute((double) context.blockX() * this.xzScale, (double) context.blockY() * this.yScale, (double) context.blockZ() * this.xzScale);
     }
 
     @Override
@@ -77,20 +75,14 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
 
     @Override
     public double maxValue() {
-        if (this.noise != null) {
-            return ((PerlinNoiseAccessor)this.noise).callMaxValue();
-        } else {
-            return ((PerlinNoiseAccessor)this.fakeNoise).callMaxValue();
-        }
+        return this.noise.map(perlinNoise -> ((PerlinNoiseAccessor) perlinNoise).callMaxValue())
+               .orElseGet(() -> ((PerlinNoiseAccessor) this.fakeNoise).callMaxValue());
     }
 
     public static PerlinNoiseVisitor createOrGetVisitor(long worldSeed) {
         return VISITORS.computeIfAbsent(worldSeed, seed -> new PerlinNoiseVisitor(noise -> {
-            if (noise.initialized()) {
-                return noise;
-            } else {
-                return noise.initialize(seed);
-            }
+            if (noise.initialized()) return noise;
+            else return noise.initialize(seed);
         }));
     }
 
@@ -106,15 +98,12 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
 
     @Override
     public PerlinNoiseFunction initialize(PerlinNoise noise) {
-        if (!this.initialized()) {
-            this.noise = noise;
-        }
+        if (!this.initialized()) this.noise = Optional.of(noise);
         return this;
     }
 
     @Override
-    @Nullable
-    public PerlinNoise noise() {
+    public Optional<PerlinNoise> noise() {
         return this.noise;
     }
 
@@ -126,9 +115,7 @@ public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHo
     public record PerlinNoiseVisitor(UnaryOperator<PerlinNoiseFunction> operator) implements DensityFunction.Visitor {
         @Override
         public DensityFunction apply(DensityFunction function) {
-            if (function instanceof PerlinNoiseFunction pnf) {
-                return operator.apply(pnf);
-            }
+            if (function instanceof PerlinNoiseFunction pnf) return operator.apply(pnf);
             return function;
         }
     }

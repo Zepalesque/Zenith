@@ -29,9 +29,8 @@ public class TabUtil {
         event.insertAfter(stack(before), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
             event.insertAfter(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            for (int i = 1; i < others.length; i++) {
+            for (int i = 1; i < others.length; i++)
                 event.insertAfter(stack(others[i - 1]), stack(others[i]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
         }
     }
 
@@ -46,9 +45,8 @@ public class TabUtil {
         event.insertBefore(stack(after), stack(inserted), TabVisibility.PARENT_AND_SEARCH_TABS);
         if (others.length > 0) {
             event.insertBefore(stack(inserted), stack(others[0]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            for (int i = 1; i < others.length; i++) {
+            for (int i = 1; i < others.length; i++)
                 event.insertBefore(stack(others[i - 1]), stack(others[i]), TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
         }
     }
 
@@ -62,9 +60,7 @@ public class TabUtil {
     public static void remove(BuildCreativeModeTabContentsEvent event, boolean removeFromSearch, ItemLike removed, ItemLike... others) {
         TabVisibility visibility = removeFromSearch ? TabVisibility.PARENT_AND_SEARCH_TABS : TabVisibility.PARENT_TAB_ONLY;
         event.remove(stack(removed), visibility);
-        for (ItemLike item : others) {
-            event.remove(stack(item), visibility);
-        }
+        for (ItemLike item : others) event.remove(stack(item), visibility);
     }
 
     /**
@@ -75,9 +71,7 @@ public class TabUtil {
      */
     public static void put(BuildCreativeModeTabContentsEvent event, ItemLike added, ItemLike... others) {
         event.accept(stack(added), TabVisibility.PARENT_AND_SEARCH_TABS);
-        for (ItemLike item : others) {
-            event.accept(stack(item), TabVisibility.PARENT_AND_SEARCH_TABS);
-        }
+        for (ItemLike item : others) event.accept(stack(item), TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
     /**

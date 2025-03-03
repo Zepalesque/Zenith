@@ -13,12 +13,10 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.ItemStackedOnOtherEvent;
+import net.zepalesque.zenith.api.recipe.recipes.AbstractStackingRecipe;
 import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
 import net.zepalesque.zenith.core.registry.ZenithAdvancementTriggers;
-import net.zepalesque.zenith.api.recipe.recipes.AbstractStackingRecipe;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
 /**
@@ -57,22 +55,19 @@ public class StackingRecipeHelper {
         Player player = event.getPlayer();
         Slot slot = event.getSlot();
         Holder<RecipeType<?>> typeHolder = Holder.direct(type);
-        if (carriedPredicate.test(carried)) {
-            for (RecipeHolder<R> holder : level.getRecipeManager().getAllRecipesFor(type)) {
+        if (carriedPredicate.test(carried))
+            for (RecipeHolder<R> holder : level.getRecipeManager().getAllRecipesFor(type))
                 if (holder != null) {
                     R recipe = holder.value();
                     if (recipe.matches(level, stackedOn)) {
                         ItemStack newStack = recipe.getResultStack(stackedOn);
                         if (newStack != null) {
-                            if (!level.isClientSide()) {
-                                // HAHA I FIXED THE MAP STUFF
-                                ZenithAdvancementTriggers.STACKING_RECIPE.get().trigger(
-                                        (ServerPlayer) player, stackedOn, newStack, typeHolder
-                                );
-                            }
-                            if (stackedOn.getCount() <= 1) {
-                                slot.set(newStack);
-                            } else {
+                            // HAHA I FIXED THE MAP STUFF
+                            if (!level.isClientSide()) ZenithAdvancementTriggers.STACKING_RECIPE.get().trigger(
+                            (ServerPlayer) player, stackedOn, newStack, typeHolder
+                            );
+                            if (stackedOn.getCount() <= 1) slot.set(newStack);
+                            else {
                                 stackedOn.shrink(1);
                                 newStack.setCount(1);
                                 boolean added = player.getInventory().add(newStack);
@@ -82,7 +77,7 @@ public class StackingRecipeHelper {
                                     ItemEntity itementity = new ItemEntity(level, player.getX(), d0, player.getZ(), newStack);
                                     itementity.setPickUpDelay(40);
                                     level.addFreshEntity(itementity);
-
+                                    
                                     final float f7 = 0.3F;
                                     float f8 = Mth.sin(player.getXRot() * (float) (Math.PI / 180.0));
                                     float f2 = Mth.cos(player.getXRot() * (float) (Math.PI / 180.0));
@@ -91,26 +86,21 @@ public class StackingRecipeHelper {
                                     float f5 = player.getRandom().nextFloat() * (float) (Math.PI * 2);
                                     float f6 = 0.02F * player.getRandom().nextFloat();
                                     itementity.setDeltaMovement(
-                                            (double)(-f3 * f2 * f7) + Math.cos(f5) * (double)f6,
-                                            -f8 * f7 + 0.1F + (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.1F,
-                                            (double)(f4 * f2 * f7) + Math.sin(f5) * (double)f6
+                                    (double) (-f3 * f2 * f7) + Math.cos(f5) * (double) f6,
+                                    -f8 * f7 + 0.1F + (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.1F,
+                                    (double) (f4 * f2 * f7) + Math.sin(f5) * (double) f6
                                     );
-
-                                } else {
-                                    player.containerMenu.broadcastChanges();
-                                }
+                                    
+                                } else player.containerMenu.broadcastChanges();
                             }
                             carried.shrink(1);
                             slot.setChanged();
-                            if (recipe.getSound().isPresent() && recipe.getSound().get().isBound()) {
+                            if (recipe.getSound().isPresent() && recipe.getSound().get().isBound())
                                 level.playSound(player, player.getX(), player.getY(), player.getZ(), recipe.getSound().get().value(), SoundSource.PLAYERS, 0.8F, 0.8F + player.level().getRandom().nextFloat() * 0.4F);
-                            }
                             return true;
                         }
                     }
                 }
-            }
-        }
         return false;
     }
 }

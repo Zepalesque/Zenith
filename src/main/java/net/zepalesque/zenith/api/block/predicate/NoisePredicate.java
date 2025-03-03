@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.zepalesque.zenith.api.noise.SeededPerlinNoiseHolder;
 import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.core.registry.ZenithBlockPredicates;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -34,9 +33,8 @@ public class NoisePredicate implements BlockPredicate, SeededPerlinNoiseHolder<N
     private final double minThreshold;
     private final double maxThreshold;
     private final long seedOffset;
-
-    @Nullable
-    private PerlinNoise noise = null;
+    
+    private Optional<PerlinNoise> noise = Optional.empty();
 
 
     public NoisePredicate(Holder<NormalNoise.NoiseParameters> params, long seedOffset, double minThreshold, double maxThreshold) {
@@ -54,8 +52,8 @@ public class NoisePredicate implements BlockPredicate, SeededPerlinNoiseHolder<N
     @Override
     public boolean test(WorldGenLevel genLevel, BlockPos pos) {
         this.initialize(genLevel.getSeed());
-        if (this.noise == null) Zenith.LOGGER.warn("NoisePredicate has no noise value, but we just initialized it. This should not be possible. Please report this to the Zenith issue tracker.");
-        double value = this.noise.getValue(pos.getX(), 0.0, pos.getZ());
+        if (this.noise.isEmpty()) Zenith.LOGGER.warn("NoisePredicate has no noise value, but we just initialized it. This should not be possible. Please report this to the Zenith issue tracker.");
+        double value = this.noise.get().getValue(pos.getX(), 0.0, pos.getZ());
 
         return value <= this.maxThreshold && value >= this.minThreshold;
     }
@@ -72,14 +70,12 @@ public class NoisePredicate implements BlockPredicate, SeededPerlinNoiseHolder<N
 
     @Override
     public NoisePredicate initialize(PerlinNoise noise) {
-        if (!this.initialized()) {
-            this.noise = noise;
-        }
+        if (!this.initialized()) this.noise = Optional.of(noise);
         return this;
     }
 
     @Override
-    public PerlinNoise noise() {
+    public Optional<PerlinNoise> noise() {
         return this.noise;
     }
 }

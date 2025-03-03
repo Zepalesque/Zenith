@@ -60,9 +60,8 @@ public class PackConfig {
         if (!locked) {
             resources.putIfAbsent(() -> predicate.test(config.get()), createPack(path, id));
             Zenith.LOGGER.info("Registered config {}{}{} for pack {}...", this.folder, path, id, this.id);
-        } else {
+        } else
             Zenith.LOGGER.warn("Attempted to register config {}{}{} for pack {} after locking was already complete!", this.folder, path, id, this.id);
-        }
         return config;
     }
 
@@ -88,8 +87,7 @@ public class PackConfig {
 
 
     public void setup(AddPackFindersEvent event) {
-        if (event.getPackType() == this.type) {
+        if (event.getPackType() == this.type)
             PackUtils.setupPack(event, this.id, this.folder, true, this.hideInMenu, this::generate);
-        }
     }
 }

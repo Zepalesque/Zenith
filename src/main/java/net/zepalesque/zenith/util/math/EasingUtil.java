@@ -39,7 +39,7 @@ public class EasingUtil {
         }
 
         public static float out (float k) {
-            return 1f + ((k -= 1f)*k*k);
+            return 1f + (k -= 1f)*k*k;
         }
 
         public static float inOut (float k) {
@@ -54,7 +54,7 @@ public class EasingUtil {
         }
 
         public static float out (float k) {
-            return 1f - ((k -= 1f)*k*k*k);
+            return 1f - (k -= 1f)*k*k*k;
         }
 
         public static float inOut (float k) {
@@ -69,7 +69,7 @@ public class EasingUtil {
         }
 
         public static float out (float k) {
-            return 1f + ((k -= 1f)*k*k*k*k);
+            return 1f + (k -= 1f)*k*k*k*k;
         }
 
         public static float inOut (float k) {
@@ -115,7 +115,7 @@ public class EasingUtil {
         }
 
         public static float out (float k) {
-            return (float) Math.sqrt(1f - ((k -= 1f)*k));
+            return (float) Math.sqrt(1f - (k -= 1f)*k);
         }
 
         public static float inOut (float k) {
@@ -167,18 +167,10 @@ public class EasingUtil {
         }
 
         public static float out (float k) {
-            if (k < (1f/2.75f)) {
-                return 7.5625f*k*k;
-            }
-            else if (k < (2f/2.75f)) {
-                return 7.5625f*(k -= (1.5f/2.75f))*k + 0.75f;
-            }
-            else if (k < (2.5f/2.75f)) {
-                return 7.5625f *(k -= (2.25f/2.75f))*k + 0.9375f;
-            }
-            else {
-                return 7.5625f*(k -= (2.625f/2.75f))*k + 0.984375f;
-            }
+            if (k < 1f/2.75f) return 7.5625f * k * k;
+            else if (k < 2f/2.75f) return 7.5625f * (k -= 1.5f / 2.75f) * k + 0.75f;
+            else if (k < 2.5f/2.75f) return 7.5625f * (k -= 2.25f / 2.75f) * k + 0.9375f;
+            else return 7.5625f * (k -= 2.625f / 2.75f) * k + 0.984375f;
         }
 
         public static float inOut (float k) {

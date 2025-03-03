@@ -23,21 +23,15 @@ public record FoliageModifier(Optional<DefaultFoliageSettings> settings, Map<Hol
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if (phase == Phase.AFTER_EVERYTHING) {
-            if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
-                if (settings.isPresent()) {
-                    settings.get().grass.ifPresent(builder.getSpecialEffects()::grassColorOverride);
-                    settings.get().foliage.ifPresent(builder.getSpecialEffects()::foliageColorOverride);
-                }
-
-                if (grassMap.containsKey(biome)) {
-                    builder.getSpecialEffects().grassColorOverride(grassMap.get(biome));
-                }
-
-                if (foliageMap.containsKey(biome)) {
-                    builder.getSpecialEffects().foliageColorOverride(foliageMap.get(biome));
-                }
+        if (phase == Phase.AFTER_EVERYTHING) if (settings().isEmpty() || settings().get().biomes.contains(biome)) {
+            if (settings().isPresent()) {
+                settings().get().grass.ifPresent(builder.getSpecialEffects()::grassColorOverride);
+                settings().get().foliage.ifPresent(builder.getSpecialEffects()::foliageColorOverride);
             }
+            
+            if (grassMap.containsKey(biome)) builder.getSpecialEffects().grassColorOverride(grassMap.get(biome));
+            
+            if (foliageMap.containsKey(biome)) builder.getSpecialEffects().foliageColorOverride(foliageMap.get(biome));
         }
     }
 
