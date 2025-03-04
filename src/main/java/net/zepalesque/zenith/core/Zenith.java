@@ -84,9 +84,7 @@ public class Zenith {
                 ZenithRecipes.Serializers.SERIALIZERS
         };
 
-        for (DeferredRegister<?> register : registers) {
-            register.register(bus);
-        }
+        for (DeferredRegister<?> register : registers) register.register(bus);
 
         // Register example config serializer
         ZConfig.COMMON.registerSerializer();

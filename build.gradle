@@ -100,20 +100,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     from "src/main/templates/META-INF"
     into "build/generated/sources/modMetadata/META-INF"
 }
-sourceSets.main.resources.srcDir generateModMetadata
-neoForge.ideSyncTask generateModMetadata
 
-compileJava {
-    options.incremental = false
-}
-
-tasks.register('sourceJar', Jar) {
-    dependsOn 'classes'
-    from sourceSets.main.allSource
-    archiveClassifier = 'sources'
-}
-
-tasks.register('genInfo', ProcessResources) {
+var genInfo = tasks.register('genInfo', ProcessResources) {
 
     File root = file('src/main')
     File java = new File(root, 'java')
@@ -140,6 +128,21 @@ tasks.register('genInfo', ProcessResources) {
         }
     }
     println("\nCreated package-info.java in " + i + " subdirectories\n")
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+sourceSets.main.java.srcDir genInfo
+neoForge.ideSyncTask generateModMetadata
+neoForge.ideSyncTask genInfo
+
+compileJava {
+    options.incremental = false
+}
+
+tasks.register('sourceJar', Jar) {
+    dependsOn 'classes'
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
 }
 
 publishing {
