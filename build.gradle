@@ -121,6 +121,7 @@ tasks.register('genInfo', ProcessResources) {
     File genJava = file('src/generated/java')
 
     genJava.deleteDir()
+    int i;
 
     java.eachDirRecurse { dir ->
         if (dir == java || dir.parentFile == java) return
@@ -130,14 +131,15 @@ tasks.register('genInfo', ProcessResources) {
         if (!packageName) return
         File genDir = new File(genJava, relative)
         if (!genDir.exists()) genDir.mkdirs()
-        File infoFile = new File(genDir, 'package-info.java')
 
-
-        String contents = template.text.replace("\${directory}", packageName)
-        infoFile.text = contents
-
-        println("Created package-info.java in: ${dir.absolutePath}")
+        i++
+        if (dir.listFiles((FileFilter) File::isFile).length > 0) {
+            File infoFile = new File(genDir, 'package-info.java')
+            String contents = template.text.replace("\${directory}", packageName)
+            infoFile.text = contents
+        }
     }
+    println("\nCreated package-info.java in " + i + " subdirectories\n")
 }
 
 publishing {
