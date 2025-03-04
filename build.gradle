@@ -119,10 +119,11 @@ tasks.register('genInfo', ProcessResources) {
     File java = new File(root, 'java')
     File template = new File(root, 'templates/package-info-template.java')
     File genJava = file('src/generated/java')
-    if (genJava.exists())
-        genJava.eachFileRecurse { file -> file.delete() }
+
+    genJava.deleteDir()
+
     java.eachDirRecurse { dir ->
-        if (dir == java) return
+        if (dir == java || dir.parentFile == java) return
         String relative = dir.absolutePath.replace(java.absolutePath + File.separator, '')
         String packageName = relative.replace(File.separator, '.')
 
@@ -132,7 +133,8 @@ tasks.register('genInfo', ProcessResources) {
         File infoFile = new File(genDir, 'package-info.java')
 
 
-        infoFile.text = template.text.replace("\${directory}", packageName)
+        String contents = template.text.replace("\${directory}", packageName)
+        infoFile.text = contents
 
         println("Created package-info.java in: ${dir.absolutePath}")
     }
