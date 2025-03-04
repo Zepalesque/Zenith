@@ -68,6 +68,8 @@ neoForge {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+sourceSets.main.java { srcDir 'src/generated/java' }
+
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
@@ -95,8 +97,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     ]
     inputs.properties replaceProperties
     expand replaceProperties
-    from "src/main/templates"
-    into "build/generated/sources/modMetadata"
+    from "src/main/templates/META-INF"
+    into "build/generated/sources/modMetadata/META-INF"
 }
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
@@ -109,6 +111,31 @@ tasks.register('sourceJar', Jar) {
     dependsOn 'classes'
     from sourceSets.main.allSource
     archiveClassifier = 'sources'
+}
+
+tasks.register('genInfo', ProcessResources) {
+
+    File root = file('src/main')
+    File java = new File(root, 'java')
+    File template = new File(root, 'templates/package-info-template.java')
+    File genJava = file('src/generated/java')
+    if (genJava.exists())
+        genJava.eachFileRecurse { file -> file.delete() }
+    java.eachDirRecurse { dir ->
+        if (dir == java) return
+        String relative = dir.absolutePath.replace(java.absolutePath + File.separator, '')
+        String packageName = relative.replace(File.separator, '.')
+
+        if (!packageName) return
+        File genDir = new File(genJava, relative)
+        if (!genDir.exists()) genDir.mkdirs()
+        File infoFile = new File(genDir, 'package-info.java')
+
+
+        infoFile.text = template.text.replace("\${directory}", packageName)
+
+        println("Created package-info.java in: ${dir.absolutePath}")
+    }
 }
 
 publishing {
