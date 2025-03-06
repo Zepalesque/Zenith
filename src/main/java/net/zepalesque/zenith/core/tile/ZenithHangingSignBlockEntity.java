@@ -18,6 +18,7 @@ public class ZenithHangingSignBlockEntity extends HangingSignBlockEntity {
     // Fix to get around crashing caused by the validateBlockState method
     public static ZenithHangingSignBlockEntity create(BlockPos pos, BlockState state, Supplier<BlockEntityType<? extends ZenithHangingSignBlockEntity>> set) {
         return new ZenithHangingSignBlockEntity(pos, state, set) {
+            @SuppressWarnings("ConstantValue")
             @Override
             public BlockEntityType<? extends ZenithHangingSignBlockEntity> getType() {
                 return this.typeSupplier == null ? set.get() : this.typeSupplier.get();

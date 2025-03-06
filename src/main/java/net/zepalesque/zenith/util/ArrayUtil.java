@@ -13,6 +13,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 
+@SuppressWarnings("unused")
 public class ArrayUtil {
     
     /**

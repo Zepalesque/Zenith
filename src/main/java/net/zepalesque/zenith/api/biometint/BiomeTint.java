@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.core.registry.BiomeTints;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,9 +47,8 @@ public class BiomeTint {
      * @return The color that should be used, as an integer.
      */
     public int getColor(Biome biome) {
-        if (!this.initialized) {
+        if (!this.initialized)
             Zenith.LOGGER.warn("Attempted to get uninitialized BiomeTint: {}!", BiomeTints.TINT_REGISTRY.getKey(this));
-        }
         return this.tints.getOrDefault(biome, defaultColor);
     }
 
@@ -63,9 +63,9 @@ public class BiomeTint {
     /**
      *  Adds a tint color to the map. Used to add tints from the data map whenever the player joins a new world. Should not be called, as this is handled by Zenith.
      */
-    public void addTint(Biome biome, int color, ResourceLocation biomeID) {
+    public void addTint(@Nullable Biome biome, int color, ResourceLocation biomeID) {
         if (biome == null) {
-            Zenith.LOGGER.warn("Attempted to put nonexistent biome {} in tint map!", biomeID.toString());
+            Zenith.LOGGER.warn("Attempted to put nonexistent biome {} in tint map!", biomeID);
             return;
         }
         this.tints.put(biome, color);

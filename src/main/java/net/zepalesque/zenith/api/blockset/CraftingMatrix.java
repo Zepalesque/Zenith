@@ -25,12 +25,9 @@ public record CraftingMatrix(int count, BiFunction<ShapedRecipeBuilder, ItemLike
     public CraftingMatrix(int resultCount, char baseIngredient, String... pattern) {
         this(resultCount, (builder, item) -> {
             builder.define(baseIngredient, item);
-            if (pattern.length > 3) {
+            if (pattern.length > 3)
                 throw new UnsupportedOperationException("Pattern cannot have more than three rows");
-            }
-            for (String s : pattern) {
-                builder.pattern(s);
-            }
+            for (String s : pattern) builder.pattern(s);
             return builder;
         });
     }

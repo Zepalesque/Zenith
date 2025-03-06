@@ -55,18 +55,18 @@ public class ExtendableStateList {
 
     public record Entry(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
 
-        private static boolean canCreate = false;
+        private static boolean allowCreation = false;
 
-        @Deprecated
+        
         public Entry {
-            if (!canCreate) throw new IllegalStateException("Use ExtendableStateList$Entry#create please!");
+            if (!allowCreation) throw new AssertionError("Use ExtendableStateList$Entry#create please!");
         }
 
         public static Entry create(ExtendableStateList list, Optional<Map<ResourceKey<Biome>, SimpleWeightedRandomList<BlockState>>> byBiome, Optional<SimpleWeightedRandomList<BlockState>> fallback) {
-            canCreate = true;
+            allowCreation = true;
             Entry e = new Entry(list, byBiome, fallback);
             list.entries.add(e);
-            canCreate = false;
+            allowCreation = false;
             return e;
         }
 

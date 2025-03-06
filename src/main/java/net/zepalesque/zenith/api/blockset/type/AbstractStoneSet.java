@@ -14,6 +14,7 @@ import net.zepalesque.zenith.api.blockset.CraftingMatrix;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public abstract class AbstractStoneSet implements BlockSet {
 
     protected abstract DeferredBlock<?> block(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, MapColor color, SoundType soundType, float breakTime, float blastResistance);

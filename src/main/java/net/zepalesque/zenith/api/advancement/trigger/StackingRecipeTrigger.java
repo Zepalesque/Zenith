@@ -5,17 +5,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
-
 import net.minecraft.advancements.critereon.ItemPredicate.Builder;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
-import net.zepalesque.zenith.util.function.type.RecipeTypePredicate;
 import net.zepalesque.zenith.core.recipe.recipes.StackingRecipe;
+import net.zepalesque.zenith.util.function.type.RecipeTypePredicate;
 
 import java.util.Optional;
 /**
@@ -24,7 +22,7 @@ import java.util.Optional;
 public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipeTrigger.Instance> {
 
     public void trigger(ServerPlayer player, ItemStack ingredient, ItemStack result, Holder<RecipeType<?>> recipeType) {
-        this.trigger(player, (instance) -> instance.test(ingredient, result, recipeType));
+        this.trigger(player, instance -> instance.test(ingredient, result, recipeType));
     }
 
     @Override

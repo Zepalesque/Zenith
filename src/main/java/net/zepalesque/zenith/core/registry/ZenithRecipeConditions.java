@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.zepalesque.zenith.api.recipe.condition.ConditionRecipeModule;
 import net.zepalesque.zenith.core.Zenith;
 
+@SuppressWarnings("unused")
 public class ZenithRecipeConditions {
 
     public static final DeferredRegister<MapCodec<? extends ICondition>> CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, Zenith.MODID);

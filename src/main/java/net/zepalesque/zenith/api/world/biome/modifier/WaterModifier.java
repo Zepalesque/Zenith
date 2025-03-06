@@ -23,21 +23,15 @@ public record WaterModifier(Optional<DefaultWaterSettings> settings, Map<Holder<
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if (phase == Phase.AFTER_EVERYTHING) {
-            if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
-                if (settings.isPresent()) {
-                    settings.get().water.ifPresent(builder.getSpecialEffects()::waterColor);
-                    settings.get().fog.ifPresent(builder.getSpecialEffects()::waterFogColor);
-                }
-
-                if (waterMap.containsKey(biome)) {
-                    builder.getSpecialEffects().waterColor(waterMap.get(biome));
-                }
-
-                if (fogMap.containsKey(biome)) {
-                    builder.getSpecialEffects().waterFogColor(fogMap.get(biome));
-                }
+        if (phase == Phase.AFTER_EVERYTHING) if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
+            if (settings.isPresent()) {
+                settings.get().water.ifPresent(builder.getSpecialEffects()::waterColor);
+                settings.get().fog.ifPresent(builder.getSpecialEffects()::waterFogColor);
             }
+            
+            if (waterMap.containsKey(biome)) builder.getSpecialEffects().waterColor(waterMap.get(biome));
+            
+            if (fogMap.containsKey(biome)) builder.getSpecialEffects().waterFogColor(fogMap.get(biome));
         }
     }
 

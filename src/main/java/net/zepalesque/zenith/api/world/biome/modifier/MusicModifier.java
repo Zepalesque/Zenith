@@ -30,9 +30,7 @@ public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Opt
             Music music = builder.getSpecialEffects().getBackgroundMusic().get();
             if (predicate.isEmpty() || predicate.get().test(music)) {
                 Music transformed = newMusic.apply(music);
-                if (transformed != music) {
-                    builder.getSpecialEffects().backgroundMusic(transformed);
-                }
+                if (transformed != music) builder.getSpecialEffects().backgroundMusic(transformed);
             }
         }
     }
@@ -52,17 +50,15 @@ public record MusicModifier(HolderSet<Biome> biomes, MusicOperator newMusic, Opt
 
         @Override
         public Music apply(Music music) {
-            if (sound.isEmpty() && minDelay.isEmpty() && maxDelay.isEmpty() && replaceCurrent.isEmpty()) {
-                return music;
-            }
+            if (sound.isEmpty() && minDelay.isEmpty() && maxDelay.isEmpty() && replaceCurrent.isEmpty()) return music;
             Holder<SoundEvent> soundEvent = music.getEvent();
             int minimum = music.getMinDelay();
             int maximum = music.getMaxDelay();
             boolean replace = music.replaceCurrentMusic();
-            if (sound.isPresent()) { soundEvent = sound.get(); }
-            if (minDelay.isPresent()) { minimum = minDelay.get(); }
-            if (maxDelay.isPresent()) { maximum = maxDelay.get(); }
-            if (replaceCurrent.isPresent()) { replace = replaceCurrent.get(); }
+            if (sound.isPresent()) soundEvent = sound.get();
+            if (minDelay.isPresent()) minimum = minDelay.get();
+            if (maxDelay.isPresent()) maximum = maxDelay.get();
+            if (replaceCurrent.isPresent()) replace = replaceCurrent.get();
             return new Music(soundEvent, minimum, maximum, replace);
         }
     }

@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 /**
  * Some utilities to simplify certain processes.
  */
+@SuppressWarnings("unused")
 public class DatagenUtil {
 
     /**
@@ -36,7 +37,7 @@ public class DatagenUtil {
     }
 
     @Nullable
-    public static <T> String localize(ResourceLocation id) {
+    public static <T> String localize(@Nullable ResourceLocation id) {
         return id == null ? null : localize(id.getPath());
     }
 

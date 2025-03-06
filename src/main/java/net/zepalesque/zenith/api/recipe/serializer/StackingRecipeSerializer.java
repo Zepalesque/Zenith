@@ -27,12 +27,12 @@ public class StackingRecipeSerializer<T extends AbstractStackingRecipe> implemen
 
     public StackingRecipeSerializer(AbstractStackingRecipe.Factory<T> factory) {
         this.factory = factory;
-        this.codec = RecordCodecBuilder.mapCodec(inst -> inst.group(
+        this.codec = RecordCodecBuilder.mapCodec(builder -> builder.group(
                 Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractStackingRecipe::getIngredient),
                 ItemStackConstructor.CODEC.fieldOf("result").forGetter(AbstractStackingRecipe::getResult),
                 CompoundTag.CODEC.optionalFieldOf("additional_data").forGetter(AbstractStackingRecipe::getAdditionalData),
                 SoundEvent.CODEC.optionalFieldOf("sound").forGetter(AbstractStackingRecipe::getSound)
-        ).apply(inst, this.factory::create));
+        ).apply(builder, this.factory::create));
         this.streamCodec = StreamCodec.of(this::toNetwork, this::fromNetwork);
     }
 

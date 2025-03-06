@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * @see java.util.function.Predicate Predicate
  * @see java.util.function.BiPredicate BiPredicate
  */
+@SuppressWarnings("unused")
 public class Predicates {
 
     /**

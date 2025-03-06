@@ -6,6 +6,7 @@ package net.zepalesque.zenith.util.function;
  * @see java.util.function.UnaryOperator UnaryOperator
  * @see java.util.function.BinaryOperator BinaryOperator
  */
+@SuppressWarnings("unused")
 public class Operators {
 
     /**

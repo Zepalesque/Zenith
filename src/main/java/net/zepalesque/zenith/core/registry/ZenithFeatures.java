@@ -10,6 +10,7 @@ import net.zepalesque.zenith.api.world.feature.gen.BlockWithPredicateFeature;
 import net.zepalesque.zenith.api.world.feature.gen.LargeRockFeature;
 import net.zepalesque.zenith.api.world.feature.gen.RuleBasedLakeFeature;
 
+@SuppressWarnings("unused")
 public class ZenithFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(BuiltInRegistries.FEATURE, Zenith.MODID);
 

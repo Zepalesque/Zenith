@@ -49,9 +49,7 @@ public record BiomeTintSyncPacket(Map<ResourceLocation, Map<ResourceLocation, In
                         tint.addTint(b, entry.getValue(), entry.getKey());
                     }
                     tint.markInitialized();
-                } else {
-                    Zenith.LOGGER.warn("Attempted to read non-existent BiomeTint {}!", tintType);
-                }
+                } else Zenith.LOGGER.warn("Attempted to read non-existent BiomeTint {}!", tintType);
             });
         }
     }

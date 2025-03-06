@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ZenithWallSignBlock extends WallSignBlock {
@@ -20,6 +21,6 @@ public class ZenithWallSignBlock extends WallSignBlock {
 
     @Override
     public  BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return this.entity.get().create(pos, state);
+        return Objects.requireNonNull(this.entity.get().create(pos, state));
     }
 }

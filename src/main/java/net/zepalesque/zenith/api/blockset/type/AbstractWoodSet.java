@@ -27,6 +27,7 @@ import java.util.function.Supplier;
 /**
  * Should implement methods by having the first of each (with the parameters) used as a construction method and the second (without parameters) as a getter function
  */
+@SuppressWarnings("unused")
 public abstract class AbstractWoodSet implements BlockSet {
 
     // Blocks

@@ -34,9 +34,7 @@ public class IntProviderTrunkPlacer extends TrunkPlacer {
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> setter, RandomSource random, int height, BlockPos origin, TreeConfiguration config) {
         setDirtAt(level, setter, random, origin.below(), config);
 
-        for(int i = 0; i < height; ++i) {
-            this.placeLog(level, setter, random, origin.above(i), config);
-        }
+        for (int i = 0; i < height; ++i) this.placeLog(level, setter, random, origin.above(i), config);
 
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin.above(height), 0, false));
     }

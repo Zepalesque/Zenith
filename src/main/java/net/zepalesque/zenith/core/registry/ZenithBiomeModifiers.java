@@ -12,6 +12,7 @@ import net.zepalesque.zenith.api.world.biome.modifier.MusicModifier;
 import net.zepalesque.zenith.api.world.biome.modifier.SkiesModifier;
 import net.zepalesque.zenith.api.world.biome.modifier.WaterModifier;
 
+@SuppressWarnings("unused")
 public class ZenithBiomeModifiers {
     public static final DeferredRegister<MapCodec<? extends BiomeModifier>> CODECS = DeferredRegister.create(NeoForgeRegistries.BIOME_MODIFIER_SERIALIZERS, Zenith.MODID);
 

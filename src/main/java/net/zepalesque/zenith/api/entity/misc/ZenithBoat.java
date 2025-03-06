@@ -11,8 +11,10 @@ import net.zepalesque.zenith.api.blockset.type.AbstractWoodSet;
 import net.zepalesque.zenith.core.Zenith;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ZenithBoat extends Boat implements ZenithBoatBehavior {
+    @Nullable
     protected AbstractWoodSet set;
     public ZenithBoat(EntityType<? extends ZenithBoat> type, Level level) {
         super(type, level);
@@ -53,11 +55,8 @@ public class ZenithBoat extends Boat implements ZenithBoatBehavior {
     }
 
     public ZenithBoat withSet(AbstractWoodSet set) {
-        if (this.set == null) {
-            this.set = set;
-        } else {
-            Zenith.LOGGER.warn("Tried to set AbstractWoodSet of ZenithBoat to {}, when it already was a part of set {}! Ignoring...", set.getID(), this.set.getID());
-        }
+        if (this.set == null) this.set = set;
+        else Zenith.LOGGER.warn("Tried to set AbstractWoodSet of ZenithBoat to {}, when it already was a part of set {}! Ignoring...", set.getID(), this.set.getID());
         return this;
     }
 }

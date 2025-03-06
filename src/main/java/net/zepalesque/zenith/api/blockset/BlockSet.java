@@ -4,9 +4,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -18,12 +16,10 @@ import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.zepalesque.zenith.mixin.mixins.common.accessor.FireAccessor;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 /**
  * A set of auto-datagenned blocks. Not to be confused with {@link net.minecraft.world.level.block.state.properties.BlockSetType}!
  */
+@SuppressWarnings("unused")
 public interface BlockSet {
 
     /**

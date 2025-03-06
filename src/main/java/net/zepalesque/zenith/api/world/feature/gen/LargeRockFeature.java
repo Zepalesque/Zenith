@@ -7,14 +7,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -50,7 +47,7 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
             if (rand.nextFloat() < 0.7) {
                 BlockPos imm = origin.relative(d).relative(d.getCounterClockWise());
                 setBlock(imm, context);
-                for (Direction d1 : Direction.Plane.VERTICAL) {
+                for (Direction d1 : Direction.Plane.VERTICAL)
                     if (rand.nextFloat() < 0.5) {
                         mutable.setWithOffset(imm, d1);
                         setBlock(mutable, context);
@@ -59,16 +56,13 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                             potentiallyPlaceAbove.add(d.getCounterClockWise());
                         }
                     }
-                }
             }
             // Keep a list of directions that actually had a chunk placed above
             for (int i = -1; i < 3; i++) {
                 BlockPos imm1 = origin.relative(d);
-                if (i < 2 || (potentiallyPlaceAbove.contains(d) && rand.nextFloat() < 0.7)) {
+                if (i < 2 || potentiallyPlaceAbove.contains(d) && rand.nextFloat() < 0.7) {
                     setBlock(imm1.above(i), context);
-                    if (i == 2 && !placedAbove.contains(d)) {
-                        placedAbove.add(d);
-                    }
+                    if (i == 2 && !placedAbove.contains(d)) placedAbove.add(d);
                 }
             }
         }
@@ -76,9 +70,7 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         int count = placedAbove.size();
         if (count > 1) {
             float chance = count == 2 ? 0.3F : count == 3 ? 0.7F : 1;
-            if (count > 3 || rand.nextFloat() < chance) {
-                setBlock(origin.above(spiky ? 4 : 3), context);
-            }
+            if (count > 3 || rand.nextFloat() < chance) setBlock(origin.above(spiky ? 4 : 3), context);
         }
 
         if (rand.nextFloat() < 0.25) {
@@ -87,21 +79,20 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
             BlockPos pos = origin.relative(d1, 2).relative(d2);
             BlockPos below = pos.below();
             BlockPos underBelow = below.below();
-            if (level.isStateAtPosition(pos, state -> state.isFaceSturdy(level, pos, Direction.UP))) {
+            if (level.isStateAtPosition(pos, state -> state.isFaceSturdy(level, pos, Direction.UP)))
                 placeSecondChunk(pos.above(), mutable, context);
-            } else if (level.isStateAtPosition(below, state -> state.isFaceSturdy(level, below, Direction.UP))) {
+            else if (level.isStateAtPosition(below, state -> state.isFaceSturdy(level, below, Direction.UP)))
                 placeSecondChunk(pos, mutable, context);
-            } else if (level.isStateAtPosition(underBelow, state -> state.isFaceSturdy(level, underBelow, Direction.UP))) {
+            else if (level.isStateAtPosition(underBelow, state -> state.isFaceSturdy(level, underBelow, Direction.UP)))
                 placeSecondChunk(below, mutable, context);
-            }
         }
         tryPlacePatch(context);
         return true;
     }
 
     private void placeSecondChunk(BlockPos pos, BlockPos.MutableBlockPos mutable, FeaturePlaceContext<Config> context) {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
+        for (int x = -1; x <= 1; x++)
+            for (int y = -1; y <= 1; y++)
                 for (int z = -1; z <= 1; z++) {
                     int total = Math.abs(x) + Math.abs(y) + Math.abs(z);
                     boolean place = context.random().nextBoolean() ? total <= 1 : total <= 2;
@@ -110,8 +101,6 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
                         setBlock(mutable, context);
                     }
                 }
-            }
-        }
     }
 
     private static void setBlock(BlockPos pos, FeaturePlaceContext<Config> context) {
@@ -120,9 +109,8 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
         BlockStateProvider provider = config.block();
         RandomSource rand = context.random();
         Optional<HolderSet<Block>> optional = config.replaceableStates();
-        if (level.isStateAtPosition(pos, bs -> bs.isAir() || bs.canBeReplaced() || (!bs.isCollisionShapeFullBlock(level, pos) && bs.getDestroySpeed(level, pos) != -1.0F) || bs.getDestroySpeed(level, pos) == 0.0F || (optional.isPresent() && bs.is(optional.get())))) {
+        if (level.isStateAtPosition(pos, bs -> bs.isAir() || bs.canBeReplaced() || !bs.isCollisionShapeFullBlock(level, pos) && bs.getDestroySpeed(level, pos) != -1.0F || bs.getDestroySpeed(level, pos) == 0.0F || optional.isPresent() && bs.is(optional.get())))
             level.setBlock(pos, provider.getState(rand, pos), 2);
-        }
     }
 
 
@@ -144,20 +132,18 @@ public class LargeRockFeature extends Feature<LargeRockFeature.Config> {
 
         for(int l = 0; l < patch.tries(); ++l) {
             mutable.setWithOffset(pos, rand.nextInt(j) - rand.nextInt(j), rand.nextInt(k) - rand.nextInt(k), rand.nextInt(j) - rand.nextInt(j));
-            if (patch.feature().value().place(level, context.chunkGenerator(), rand, mutable)) {
-                ++i;
-            }
+            if (patch.feature().value().place(level, context.chunkGenerator(), rand, mutable)) ++i;
         }
 
         return i > 0;
     }
 
     public record Config(BlockStateProvider block, Optional<HolderSet<Block>> replaceableStates, Optional<PatchData> patch) implements FeatureConfiguration {
-        public static final Codec<Config> CODEC = RecordCodecBuilder.create((config) -> config.group(
+        public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 BlockStateProvider.CODEC.fieldOf("block").forGetter(Config::block),
                 RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("replaceable_states").forGetter(Config::replaceableStates),
                 PatchData.CODEC.optionalFieldOf("patch_gen").forGetter(Config::patch)
-        ).apply(config, Config::new));
+        ).apply(builder, Config::new));
     }
 
     public record PatchData(int tries, int xzSpread, int ySpread, Holder<PlacedFeature> feature) {

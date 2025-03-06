@@ -32,20 +32,17 @@ public interface SharedSuggestionProviderMixin {
             // If the input contains a colon, match exactly to the location as this implies a namespace
             if (hasColon) {
                 String s = resourcelocation.toString();
-                if (SharedSuggestionProvider.matchesSubStr(input, s)) {
+                if (SharedSuggestionProvider.matchesSubStr(input, s))
                     consumer.accept(t);
-                }
             // Otherwise, check if the string contains the substring
             } else if (SharedSuggestionProvider.matchesSubStr(input, resourcelocation.getNamespace())
-                    ||
-                 // resourcelocation.getNamespace().equals("minecraft") &&
+                    || // resourcelocation.getNamespace().equals("minecraft") &&
                     (resourcelocation.getNamespace().equals("minecraft") || ZConfig.COMMON.allow_nonminecraft_autocomplete.get()) &&
-                    SharedSuggestionProvider.matchesSubStr(input, resourcelocation.getPath())) {
+                    SharedSuggestionProvider.matchesSubStr(input, resourcelocation.getPath()))
                 consumer.accept(t);
             // Zenith feature, allows for any string containing the input to result. Disabled by default.
-            } else if (ZConfig.COMMON.search_as_containing.get() && resourcelocation.getPath().contains(input)) {
+            else if (ZConfig.COMMON.search_as_containing.get() && resourcelocation.getPath().contains(input))
                 consumer.accept(t);
-            }
 
         }
     }

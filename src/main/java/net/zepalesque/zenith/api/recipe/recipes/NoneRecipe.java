@@ -9,7 +9,22 @@ import net.minecraft.world.level.Level;
 import net.zepalesque.zenith.core.recipe.input.EmptyRecipeInput;
 import net.zepalesque.zenith.core.registry.ZenithRecipes;
 
-public class NoneRecipe implements Recipe<EmptyRecipeInput> {
+public record NoneRecipe() implements Recipe<EmptyRecipeInput> {
+    
+    public static final NoneRecipe INSTANCE = create();
+    
+    public NoneRecipe {
+        if (!allowCreation) throw new AssertionError("Use the INSTANCE field instead");
+    }
+    
+    private static boolean allowCreation = false;
+    private static NoneRecipe create() {
+        allowCreation = true;
+        NoneRecipe recipe = new NoneRecipe();
+        allowCreation = false;
+        return recipe;
+    }
+    
     @Override
     public boolean matches(EmptyRecipeInput container, Level level) {
         return false;

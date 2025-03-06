@@ -21,9 +21,8 @@ public record RemoveStructureModifier(HolderSet<Structure> structures) implement
 
     @Override
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
-        if (phase == Phase.AFTER_EVERYTHING && this.structures.contains(structure)) {
+        if (phase == Phase.AFTER_EVERYTHING && this.structures.contains(structure))
             builder.getStructureSettings().setBiomes(HolderSet.direct());
-        }
     }
 
     @Override

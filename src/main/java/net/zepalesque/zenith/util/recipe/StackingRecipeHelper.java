@@ -35,6 +35,7 @@ import java.util.function.Predicate;
  * </code></pre>
  * NOTE: Future versions of Zenith may automate this process for you.
  */
+@SuppressWarnings("unused")
 public class StackingRecipeHelper {
 
     /**

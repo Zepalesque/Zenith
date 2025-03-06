@@ -10,6 +10,7 @@ import net.zepalesque.zenith.api.world.density.CubeRootFunction;
 import net.zepalesque.zenith.api.world.density.PerlinNoiseFunction;
 import net.zepalesque.zenith.api.world.density.SquareRootFunction;
 
+@SuppressWarnings("unused")
 public class ZenithDensityFunctions {
     public static final DeferredRegister<MapCodec<? extends DensityFunction>> FUNCTIONS = DeferredRegister.create(BuiltInRegistries.DENSITY_FUNCTION_TYPE, Zenith.MODID);
 

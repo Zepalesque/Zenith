@@ -15,6 +15,7 @@ import net.zepalesque.zenith.api.blockset.CraftingMatrix;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
+@SuppressWarnings("unused")
 public abstract class AbstractFlowerSet implements BlockSet {
 
     protected abstract <T extends Block> DeferredBlock<T> flower(DeferredRegister.Blocks registry, DeferredRegister.Items items, String id, Supplier<T> constructor);

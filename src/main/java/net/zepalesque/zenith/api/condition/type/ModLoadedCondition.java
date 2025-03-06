@@ -3,18 +3,18 @@ package net.zepalesque.zenith.api.condition.type;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.neoforged.fml.ModList;
 import net.zepalesque.zenith.api.condition.Condition;
+import net.zepalesque.zenith.util.mod.CompatHelper;
 
 public record ModLoadedCondition(String modid) implements Condition<ModLoadedCondition> {
 
-    public static final MapCodec<ModLoadedCondition> CODEC = RecordCodecBuilder.mapCodec((condition) ->
-            condition.group(Codec.STRING.fieldOf("modid").forGetter((config) -> config.modid))
-                    .apply(condition, ModLoadedCondition::new));
+    public static final MapCodec<ModLoadedCondition> CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(Codec.STRING.fieldOf("modid").forGetter(ModLoadedCondition::modid))
+                    .apply(builder, ModLoadedCondition::new));
 
     @Override
     public boolean test() {
-        return ModList.get().isLoaded(this.modid);
+        return CompatHelper.loaded(this.modid());
     }
 
     @Override

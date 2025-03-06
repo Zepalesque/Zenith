@@ -2,6 +2,7 @@ package net.zepalesque.zenith.util.math;
 
 import net.minecraft.world.phys.Vec3;
 
+@SuppressWarnings("unused")
 public class VectorUtil {
 
     public static Vec3 threshold(Vec3 vec3, Vec3 threshold) {

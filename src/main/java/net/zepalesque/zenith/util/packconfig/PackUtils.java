@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class PackUtils {
 
     public static void setupPack(AddPackFindersEvent event, String modid, String path, String id, boolean required, boolean hidden, Function<Path, Pack.ResourcesSupplier> packBuilder) {

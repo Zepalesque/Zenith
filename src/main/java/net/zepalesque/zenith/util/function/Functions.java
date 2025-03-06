@@ -9,6 +9,7 @@ import java.util.function.Function;
  * @see Function
  * @see java.util.function.BiFunction BiFunction
  */
+@SuppressWarnings("unused")
 public class Functions {
     
     /**

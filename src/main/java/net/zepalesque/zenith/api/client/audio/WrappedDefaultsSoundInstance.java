@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>32: getPitch - default: 1.0F</p>
  * <p>64: getAttenuation - default: {@link Attenuation#LINEAR}</p>
  */
+@SuppressWarnings("unused")
 public record WrappedDefaultsSoundInstance<S extends SoundInstance>(S inner, byte flags) implements SoundInstance {
 
     private static final byte[] powers = { 0b1, 0b10, 0b100, 0b1000, 0b10000, 0b100000, 0b1000000 };

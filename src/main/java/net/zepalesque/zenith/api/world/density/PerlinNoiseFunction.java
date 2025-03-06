@@ -20,13 +20,13 @@ import java.util.function.UnaryOperator;
 public class PerlinNoiseFunction implements DensityFunction, SeededPerlinNoiseHolder<PerlinNoiseFunction> {
 
     public static final KeyDispatchDataCodec<PerlinNoiseFunction> CODEC = KeyDispatchDataCodec.of(RecordCodecBuilder.mapCodec(
-            p_208798_ -> p_208798_.group(
-                            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(func -> func.params),
-                            Codec.DOUBLE.fieldOf("xz_scale").forGetter(func -> func.xzScale),
-                            Codec.DOUBLE.fieldOf("y_scale").forGetter(func -> func.yScale),
-                            Codec.LONG.fieldOf("seed_offset").forGetter(func -> func.seedOffset)
+            builder -> builder.group(
+                            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(instance -> instance.params),
+                            Codec.DOUBLE.fieldOf("xz_scale").forGetter(instance -> instance.xzScale),
+                            Codec.DOUBLE.fieldOf("y_scale").forGetter(instance -> instance.yScale),
+                            Codec.LONG.fieldOf("seed_offset").forGetter(instance -> instance.seedOffset)
                     )
-                    .apply(p_208798_, PerlinNoiseFunction::new)));
+                    .apply(builder, PerlinNoiseFunction::new)));
 
     public Optional<PerlinNoise> noise = Optional.empty();
     private static final Map<Long, PerlinNoiseVisitor> VISITORS = new HashMap<>();

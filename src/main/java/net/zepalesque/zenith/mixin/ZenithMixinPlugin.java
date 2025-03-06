@@ -6,6 +6,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,7 @@ public final class ZenithMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
+    @Nullable
     public String getRefMapperConfig() {
         return null;
     }
@@ -36,6 +38,7 @@ public final class ZenithMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
+    @Nullable
     public List<String> getMixins() {
         return null;
     }

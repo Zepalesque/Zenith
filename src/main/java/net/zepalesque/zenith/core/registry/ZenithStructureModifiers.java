@@ -9,6 +9,7 @@ import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.api.world.structure.modifier.ConditionalStructureModifier;
 import net.zepalesque.zenith.api.world.structure.modifier.RemoveStructureModifier;
 
+@SuppressWarnings("unused")
 public class ZenithStructureModifiers {
     public static final DeferredRegister<MapCodec<? extends StructureModifier>> CODECS = DeferredRegister.create(NeoForgeRegistries.STRUCTURE_MODIFIER_SERIALIZERS, Zenith.MODID);
 

@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.function.UnaryOperator;
 
+@SuppressWarnings("unused")
 public class StateUtil {
 
     public static <P extends Comparable<P>> BlockState mapValue(BlockState state, Property<P> property, UnaryOperator<P> operation) {

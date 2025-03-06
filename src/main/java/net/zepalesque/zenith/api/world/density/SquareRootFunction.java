@@ -16,9 +16,7 @@ public record SquareRootFunction(DensityFunction input) implements DensityFuncti
     public void fillArray(double[] array, ContextProvider provider) {
         this.input().fillArray(array, provider);
 
-        for (int i = 0; i < array.length; ++i) {
-            array[i] = Math.sqrt(array[i]);
-        }
+        for (int i = 0; i < array.length; ++i) array[i] = Math.sqrt(array[i]);
     }
 
     @Override

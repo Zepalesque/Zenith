@@ -4,18 +4,16 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab.TabVisibility;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Supplier;
 
 /**
  * Helpful methods for creative tab insertion via {@link BuildCreativeModeTabContentsEvent}
  */
+@SuppressWarnings("unused")
 public class TabUtil {
 
     /**

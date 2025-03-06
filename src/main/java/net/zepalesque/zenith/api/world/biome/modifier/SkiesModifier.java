@@ -23,21 +23,15 @@ public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Bi
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if (phase == Phase.AFTER_EVERYTHING) {
-            if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
-                if (settings.isPresent()) {
-                    settings.get().sky.ifPresent(builder.getSpecialEffects()::skyColor);
-                    settings.get().fog.ifPresent(builder.getSpecialEffects()::fogColor);
-                }
-
-                if (skyMap.containsKey(biome)) {
-                    builder.getSpecialEffects().skyColor(skyMap.get(biome));
-                }
-
-                if (fogMap.containsKey(biome)) {
-                    builder.getSpecialEffects().fogColor(fogMap.get(biome));
-                }
+        if (phase == Phase.AFTER_EVERYTHING) if (settings.isEmpty() || settings.get().biomes.contains(biome)) {
+            if (settings.isPresent()) {
+                settings.get().sky.ifPresent(builder.getSpecialEffects()::skyColor);
+                settings.get().fog.ifPresent(builder.getSpecialEffects()::fogColor);
             }
+            
+            if (skyMap.containsKey(biome)) builder.getSpecialEffects().skyColor(skyMap.get(biome));
+            
+            if (fogMap.containsKey(biome)) builder.getSpecialEffects().fogColor(fogMap.get(biome));
         }
     }
 
@@ -45,8 +39,7 @@ public record SkiesModifier(Optional<DefaultSkySettings> settings, Map<Holder<Bi
     public MapCodec<? extends BiomeModifier> codec() {
         return CODEC;
     }
-
-
+    
     public record DefaultSkySettings(HolderSet<Biome> biomes, Optional<Integer> sky, Optional<Integer> fog) {
         public static final Codec<DefaultSkySettings> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 Biome.LIST_CODEC.fieldOf("biomes").forGetter(DefaultSkySettings::biomes),

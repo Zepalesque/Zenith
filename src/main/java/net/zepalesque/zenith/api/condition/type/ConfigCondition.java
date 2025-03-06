@@ -10,31 +10,31 @@ import net.zepalesque.zenith.api.serialization.config.ConfigSerializer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Objects;
 
 public record ConfigCondition(@Nullable String serializerId, @Nullable ConfigValue<Boolean> config) implements Condition<ConfigCondition> {
 
     private static final HashMap<String, ConfigSerializer> SERIALIZERS = new HashMap<>();
 
-    public static MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec((condition) ->
-            condition.group(
+    public static MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(
                             Codec.STRING.fieldOf("serializer").forGetter(ConfigCondition::serializerId),
                             Codec.STRING.fieldOf("config_path").forGetter(ConfigCondition::serializePath)
                     )
-                    .apply(condition, (serializerId, configPath) -> {
-                        @Nullable ConfigSerializer serializer = SERIALIZERS.get(serializerId);
-                        return new ConfigCondition(serializerId, serializer == null ? null : serializer.deserialize(configPath));
+                    .apply(builder, (id, path) -> {
+                        @Nullable ConfigSerializer serializer = SERIALIZERS.get(id);
+                        return new ConfigCondition(id, serializer == null ? null : serializer.deserialize(path));
                     }));
 
     // Record constructors are cool :eyes:
     public ConfigCondition {
-        if (!SERIALIZERS.containsKey(serializerId)) {
+        if (!SERIALIZERS.containsKey(serializerId))
             throw new UnsupportedOperationException("Attempted to create ConfigCondition with unregistered serializer!");
-        }
     }
 
     @Override
     public boolean test() {
-        return this.config == null || this.config.get();
+        return this.config() == null || this.config().get();
     }
 
     @Override
@@ -42,6 +42,7 @@ public record ConfigCondition(@Nullable String serializerId, @Nullable ConfigVal
         return CODEC;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static boolean registerSerializer(String id, ConfigSerializer serializer) {
         if (SERIALIZERS.containsKey(id)) {
             Zenith.LOGGER.warn("Attempted to register config serializer when one with the same id, {}, already exists! Skipping...", id);
@@ -52,6 +53,7 @@ public record ConfigCondition(@Nullable String serializerId, @Nullable ConfigVal
     }
 
     private String serializePath() {
+        Objects.requireNonNull(this.config());
         if (!SERIALIZERS.containsKey(this.serializerId()) || SERIALIZERS.get(this.serializerId()) == null) return "";
         else return SERIALIZERS.get(this.serializerId()).serialize(this.config());
     }

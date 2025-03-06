@@ -84,8 +84,7 @@ public class PackConfig {
     public <T extends ModConfigSpec.ConfigValue<Boolean>> T register(T config, String id) {
         return register(config, "", id);
     }
-
-
+    
     public void setup(AddPackFindersEvent event) {
         if (event.getPackType() == this.type)
             PackUtils.setupPack(event, this.id, this.folder, true, this.hideInMenu, this::generate);

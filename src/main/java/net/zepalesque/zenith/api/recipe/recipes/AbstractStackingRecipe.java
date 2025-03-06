@@ -30,7 +30,7 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
         this.additional = additional;
         this.sound = sound;
     }
-
+    
     public boolean matches(Level level, ItemStack item) {
         return this.getIngredient().test(item);
     }
@@ -38,19 +38,15 @@ public abstract class AbstractStackingRecipe implements StackingRecipe {
     @Nullable
     @Override
     public ItemStack getResultStack(ItemStack originalStack) {
-        if (!this.getIngredient().test(originalStack)) {
-            return null;
-        }
+        if (!this.getIngredient().test(originalStack)) return null;
 
         ItemStack resultStack = this.getResult().createStack(originalStack.getCount());
 
-        if (!originalStack.isComponentsPatchEmpty()) {
+        if (!originalStack.isComponentsPatchEmpty())
             resultStack.applyComponents(originalStack.getComponentsPatch());
-        }
 
-        if (resultStack.getItem() instanceof CustomStackingBehavior custom) {
+        if (resultStack.getItem() instanceof CustomStackingBehavior custom)
             resultStack = custom.transformStack(this.ingredient, resultStack, this.type, this.additional.orElse(null));
-        }
         return resultStack;
     }
 

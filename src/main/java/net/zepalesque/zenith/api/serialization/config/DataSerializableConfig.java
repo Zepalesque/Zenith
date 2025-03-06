@@ -4,7 +4,6 @@ import com.google.gson.JsonSyntaxException;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.zepalesque.zenith.api.condition.type.ConfigCondition;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;

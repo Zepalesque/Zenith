@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * @see java.util.function.Consumer Consumer
  * @see java.util.function.BiConsumer BiConsumer
  */
+@SuppressWarnings("unused")
 public class Consumers {
 
     /**

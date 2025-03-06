@@ -106,6 +106,7 @@ public class Zenith {
         event.dataPackRegistry(Keys.EXTENDABLE_STATE_LIST_ENTRY, ExtendableStateList.Entry.CODEC);
     }
 
+    // TODO: Move to seperate class
     private void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper fileHelper = event.getExistingFileHelper();

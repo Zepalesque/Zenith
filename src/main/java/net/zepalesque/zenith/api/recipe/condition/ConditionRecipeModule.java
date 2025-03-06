@@ -37,6 +37,6 @@ public  class ConditionRecipeModule implements ICondition {
 
     @Override
     public String toString() {
-        return "data_condition(" + Objects.requireNonNullElse(this.condition, "null") +  ")";
+        return "data_condition(" + this.condition +  ")";
     }
 }

@@ -21,15 +21,17 @@ public record MusicPredicate(Optional<HolderSet<SoundEvent>> sounds, Optional<Li
 
     @Override
     public boolean test(Music music) {
-        if (this.sounds.isPresent() && !this.sounds.get().contains(music.getEvent())) {
-            return false;
-        }
-        if (this.minDelays.isPresent() && !this.minDelays.get().isEmpty() && !this.minDelays.get().contains(music.getMinDelay())) {
-            return false;
-        }
-        if (this.maxDelays.isPresent() && !this.maxDelays.get().isEmpty() && !this.maxDelays.get().contains(music.getMaxDelay())) {
-            return false;
-        }
-        return this.replaceCurrent.isEmpty() || music.replaceCurrentMusic() == this.replaceCurrent.get();
+        return (this.sounds.isEmpty()
+              || this.sounds.get().contains(music.getEvent()))
+            
+            && (this.minDelays.isEmpty() || this.minDelays.get().isEmpty()
+              || this.minDelays.get().contains(music.getMinDelay()))
+            
+            && (this.maxDelays.isEmpty()
+              || this.maxDelays.get().isEmpty()
+              || this.maxDelays.get().contains(music.getMaxDelay()))
+            
+            && (this.replaceCurrent.isEmpty()
+                || music.replaceCurrentMusic() == this.replaceCurrent.get());
     }
 }

@@ -29,26 +29,20 @@ public class ExtendableStateListBlockFeature extends Feature<ExtendableStateList
         BlockState state = config.list().calculate(context.random(), context.level(), pos);
         if ((predicate.isEmpty() || predicate.get().test(level, pos)) && state.canSurvive(level, pos)) {
             if (state.getBlock() instanceof DoublePlantBlock) {
-                if (!level.isEmptyBlock(pos.above())) {
-                    return false;
-                }
+                if (!level.isEmptyBlock(pos.above())) return false;
 
                 DoublePlantBlock.placeAt(level, state, pos, 2);
-            } else {
-                level.setBlock(pos, state, 2);
-            }
+            } else level.setBlock(pos, state, 2);
 
             return true;
-        } else {
-            return false;
-        }
+        } else return false;
     }
 
 
     public record Config(ExtendableStateList list, Optional<BlockPredicate> predicate) implements FeatureConfiguration {
-        public static final Codec<Config> CODEC = RecordCodecBuilder.create((config) -> config.group(
+        public static final Codec<Config> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                 StateLists.STATE_LIST_REGISTRY.byNameCodec().fieldOf("to_place").forGetter(Config::list),
                 BlockPredicate.CODEC.optionalFieldOf("predicate").forGetter(Config::predicate)
-        ).apply(config, Config::new));
+        ).apply(builder, Config::new));
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.animation.AnimationChannel;
  *  <p>Ported to Java from C#, based on <a href="https://gist.github.com/Fonserbc/3d31a25e87fdaa541ddf">...</a></p>
  *  <p><b>TODO:</b> Relevant {@link AnimationChannel.Interpolation} types</p>
  */
+@SuppressWarnings("unused")
 public class EasingUtil {
 
     public static float linear(float k) {

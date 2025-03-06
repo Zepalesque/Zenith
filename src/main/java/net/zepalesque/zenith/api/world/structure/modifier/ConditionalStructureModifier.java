@@ -28,9 +28,7 @@ public record ConditionalStructureModifier(Holder<StructureModifier> modifier, H
             return;
         }
 
-        if (this.condition().value().test()) {
-            this.modifier.value().modify(structure, phase, builder);
-        }
+        if (this.condition().value().test()) this.modifier().value().modify(structure, phase, builder);
     }
 
     @Override

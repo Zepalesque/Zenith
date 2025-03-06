@@ -4,11 +4,11 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.zepalesque.zenith.core.Zenith;
 import net.zepalesque.zenith.api.condition.Condition;
 import net.zepalesque.zenith.api.condition.type.DevEnvironmentCondition;
 import net.zepalesque.zenith.api.condition.type.LogicConditions;
 import net.zepalesque.zenith.api.condition.type.ModLoadedCondition;
+import net.zepalesque.zenith.core.Zenith;
 
 import javax.annotation.Nullable;
 
@@ -37,11 +37,9 @@ public class Conditions {
     @Nullable
     public static ResourceKey<Condition<?>> getResourceKey(RegistryAccess registryAccess, ResourceLocation location) {
         Condition<?> condition = getCondition(registryAccess, location);
-        if (condition != null) {
+        if (condition != null)
             return registryAccess.registryOrThrow(Zenith.Keys.CONDITION).getResourceKey(condition).orElse(null);
-        } else {
-            return null;
-        }
+        else return null;
     }
 
     @Nullable

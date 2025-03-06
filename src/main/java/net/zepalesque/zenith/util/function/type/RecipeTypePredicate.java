@@ -30,13 +30,13 @@ public record RecipeTypePredicate(HolderSet<RecipeType<?>> types) implements Pre
                     predicate -> {
                         HolderSet<RecipeType<?>> holderset = predicate.types();
                         Optional<TagKey<RecipeType<?>>> optional = holderset.unwrapKey();
-                        if (optional.isPresent()) {
-                            return DataResult.success(Either.left(optional.get()));
-                        } else {
-                            return holderset.size() == 1
-                                    ? DataResult.success(Either.right(holderset.get(0)))
-                                    : DataResult.error(() -> "Recipe types set must have a single element, but got " + holderset.size());
-                        }
+                        
+                        return optional.<DataResult<? extends Either<TagKey<RecipeType<?>>, Holder<RecipeType<?>>>>>map(
+                            key -> DataResult.success(Either.left(key)))
+                            .orElseGet(() -> holderset.size() == 1
+                                ? DataResult.success(Either.right(holderset.get(0)))
+                                : DataResult.error(() -> "Recipe types set must have a single element, but got " + holderset.size())
+                            );
                     }
             );
 

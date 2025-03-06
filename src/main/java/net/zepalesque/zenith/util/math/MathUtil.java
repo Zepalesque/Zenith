@@ -6,6 +6,7 @@ import net.minecraft.util.RandomSource;
 /**
  * Some helpful math functions that extend off of ones used in Java's {@link Math} class and Minecraft's {@link Mth} class.
  */
+@SuppressWarnings("unused")
 public class MathUtil {
 
     public static int clampedLerpInt(float delta, int min, int max) {

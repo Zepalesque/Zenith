@@ -18,12 +18,12 @@ public class ConditionalStateProvider extends BlockStateProvider {
     private final Holder<Condition<?>> condition;
     private final BlockStateProvider alternative;
 
-    public static final MapCodec<ConditionalStateProvider> CODEC = RecordCodecBuilder.mapCodec((condition) ->
-            condition.group(
-                    BlockStateProvider.CODEC.fieldOf("base").forGetter((alt) -> alt.base),
-                    Condition.CODEC.fieldOf("condition").forGetter((alt) -> alt.condition),
-                    BlockStateProvider.CODEC.fieldOf("alternative").forGetter((alt) -> alt.alternative))
-                    .apply(condition, ConditionalStateProvider::new));
+    public static final MapCodec<ConditionalStateProvider> CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(
+                    BlockStateProvider.CODEC.fieldOf("base").forGetter(instance -> instance.base),
+                    Condition.CODEC.fieldOf("condition").forGetter(instance -> instance.condition),
+                    BlockStateProvider.CODEC.fieldOf("alternative").forGetter(instance -> instance.alternative))
+                    .apply(builder, ConditionalStateProvider::new));
 
     public ConditionalStateProvider(BlockStateProvider base, Holder<Condition<?>> condition, BlockStateProvider alternative) {
         this.base = base;
