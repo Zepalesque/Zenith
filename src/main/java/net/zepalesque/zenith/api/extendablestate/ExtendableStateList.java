@@ -70,10 +70,10 @@ public class ExtendableStateList {
             return e;
         }
 
-        public static Codec<Entry> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-                StateLists.STATE_LIST_REGISTRY.byNameCodec().fieldOf("parent_state_list").forGetter(Entry::list),
-                Codec.unboundedMap(ResourceKey.codec(Registries.BIOME), SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC)).optionalFieldOf("by_biome").forGetter(Entry::byBiome),
-                SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC).optionalFieldOf("fallback").forGetter(Entry::fallback)
+        public static final Codec<Entry> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            StateLists.STATE_LIST_REGISTRY.byNameCodec().fieldOf("parent_state_list").forGetter(Entry::list),
+            Codec.unboundedMap(ResourceKey.codec(Registries.BIOME), SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC)).optionalFieldOf("by_biome").forGetter(Entry::byBiome),
+            SimpleWeightedRandomList.wrappedCodec(BlockState.CODEC).optionalFieldOf("fallback").forGetter(Entry::fallback)
         ).apply(builder, Entry::create));
 
 
@@ -82,9 +82,8 @@ public class ExtendableStateList {
             Optional<ResourceKey<Biome>> optional = biome.unwrapKey();
             if (optional.isPresent()) {
                 ResourceKey<Biome> key = optional.get();
-                if (this.byBiome.isPresent() && this.byBiome.get().containsKey(key)) {
+                if (this.byBiome.isPresent() && this.byBiome.get().containsKey(key))
                     return this.byBiome.get().get(key).getRandomValue(random).orElseThrow(IllegalStateException::new);
-                }
             }
             return this.fallback.isEmpty() ? Blocks.AIR.defaultBlockState() : this.fallback.get().getRandomValue(random).orElseThrow(IllegalStateException::new);
         }

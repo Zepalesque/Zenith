@@ -32,12 +32,12 @@ public class StackingRecipeTrigger extends SimpleCriterionTrigger<StackingRecipe
 
     public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> ingredient, Optional<ItemPredicate> result, Optional<RecipeTypePredicate> types) implements SimpleInstance {
 
-        public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final Codec<Instance> CODEC = RecordCodecBuilder.create(builder -> builder.group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player),
                         ItemPredicate.CODEC.optionalFieldOf("ingredient").forGetter(Instance::ingredient),
                         ItemPredicate.CODEC.optionalFieldOf("result").forGetter(Instance::result),
                         RecipeTypePredicate.CODEC.optionalFieldOf("recipe_types").forGetter(Instance::types))
-                .apply(instance, Instance::new));
+                .apply(builder, Instance::new));
 
         public static Instance forIngredient(Optional<ItemPredicate> item, Optional<RecipeTypePredicate> recipeType) {
             return new Instance(Optional.empty(), item, Optional.empty(), recipeType);

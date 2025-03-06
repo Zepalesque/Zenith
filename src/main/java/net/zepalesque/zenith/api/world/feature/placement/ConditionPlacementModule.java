@@ -16,10 +16,10 @@ import java.util.Optional;
 
 public class ConditionPlacementModule extends PlacementFilter {
 
-    public static MapCodec<ConditionPlacementModule> CODEC = RecordCodecBuilder.mapCodec(
-            builder -> builder
-                    .group(Condition.CODEC.fieldOf("condition").forGetter(module -> module.condition))
-                    .apply(builder, ConditionPlacementModule::new));
+    public static final MapCodec<ConditionPlacementModule> CODEC = RecordCodecBuilder.mapCodec(
+        builder -> builder
+            .group(Condition.CODEC.fieldOf("condition").forGetter(instance -> instance.condition))
+            .apply(builder, ConditionPlacementModule::new));
 
     public final Holder<Condition<?>> condition;
 

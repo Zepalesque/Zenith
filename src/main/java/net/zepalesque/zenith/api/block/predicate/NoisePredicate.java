@@ -19,13 +19,13 @@ import java.util.Optional;
 public class NoisePredicate implements BlockPredicate, SeededPerlinNoiseHolder<NoisePredicate> {
 
     public static MapCodec<NoisePredicate> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(predicate -> predicate.params),
-            Codec.LONG.fieldOf("seed_offset").forGetter(predicate -> predicate.seedOffset),
+            NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(instance -> instance.params),
+            Codec.LONG.fieldOf("seed_offset").forGetter(instance -> instance.seedOffset),
             Codec.DOUBLE.optionalFieldOf("min_threshold").xmap(
                     optional -> optional.orElse(Double.MAX_VALUE),
                     d -> d == Double.MAX_VALUE ? Optional.empty() : Optional.of(d)
-            ).forGetter(predicate -> predicate.minThreshold),
-            Codec.DOUBLE.fieldOf("max_threshold").forGetter(predicate -> predicate.maxThreshold)
+            ).forGetter(instance -> instance.minThreshold),
+            Codec.DOUBLE.fieldOf("max_threshold").forGetter(instance -> instance.maxThreshold)
             ).apply(builder, NoisePredicate::new)
     );
 

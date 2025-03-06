@@ -16,15 +16,13 @@ public record ConfigCondition(@Nullable String serializerId, @Nullable ConfigVal
 
     private static final HashMap<String, ConfigSerializer> SERIALIZERS = new HashMap<>();
 
-    public static MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec(builder ->
-            builder.group(
-                            Codec.STRING.fieldOf("serializer").forGetter(ConfigCondition::serializerId),
-                            Codec.STRING.fieldOf("config_path").forGetter(ConfigCondition::serializePath)
-                    )
-                    .apply(builder, (id, path) -> {
-                        @Nullable ConfigSerializer serializer = SERIALIZERS.get(id);
-                        return new ConfigCondition(id, serializer == null ? null : serializer.deserialize(path));
-                    }));
+    public static final MapCodec<ConfigCondition> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+        Codec.STRING.fieldOf("serializer").forGetter(ConfigCondition::serializerId),
+        Codec.STRING.fieldOf("config_path").forGetter(ConfigCondition::serializePath)
+    ).apply(builder, (id, path) -> {
+        @Nullable ConfigSerializer serializer = SERIALIZERS.get(id);
+        return new ConfigCondition(id, serializer == null ? null : serializer.deserialize(path));
+    }));
 
     // Record constructors are cool :eyes:
     public ConfigCondition {

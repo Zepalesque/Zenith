@@ -145,14 +145,14 @@ public class EasingUtil {
     }
 
     public static class Back {
-        static float s = 1.70158f;
-        static float s2 = 2.5949095f;
+        static final float s = 1.70158f;
+        static final float s2 = 2.5949095f;
 
         public static float in (float k) {
             return k*k*((s + 1f)*k - s);
         }
 
-        public static float out (float k) {
+        public static float out(float k) {
             return (k -= 1f)*k*((s + 1f)*k + s) + 1f;
         }
 
