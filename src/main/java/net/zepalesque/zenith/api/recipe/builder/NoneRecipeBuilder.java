@@ -9,14 +9,22 @@ import net.minecraft.world.item.Items;
 import net.zepalesque.zenith.api.recipe.recipes.NoneRecipe;
 import org.jetbrains.annotations.Nullable;
 
-public class NoneRecipeBuilder implements RecipeBuilder {
-
-    public static NoneRecipeBuilder of() {
-        return new NoneRecipeBuilder();
+public record NoneRecipeBuilder() implements RecipeBuilder {
+    
+    public static final NoneRecipeBuilder INSTANCE = create();
+   
+    public NoneRecipeBuilder {
+        if (!allowCreation) throw new AssertionError("Use the INSTANCE field instead");
     }
-
-    protected NoneRecipeBuilder() { }
-
+    
+    private static boolean allowCreation = false;
+    private static NoneRecipeBuilder create() {
+        allowCreation = true;
+        NoneRecipeBuilder recipe = new NoneRecipeBuilder();
+        allowCreation = false;
+        return recipe;
+    }
+    
     @Override
     public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
         return this;
@@ -34,6 +42,6 @@ public class NoneRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceLocation id) {
-        output.accept(id, new NoneRecipe(), null);
+        output.accept(id, NoneRecipe.INSTANCE, null);
     }
 }
