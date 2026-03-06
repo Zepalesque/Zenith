@@ -103,7 +103,7 @@ public class Zenith {
 
     private void datapackRegistries(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(Keys.CONDITION, Condition.ELEMENT_CODEC, Condition.ELEMENT_CODEC);
-        event.dataPackRegistry(Keys.EXTENDABLE_STATE_LIST_ENTRY, ExtendableStateList.Entry.DIRECT);
+        event.dataPackRegistry(Keys.EXTENDABLE_STATE_LIST_ENTRY, ExtendableStateList.Entry.DIRECT, ExtendableStateList.Entry.DIRECT);
     }
 
     // TODO: Move to seperate class
