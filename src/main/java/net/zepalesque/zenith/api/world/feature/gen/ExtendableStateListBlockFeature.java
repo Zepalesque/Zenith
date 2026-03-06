@@ -22,20 +22,22 @@ public class ExtendableStateListBlockFeature extends Feature<ExtendableStateList
     }
 
     public boolean place(FeaturePlaceContext<ExtendableStateListBlockFeature.Config> context) {
-        ExtendableStateListBlockFeature.Config config = context.config();
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        Optional<BlockPredicate> predicate = context.config().predicate();
-        BlockState state = config.list().calculate(context.random(), context.level(), pos);
-        if ((predicate.isEmpty() || predicate.get().test(level, pos)) && state.canSurvive(level, pos)) {
-            if (state.getBlock() instanceof DoublePlantBlock) {
-                if (!level.isEmptyBlock(pos.above())) return false;
-
-                DoublePlantBlock.placeAt(level, state, pos, 2);
-            } else level.setBlock(pos, state, 2);
-
-            return true;
-        } else return false;
+	    var config = context.config();
+	    var level = context.level();
+	    var pos = context.origin();
+	    var predicate = context.config().predicate();
+	    var opt = config.list().calculate(context.random(), context.level(), pos);
+        return opt.map(state -> {
+            if ((predicate.isEmpty() || predicate.get().test(level, pos)) && state.canSurvive(level, pos)) {
+                if (state.getBlock() instanceof DoublePlantBlock) {
+                    if (!level.isEmptyBlock(pos.above())) return false;
+                    
+                    DoublePlantBlock.placeAt(level, state, pos, 2);
+                } else level.setBlock(pos, state, 2);
+                
+                return true;
+            } else return false;
+        }).orElse(false);
     }
 
 
