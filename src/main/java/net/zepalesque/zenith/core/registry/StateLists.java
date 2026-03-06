@@ -3,7 +3,7 @@ package net.zepalesque.zenith.core.registry;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType;
-import net.zepalesque.zenith.api.extendablestate.ExtendableStateList;
+import net.zepalesque.zenith.api.extstate.ExtendableStateList;
 import net.zepalesque.zenith.core.Zenith;
 
 import java.util.List;

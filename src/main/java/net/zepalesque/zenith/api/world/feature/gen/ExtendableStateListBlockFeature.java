@@ -2,15 +2,12 @@ package net.zepalesque.zenith.api.world.feature.gen;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.zepalesque.zenith.api.extendablestate.ExtendableStateList;
+import net.zepalesque.zenith.api.extstate.ExtendableStateList;
 import net.zepalesque.zenith.core.registry.StateLists;
 
 import java.util.Optional;

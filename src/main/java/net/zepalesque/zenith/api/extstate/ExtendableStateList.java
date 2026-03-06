@@ -1,4 +1,4 @@
-package net.zepalesque.zenith.api.extendablestate;
+package net.zepalesque.zenith.api.extstate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
