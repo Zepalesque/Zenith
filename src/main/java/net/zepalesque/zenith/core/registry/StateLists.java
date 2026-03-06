@@ -1,5 +1,6 @@
 package net.zepalesque.zenith.core.registry;
 
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType;
@@ -16,11 +17,12 @@ public class StateLists {
             .sync(true)
             .create();
    
-    public static final AdvancedDataMapType<ExtendableStateList, List<ExtendableStateList.Entry>, ?> STATE_LIST_MODIFIERS =
+    public static final AdvancedDataMapType<ExtendableStateList, HolderSet<ExtendableStateList.Entry>, ?> STATE_LIST_MODIFIERS =
         AdvancedDataMapType.builder(Zenith.loc("ext_state_list_modifier"),
                 Zenith.Keys.EXTENDABLE_STATE_LIST,
-                ExtendableStateList.Entry.CODEC.listOf()
+            
+                ExtendableStateList.Entry.LIST_CODEC
             ).merger((registry, srcA, a, srcB, b) ->
-                Stream.concat(a.stream(), b.stream()).toList()
+                HolderSet.direct(Stream.concat(a.stream(), b.stream()).toList())
             ).build();
 }
