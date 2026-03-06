@@ -123,6 +123,7 @@ public class Zenith {
 
     private void registerDataMaps(RegisterDataMapTypesEvent event) {
         BiomeTints.TINT_REGISTRY.forEach(tint -> tint.register(event));
+        event.register(StateLists.STATE_LIST_MODIFIERS);
     }
 
     private void registerRegistries(NewRegistryEvent event) {
