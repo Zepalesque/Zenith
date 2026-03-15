@@ -1,5 +1,6 @@
 package net.zepalesque.zenith.api.blockset;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -44,8 +45,9 @@ public interface BlockSet {
      * Generate recipe data for this BlockSet
      * @param data the {@link RecipeProvider} used
      * @param output the {@link RecipeOutput} that the recipe provider uses
+     * @param holderLookup the {@link HolderLookup.Provider} used to get additional context
      */
-    void recipeData(RecipeProvider data, RecipeOutput output);
+    void recipeData(RecipeProvider data, RecipeOutput output, HolderLookup.Provider holderLookup);
 
     /**
      * Generate block components data for this BlockSet
