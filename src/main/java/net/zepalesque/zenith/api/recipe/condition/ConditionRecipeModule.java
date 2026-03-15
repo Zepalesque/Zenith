@@ -25,8 +25,7 @@ public  class ConditionRecipeModule implements ICondition {
 
     @Override
     public boolean test(IContext context) {
-        Optional<Condition<?>> optional = this.condition.unwrap().right();
-        return optional.isEmpty() || optional.get().test();
+        return this.condition.value().test();
     }
     
     @Override
