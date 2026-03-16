@@ -6,11 +6,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zepalesque.zenith.api.blockset.BlockSet;
 
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public abstract class AbstractLeafSet<Self extends AbstractLeafSet<Self>> implements BlockSet {
 	
@@ -42,7 +44,13 @@ public abstract class AbstractLeafSet<Self extends AbstractLeafSet<Self>> implem
 	public abstract Self saplingCompost(float amount);
 	
 	public abstract Self leafFlammable(int encouragement, int flammability);
+	public abstract Self leafInflammable();
 	public abstract Self saplingFlammable(int encouragement, int flammability);
+	public abstract Self saplingInflammable();
 	
 	public abstract TreeGrower grower();
+	
+	public abstract Self withPotProperties(UnaryOperator<BlockBehaviour.Properties> properties);
+	public abstract Self withLeafProperties(UnaryOperator<BlockBehaviour.Properties> properties);
+	
 }
