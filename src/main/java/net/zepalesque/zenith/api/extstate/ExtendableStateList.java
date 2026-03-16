@@ -52,7 +52,7 @@ public class ExtendableStateList {
 	    var reg = acc.registryOrThrow(Zenith.Keys.EXTENDABLE_STATE_LIST);
         var key = StateLists.STATE_LIST_REGISTRY.getResourceKey(this).orElseThrow();
         var entries = reg.getDataMap(STATE_LIST_MODIFIERS).get(key);
-        if (entries.size() != 0) {
+        if (entries != null && entries.size() != 0) {
 	        var length = entries.size();
 	        var index = random.nextInt(length);
             return entries.get(index).value().calculate(random, level, pos);
