@@ -98,3 +98,6 @@ jarJar fg.deobf("net.zepalesque.zenith:zenith:${project.zenith_version}") {
 The assets (main case in point - the logo) for this mod are **unlicensed and [all rights are reserved](https://en.wikipedia.org/wiki/All_rights_reserved) by Zepalesque.**
 
 The code for the mod is licensed under the LGPL v3.0 license.
+
+# On LLMs and AI
+Zenith has a **zero-AI policy** on all code and assets.
