@@ -1,5 +1,6 @@
 package net.zepalesque.zenith.api.blockset.type;
 
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zepalesque.zenith.api.blockset.BlockSet;
+import net.zepalesque.zenith.api.blockset.CraftingMatrix;
 
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -52,5 +54,11 @@ public abstract class AbstractLeafSet<Self extends AbstractLeafSet<Self>> implem
 	
 	public abstract Self withPotProperties(UnaryOperator<BlockBehaviour.Properties> properties);
 	public abstract Self withLeafProperties(UnaryOperator<BlockBehaviour.Properties> properties);
+	
+	// TODO
+/*	public abstract Self leafCraftsInto(ItemLike block, CraftingMatrix shape, RecipeCategory category);
+	public abstract Self leafCraftsIntoShapeless(int ingredientCount, ItemLike result, int resultCount, RecipeCategory category);
+	public abstract Self saplingCraftsInto(ItemLike block, CraftingMatrix shape, RecipeCategory category);
+	public abstract Self saplingCraftsIntoShapeless(int ingredientCount, ItemLike result, int resultCount, RecipeCategory category);*/
 	
 }

@@ -120,7 +120,7 @@ public class Zenith {
 //        CompletableFuture<HolderLookup.Provider> registryProvider = registrySets.getRegistryProvider();
         generator.addProvider(event.includeServer(), registrySets);
     }
-
+    
     private void registerDataMaps(RegisterDataMapTypesEvent event) {
         BiomeTints.TINT_REGISTRY.forEach(tint -> tint.register(event));
         event.register(StateLists.STATE_LIST_MODIFIERS);
