@@ -233,7 +233,7 @@ public class ArrayUtil {
         Objects.requireNonNull(factory, "Factory parameter must not be null!");
         Objects.requireNonNull(array, "Array parameter must not be null!");
         
-        for (int index = 0; index < array.length; index++) array[index] = factory.applyAsChar(index);
+        for (var index : Range.Int.incExc(0, array.length)) array[index] = factory.applyAsChar(index);
         return array;
     }
     

@@ -34,7 +34,7 @@ public class Predicates {
          * predicate
          */
         default P3<T1, T2, T3> negate() {
-            return (t1, t2, t3) -> !test(t1, t2, t3);
+            return (t1, t2, t3) -> !this.test(t1, t2, t3);
         }
 
         /**
@@ -53,7 +53,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P3<T1, T2, T3> and(@NotNull P3<? super T1, ? super T2, ? super T3> other) {
-            return (t1, t2, t3) -> test(t1, t2, t3) && other.test(t1, t2, t3);
+            return (t1, t2, t3) -> this.test(t1, t2, t3) && other.test(t1, t2, t3);
         }
 
         /**
@@ -72,7 +72,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P3<T1, T2, T3> or(@NotNull P3<? super T1, ? super T2, ? super T3> other) {
-            return (t1, t2, t3) -> test(t1, t2, t3) || other.test(t1, t2, t3);
+            return (t1, t2, t3) -> this.test(t1, t2, t3) || other.test(t1, t2, t3);
         }
     }
 
@@ -101,7 +101,7 @@ public class Predicates {
          * predicate
          */
         default P4<T1, T2, T3, T4> negate() {
-            return (t1, t2, t3, t4) -> !test(t1, t2, t3, t4);
+            return (t1, t2, t3, t4) -> !this.test(t1, t2, t3, t4);
         }
 
         /**
@@ -120,7 +120,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P4<T1, T2, T3, T4> and(@NotNull P4<? super T1, ? super T2, ? super T3, ? super T4> other) {
-            return (t1, t2, t3, t4) -> test(t1, t2, t3, t4) && other.test(t1, t2, t3, t4);
+            return (t1, t2, t3, t4) -> this.test(t1, t2, t3, t4) && other.test(t1, t2, t3, t4);
         }
 
         /**
@@ -139,7 +139,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P4<T1, T2, T3, T4> or(@NotNull P4<? super T1, ? super T2, ? super T3, ? super T4> other) {
-            return (t1, t2, t3, t4) -> test(t1, t2, t3, t4) || other.test(t1, t2, t3, t4);
+            return (t1, t2, t3, t4) -> this.test(t1, t2, t3, t4) || other.test(t1, t2, t3, t4);
         }
     }
 
@@ -169,7 +169,7 @@ public class Predicates {
          * predicate
          */
         default P5<T1, T2, T3, T4, T5> negate() {
-            return (t1, t2, t3, t4, t5) -> !test(t1, t2, t3, t4, t5);
+            return (t1, t2, t3, t4, t5) -> !this.test(t1, t2, t3, t4, t5);
         }
 
         /**
@@ -188,7 +188,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P5<T1, T2, T3, T4, T5> and(@NotNull P5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5> other) {
-            return (t1, t2, t3, t4, t5) -> test(t1, t2, t3, t4, t5) && other.test(t1, t2, t3, t4, t5);
+            return (t1, t2, t3, t4, t5) -> this.test(t1, t2, t3, t4, t5) && other.test(t1, t2, t3, t4, t5);
         }
 
         /**
@@ -207,7 +207,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P5<T1, T2, T3, T4, T5> or(@NotNull P5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5> other) {
-            return (t1, t2, t3, t4, t5) -> test(t1, t2, t3, t4, t5) || other.test(t1, t2, t3, t4, t5);
+            return (t1, t2, t3, t4, t5) -> this.test(t1, t2, t3, t4, t5) || other.test(t1, t2, t3, t4, t5);
         }
     }
 
@@ -238,7 +238,7 @@ public class Predicates {
          * predicate
          */
         default P6<T1, T2, T3, T4, T5, T6> negate() {
-            return (t1, t2, t3, t4, t5, t6) -> !test(t1, t2, t3, t4, t5, t6);
+            return (t1, t2, t3, t4, t5, t6) -> !this.test(t1, t2, t3, t4, t5, t6);
         }
 
         /**
@@ -257,7 +257,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P6<T1, T2, T3, T4, T5, T6> and(@NotNull P6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6> other) {
-            return (t1, t2, t3, t4, t5, t6) -> test(t1, t2, t3, t4, t5, t6) && other.test(t1, t2, t3, t4, t5, t6);
+            return (t1, t2, t3, t4, t5, t6) -> this.test(t1, t2, t3, t4, t5, t6) && other.test(t1, t2, t3, t4, t5, t6);
         }
 
         /**
@@ -276,7 +276,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P6<T1, T2, T3, T4, T5, T6> or(@NotNull P6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6> other) {
-            return (t1, t2, t3, t4, t5, t6) -> test(t1, t2, t3, t4, t5, t6) || other.test(t1, t2, t3, t4, t5, t6);
+            return (t1, t2, t3, t4, t5, t6) -> this.test(t1, t2, t3, t4, t5, t6) || other.test(t1, t2, t3, t4, t5, t6);
         }
     }
 
@@ -308,7 +308,7 @@ public class Predicates {
          * predicate
          */
         default P7<T1, T2, T3, T4, T5, T6, T7> negate() {
-            return (t1, t2, t3, t4, t5, t6, t7) -> !test(t1, t2, t3, t4, t5, t6, t7);
+            return (t1, t2, t3, t4, t5, t6, t7) -> !this.test(t1, t2, t3, t4, t5, t6, t7);
         }
 
         /**
@@ -327,7 +327,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P7<T1, T2, T3, T4, T5, T6, T7> and(@NotNull P7<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7> other) {
-            return (t1, t2, t3, t4, t5, t6, t7) -> test(t1, t2, t3, t4, t5, t6, t7) && other.test(t1, t2, t3, t4, t5, t6, t7);
+            return (t1, t2, t3, t4, t5, t6, t7) -> this.test(t1, t2, t3, t4, t5, t6, t7) && other.test(t1, t2, t3, t4, t5, t6, t7);
         }
 
         /**
@@ -346,7 +346,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P7<T1, T2, T3, T4, T5, T6, T7> or(@NotNull P7<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7> other) {
-            return (t1, t2, t3, t4, t5, t6, t7) -> test(t1, t2, t3, t4, t5, t6, t7) || other.test(t1, t2, t3, t4, t5, t6, t7);
+            return (t1, t2, t3, t4, t5, t6, t7) -> this.test(t1, t2, t3, t4, t5, t6, t7) || other.test(t1, t2, t3, t4, t5, t6, t7);
         }
     }
 
@@ -379,7 +379,7 @@ public class Predicates {
          * predicate
          */
         default P8<T1, T2, T3, T4, T5, T6, T7, T8> negate() {
-            return (t1, t2, t3, t4, t5, t6, t7, t8) -> !test(t1, t2, t3, t4, t5, t6, t7, t8);
+            return (t1, t2, t3, t4, t5, t6, t7, t8) -> !this.test(t1, t2, t3, t4, t5, t6, t7, t8);
         }
 
         /**
@@ -398,7 +398,7 @@ public class Predicates {
          * AND of this predicate and the {@code other} predicate
          */
         default P8<T1, T2, T3, T4, T5, T6, T7, T8> and(@NotNull P8<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8> other) {
-            return (t1, t2, t3, t4, t5, t6, t7, t8) -> test(t1, t2, t3, t4, t5, t6, t7, t8) && other.test(t1, t2, t3, t4, t5, t6, t7, t8);
+            return (t1, t2, t3, t4, t5, t6, t7, t8) -> this.test(t1, t2, t3, t4, t5, t6, t7, t8) && other.test(t1, t2, t3, t4, t5, t6, t7, t8);
         }
 
         /**
@@ -417,7 +417,7 @@ public class Predicates {
          * OR of this predicate and the {@code other} predicate
          */
         default P8<T1, T2, T3, T4, T5, T6, T7, T8> or(@NotNull P8<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8> other) {
-            return (t1, t2, t3, t4, t5, t6, t7, t8) -> test(t1, t2, t3, t4, t5, t6, t7, t8) || other.test(t1, t2, t3, t4, t5, t6, t7, t8);
+            return (t1, t2, t3, t4, t5, t6, t7, t8) -> this.test(t1, t2, t3, t4, t5, t6, t7, t8) || other.test(t1, t2, t3, t4, t5, t6, t7, t8);
         }
     }
 }
