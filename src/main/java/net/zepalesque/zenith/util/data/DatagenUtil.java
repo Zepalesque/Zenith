@@ -35,7 +35,7 @@ public class DatagenUtil {
     public static String localize(String id) {
         return StringUtils.capitaliseAllWords(id.replace('_', ' '));
     }
-
+    
     @Nullable
     public static <T> String localize(@Nullable ResourceLocation id) {
         return id == null ? null : localize(id.getPath());
@@ -49,6 +49,10 @@ public class DatagenUtil {
 
     public static <T> String localize(DeferredHolder<?, ?> holder) {
         return localize(holder.getId().getPath());
+    }
+    
+    public static String unlocalize(String name) {
+        return StringUtils.uncapitaliseAllWords(name).replace(' ', '_');
     }
 
     /**
